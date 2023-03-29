@@ -1,0 +1,44 @@
+.navigation-panel {
+    height: 104px;
+    width: 100%;
+    background-color: #497CFF;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-panel-logo {
+    margin-left: 30px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    height: 80px;
+    width: 200px;
+}
+
+.navigation-panel-logo > img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.navigation-panel-account-info {
+    margin-top: 22px;
+    margin-right: 35px;
+    margin-bottom: 22px;
+    height: 60px;
+    width: 167px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.navigation-panel-account-info > p {
+    font-family: 'Inter', sans-serif;
+    font-size: 29px;
+    font-weight: 500;
+    margin: auto;
+    color: white;
+}
+
+.navigation-panel-account-info > img {
+    height: 100%;
+    filter: brightness(0) invert(1)
+}
