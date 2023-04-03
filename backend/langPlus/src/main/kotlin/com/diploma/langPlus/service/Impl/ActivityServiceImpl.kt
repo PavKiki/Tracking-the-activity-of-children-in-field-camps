@@ -10,4 +10,8 @@ class ActivityServiceImpl(val activityRepository: ActivityRepository): ActivityS
     override fun getAll(): List<ActivityEntity> {
         return activityRepository.findAll().toList()
     }
+
+    override fun getByTimetableId(timetableId: Int): List<ActivityEntity> {
+        return activityRepository.findByTimetableId(timetableId).toList()
+    }
 }

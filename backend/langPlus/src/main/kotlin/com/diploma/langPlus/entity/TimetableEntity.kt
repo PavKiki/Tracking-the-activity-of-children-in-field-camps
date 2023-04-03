@@ -8,10 +8,10 @@ import jakarta.persistence.*
 class TimetableEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val timetableId: Int,
+    val id: Int,
     val date: String,
     @OneToMany(mappedBy = "timetable")
     var activities: List<ActivityEntity>
 )
 
-fun TimetableEntity.toDto(): TimetableDto = TimetableDto(this.timetableId, this.date)
+fun TimetableEntity.toDto(): TimetableDto = TimetableDto(this.id, this.date)

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/timetable")
+@RequestMapping("api/v1/timetable")
 class TimetableController (private val timetableService: TimetableService) {
-    @GetMapping
+    @GetMapping("/all")
     fun getAll(): List<TimetableDto> = timetableService.getAll().map { it.toDto() }
 }

@@ -8,7 +8,7 @@ import jakarta.persistence.*
 class ActivityEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val activityId: Int,
+    val id: Int,
     val title: String,
     val startAt: Int,
     val endAt: Int,
@@ -18,8 +18,9 @@ class ActivityEntity (
 )
 
 fun ActivityEntity.toDto(): ActivityDto = ActivityDto(
-    activityId = this.activityId,
+    id = this.id,
     title = this.title,
     startAt = this.startAt,
     endAt = this.endAt,
+    timetableId = this.timetable.id
 )
