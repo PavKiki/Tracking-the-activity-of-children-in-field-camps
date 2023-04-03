@@ -1,10 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { MainPageComponent } from './components/MainPageComponent';
+import { MainPage } from './pages/MainPage';
 
 function App() {
-  return MainPageComponent()
+  return MainPage()
 }
 
 export default App;

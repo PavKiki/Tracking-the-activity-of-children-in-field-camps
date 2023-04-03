@@ -1,0 +1,11 @@
+.activity {
+    height: 48px;
+    width: 100%;
+    background: #8860D0;
+}
+
+.activity > p {
+    font-size: 21px;
+    font-weight: bold;
+    color: white;
+}
