@@ -1,4 +1,5 @@
-import { IActivity, ITimetable } from "../models";
+import { useState } from 'react'
+import { ITimetable } from "../models";
 import { useActivities } from "../hooks/activities";
 import { Activity } from "./Activity";
 import "../css-components/Timetable.css";
@@ -8,8 +9,8 @@ interface TimetalbeProps {
 }
 
 export function Timetable({ timetable }: TimetalbeProps) {
-    const { activities, loading, error } = useActivities(timetable.id)
-    
+    const { activities, loading, error } = useActivities(timetable?.id)
+
     return (
         <div className="activity-container">
             { loading && <div>Loading...</div>}

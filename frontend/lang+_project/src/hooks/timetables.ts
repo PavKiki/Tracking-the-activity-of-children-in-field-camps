@@ -5,20 +5,21 @@ import { ITimetable } from "../models";
 export function useTimetables() {
     const [timetables, setTimetables] = useState<ITimetable[]>([])
 
-    async function fetchTimetables() {      //refactor whole function later
+    useEffect( () => { 
+        fetchTimetables()
+        console.log("timetables loaded successfully!!!")
+    }, [])
+
+    async function fetchTimetables() {      
         try {
-            const response = await axios.get<ITimetable[]>("localhost:8080/api/v1/timetable/all")
+            const response = await axios.get<ITimetable[]>("http://localhost:8080/api/v1/timetable/all")
+            setTimetables(response.data)
         }
-        catch (err) {
+        catch (err: unknown) {
             const error = err as AxiosError
             console.log(error.message)
         }
     }
-
-    useEffect(
-        () => { fetchTimetables() },
-        []
-    )
 
     return { timetables }
 }
