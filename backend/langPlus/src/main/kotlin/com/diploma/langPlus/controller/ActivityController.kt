@@ -6,6 +6,7 @@ import com.diploma.langPlus.service.ActivityService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -14,6 +15,8 @@ class ActivityController(val activityService: ActivityService) {
     @GetMapping("/all")
     fun getAll(): List<ActivityDto> = activityService.getAll().map { it.toDto() }
 
-    @GetMapping("/get") //ИСПРАВИТЬ, НУЖНО ПОЛУЧАТЬ АЙДИ ТАБЛИЦЫ ИЗ ЮРЛА
-    fun getByTimetableId(): List<ActivityDto> = activityService.getByTimetableId(1).map { it.toDto() }
+    @GetMapping("/get")
+    fun getByTimetableIdSortByTime(@RequestParam("id") timetableId: Int): List<ActivityDto> {
+        return activityService.getByTimetableIdSortByTime(timetableId).map { it.toDto() }
+    }
 }

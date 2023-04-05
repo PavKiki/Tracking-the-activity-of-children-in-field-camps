@@ -2,6 +2,8 @@ package com.diploma.langPlus.entity
 
 import com.diploma.langPlus.dto.ActivityDto
 import jakarta.persistence.*
+import java.time.OffsetTime
+import java.time.format.DateTimeFormatter
 
 @Entity
 @Table(name = "activity")
@@ -10,17 +12,20 @@ class ActivityEntity (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
     val title: String,
-    val startAt: Int,
-    val endAt: Int,
+    val startAt: OffsetTime,
+    val endAt: OffsetTime,
     @ManyToOne
     @JoinColumn(name = "timetableId")
     var timetable: TimetableEntity,
 )
 
-fun ActivityEntity.toDto(): ActivityDto = ActivityDto(
-    id = this.id,
-    title = this.title,
-    startAt = this.startAt,
-    endAt = this.endAt,
-    timetableId = this.timetable.id
-)
+fun ActivityEntity.toDto(): ActivityDto {
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+    return ActivityDto(
+        id = this.id,
+        title = this.title,
+        startAt = this.startAt.format(formatter),
+        endAt = this.endAt.format(formatter),
+        timetableId = this.timetable.id
+    )
+}

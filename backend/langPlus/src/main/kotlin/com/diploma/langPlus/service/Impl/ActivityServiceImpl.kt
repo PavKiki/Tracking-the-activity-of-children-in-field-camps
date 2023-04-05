@@ -11,7 +11,7 @@ class ActivityServiceImpl(val activityRepository: ActivityRepository): ActivityS
         return activityRepository.findAll().toList()
     }
 
-    override fun getByTimetableId(timetableId: Int): List<ActivityEntity> {
-        return activityRepository.findByTimetableId(timetableId).toList()
+    override fun getByTimetableIdSortByTime(timetableId: Int): List<ActivityEntity> {
+        return activityRepository.findByTimetableIdOrderByStartAt(timetableId).toList()
     }
 }
