@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
 import { NavigationPanel } from "../components/NavigationPanel";
 import { Timetable } from "../components/Timetable";
 import { useTimetables } from "../hooks/timetables";
-import { ITimetable } from '../models';
 
 export function MainPage() {
     const { timetables } = useTimetables()

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { ITimetable } from "../models";
 import { useActivities } from "../hooks/activities";
 import { Activity } from "./Activity";
