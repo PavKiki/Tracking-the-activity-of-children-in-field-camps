@@ -11,7 +11,7 @@ export function useActivities(timetableId: number) {
         try {
             setError("")
             setLoading(true)
-            const response = await axios.get<IActivity[]>("google.com" + timetableId)
+            const response = await axios.get<IActivity[]>("localhost:8080/api/v1/activity/get", { params: { id: timetableId } })
             setActivities(response.data)
             setLoading(false)
         }

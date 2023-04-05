@@ -8,14 +8,14 @@ interface TimetalbeProps {
 }
 
 export function Timetable({ timetable }: TimetalbeProps) {
-    const { activities, loading, error } = useActivities(timetable.timetableId)
+    const { activities, loading, error } = useActivities(timetable.id)
     
     return (
         <div className="activity-container">
             { loading && <div>Loading...</div>}
             { error && <div>{ error }</div>}
             { activities.map(
-                (activity: IActivity) => <Activity activity={ activity }/> 
+                activity => <Activity activity={ activity }/> 
             )}
         </div>
     );

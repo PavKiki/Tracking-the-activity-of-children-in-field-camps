@@ -1,12 +1,12 @@
 export interface IActivity {
-    activityId: number;
+    id: number;
     title: string;
-    startAt: number;
-    endAt: number;
+    startAt: string;
+    endAt: string;
     timetableId: number;
 }
 
 export interface ITimetable {
-    timetableId: number;
-    date: number;
+    id: number;
+    date: string;
 }

@@ -7,7 +7,7 @@ export function useTimetables() {
 
     async function fetchTimetables() {      //refactor whole function later
         try {
-            const response = await axios.get<ITimetable[]>("google.com")
+            const response = await axios.get<ITimetable[]>("localhost:8080/api/v1/timetable/all")
         }
         catch (err) {
             const error = err as AxiosError
