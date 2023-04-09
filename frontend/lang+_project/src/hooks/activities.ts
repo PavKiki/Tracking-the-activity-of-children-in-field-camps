@@ -9,7 +9,6 @@ export function useActivities(timetableId: number) {
 
     useEffect( () => { 
         fetchActivities()
-        console.log("activities loaded " + timetableId)
     }, [] )
 
     async function fetchActivities() {

@@ -1,0 +1,26 @@
+.data {
+    margin-left: 20%;
+    text-align: center;
+}
+
+.data > p {
+    font-size: 25px;
+    font-weight: 450;
+    margin-top: 0px;
+}
+
+.time-timetable-container {
+    display: flex;
+}
+
+.time {
+    width: 20%;
+}
+
+.time > p {
+    font-size: 18px;
+    font-weight: 480;
+    height: 6.66%;
+    margin: 0px;
+    padding-left: 5%;
+}

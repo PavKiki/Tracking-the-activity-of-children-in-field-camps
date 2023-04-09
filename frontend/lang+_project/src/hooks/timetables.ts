@@ -7,7 +7,6 @@ export function useTimetables() {
 
     useEffect( () => { 
         fetchTimetables()
-        console.log("timetables loaded successfully!!!")
     }, [])
 
     async function fetchTimetables() {      

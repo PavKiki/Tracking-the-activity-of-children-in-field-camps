@@ -1,6 +1,7 @@
 .navigation-panel {
-    height: 104px;
+    height: 80px;
     width: 100%;
+    max-width: 1920px;
     background-color: #497CFF;
     display: flex;
     justify-content: space-between;
@@ -10,7 +11,7 @@
     margin-left: 30px;
     margin-top: 12px;
     margin-bottom: 12px;
-    height: 80px;
+    height: 56px;
     width: 200px;
 }
 
@@ -20,19 +21,28 @@
 }
 
 .navigation-panel-account-info {
-    margin-top: 22px;
-    margin-right: 35px;
-    margin-bottom: 22px;
-    height: 60px;
-    width: 167px;
+    margin-top: 12px;
+    margin-right: 30px;
+    margin-bottom: 12px;
+    padding: 5px;
+    padding-left: 12px;
+    height: 46px;
+    min-width: 177px;
     display: flex;
     align-items: flex-end;
-    gap: 20px;
+    gap: 10px;
+    border-radius: 10px;
+
+}
+
+.navigation-panel-account-info:hover {
+    background-color: #2b55bf;
+    cursor: pointer;
 }
 
 .navigation-panel-account-info > p {
     font-family: 'Inter', sans-serif;
-    font-size: 29px;
+    font-size: 24px;
     font-weight: 500;
     margin: auto;
     color: white;

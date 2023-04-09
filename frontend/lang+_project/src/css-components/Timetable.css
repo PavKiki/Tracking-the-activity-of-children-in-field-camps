@@ -1,7 +1,7 @@
 .activity-container {
-    height: 720px;
-    width: 462px;
+    border: solid;
     border-radius: 40px;
     border-color: #BBBBBB;
     border-width: 3px;
+    overflow: hidden;
 }
