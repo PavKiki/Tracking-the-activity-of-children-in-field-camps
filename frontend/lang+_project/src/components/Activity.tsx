@@ -8,8 +8,9 @@ interface ActivityProps {
 }
 
 export function Activity({ activity, bgColor }: ActivityProps) {
-    const interval = moment(activity.endAt, 'HH:mm:ss').diff(moment(activity.startAt, 'HH:mm:ss'), "minutes", true)
-    const style = { height: `${interval / 900 * 100}%`,  background: `${bgColor}`}
+    const duration = moment(activity.endAt, 'HH:mm:ss').diff(moment(activity.startAt, 'HH:mm:ss'), "minutes", true) / 900 * 100
+    const position = moment(activity.startAt, 'HH:mm:ss').diff(moment("08:00", 'HH:mm'), "minutes", true) / 900 * 100    //нужно рассчитать в процентах на сколько должен быть отступ
+    const style = { height: `${duration}%`,  background: `${bgColor}`, top: `${position}%`}
 
     return(
         <>

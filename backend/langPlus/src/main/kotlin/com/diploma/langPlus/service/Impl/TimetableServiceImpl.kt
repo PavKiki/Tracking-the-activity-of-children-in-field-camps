@@ -8,4 +8,5 @@ import org.springframework.stereotype.Service
 @Service
 class TimetableServiceImpl(private val timetableRepository: TimetableRepository): TimetableService {
     override fun getAll(): List<TimetableEntity> = timetableRepository.findAll().toList()
+    override fun getAllSortByDate(): List<TimetableEntity> = timetableRepository.findAllByOrderByDate().toList()
 }

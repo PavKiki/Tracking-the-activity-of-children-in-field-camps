@@ -14,4 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 class TimetableController (private val timetableService: TimetableService) {
     @GetMapping("/all")
     fun getAll(): List<TimetableDto> = timetableService.getAll().map { it.toDto() }
+
+    @GetMapping("/allbydate")
+    fun getAllSortByDate(): List<TimetableDto> = timetableService.getAllSortByDate().map { it.toDto() }
 }
