@@ -73,6 +73,10 @@ export function MainPage() {
     function checkPreviousIndex(): boolean { return previousIndex !== undefined && previousIndex > 0 }
     function checkNextIndex(): boolean { return nextIndex !== undefined && nextIndex < timetables.length }
 
+    function leftShift() {
+        
+    }
+
     return (
     <>
         <NavigationPanel></NavigationPanel>
