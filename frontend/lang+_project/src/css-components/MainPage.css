@@ -9,6 +9,8 @@
 
 .previous-timetable, .next-timetable {
     padding-top: 50px;
+    height: 440px;
+    width: 290px;
 }
 
 .current-timetable {
