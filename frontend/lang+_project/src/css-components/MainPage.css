@@ -7,10 +7,16 @@
     align-items: center;
 }
 
-.previous-timetable, .next-timetable {
+.previous-timetable {
     padding-top: 50px;
     height: 440px;
-    width: 290px;
+    width: 320px;
+}
+
+.next-timetable {
+    padding-top: 50px;
+    height: 440px;
+    width: 320px;
 }
 
 .current-timetable {

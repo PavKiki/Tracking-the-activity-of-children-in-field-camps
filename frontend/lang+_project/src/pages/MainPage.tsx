@@ -22,59 +22,71 @@ export function MainPage() {
     const { timetables, loading, error } = useTimetables()
     
     useEffect(() => {
-        initPreviousDay(moment().subtract(1, 'd'))
-        initCurrentDay(moment())
-        initNextDay(moment().add(1, 'd'))
+        initDays(moment())
     }, [timetables])
 
-    function findDayInArray(setDay: (d: ITimetable) => void, setIndex: (i: number) => void, day: Moment) {
-        for (let i = 0; i < timetables.length; i++) {
-            if (day === moment(timetables[i].date, "dddd - DD/MM/YY")) {
-                setDay(timetables[i])
-                setIndex(i)
-            }
-        }
-    }
-
-    function initPreviousDay(day: Moment) {
-        if (timetables.length > 0 && day >= moment(timetables[0].date, "dddd - DD/MM/YY")) {
-            if (day > moment(timetables[timetables.length - 1].date, "dddd - DD/MM/YY") && timetables.length !== 1) {
-                setPreviousDay(timetables[timetables.length - 2])
-                setPreviousIndex(timetables.length - 2)
-            }
-            else findDayInArray(setPreviousDay, setPreviousIndex, day)
-        }
-    }
-
-    function initCurrentDay(day: Moment) {
+    function initDays(day: Moment) {
         if (timetables.length > 0) {
             if (day < moment(timetables[0].date, "dddd - DD/MM/YY")) {
                 setCurrentDay(timetables[0])
                 setCurrentIndex(0)
+                setPreviousIndex(-1)
+                if (timetables.length !== 1) setNextDay(timetables[1])
+                setNextIndex(1)
             }
             else if (day > moment(timetables[timetables.length - 1].date, "dddd - DD/MM/YY")) {
                 setCurrentDay(timetables[timetables.length - 1])
                 setCurrentIndex(timetables.length - 1)
+                setNextIndex(timetables.length)
+                if (timetables.length !== 1) setPreviousDay(timetables[timetables.length - 2])
+                setPreviousIndex(timetables.length - 2)
             }
-            else findDayInArray(setCurrentDay, setCurrentIndex, day)
+            else {
+                for (let i = 0; i < timetables.length; i++) {
+                    if (day === moment(timetables[i].date, "dddd - DD/MM/YY")) {
+                        setCurrentDay(timetables[i])
+                        setCurrentIndex(i)
+                        if (i + 1 < timetables.length) setNextDay(timetables[i + 1])
+                        setNextIndex(i + 1)
+                        if (i - 1 >= 0) setPreviousDay(timetables[i - 1])
+                        setPreviousIndex(i - 1)
+                    }
+                }
+            }
         }
     }
 
-    function initNextDay(day: Moment) {
-        if (timetables.length > 0 && day <= moment(timetables[timetables.length - 1].date, "dddd - DD/MM/YY")) {
-            if (day < moment(timetables[0].date, "dddd - DD/MM/YY") && timetables.length !== 1) {
-                setNextDay(timetables[1])
-                setNextIndex(1)
-            }
-            else findDayInArray(setNextDay, setNextIndex, day)
-        }
-    }
-
-    function checkPreviousIndex(): boolean { return previousIndex !== undefined && previousIndex > 0 }
+    function checkPreviousIndex(): boolean { return previousIndex !== undefined && previousIndex >= 0 }
     function checkNextIndex(): boolean { return nextIndex !== undefined && nextIndex < timetables.length }
 
     function leftShift() {
-        
+        setCurrentDay(timetables[previousIndex!!])
+        setNextDay(timetables[currentIndex!!])
+        setNextIndex(currentIndex!!)
+        setCurrentIndex(previousIndex!!)
+        if (previousIndex === 0) {
+            setPreviousDay(undefined)
+            setPreviousIndex(-1)
+        }
+        else {
+            setPreviousDay(timetables[previousIndex!! - 1])
+            setPreviousIndex(previousIndex!! - 1)
+        }
+    }
+
+    function rightShift() {
+        setPreviousDay(timetables[currentIndex!!])
+        setCurrentDay(timetables[nextIndex!!])
+        setPreviousIndex(currentIndex!!)
+        setCurrentIndex(nextIndex!!)
+        if (nextIndex === timetables.length - 1) {
+            setNextDay(undefined)
+            setNextIndex(timetables.length)
+        }
+        else {
+            setNextDay(timetables[nextIndex!! + 1])
+            setNextIndex(nextIndex!! + 1)
+        }
     }
 
     return (
@@ -89,9 +101,9 @@ export function MainPage() {
                 </div>
                 {currentDay &&
                     <div className="current-timetable">
-                        { checkPreviousIndex() && <img src = { arrowLeft } alt="arrow to change the day to the previous"></img>}
+                        { checkPreviousIndex() && <img src = { arrowLeft } alt="arrow to change the day to the previous" onClick={ () => leftShift() }></img>}
                         <CurrentTimetable timetable={ currentDay!! } key={ currentDay!!.id }></CurrentTimetable>
-                        { checkNextIndex() && <img src = { arrowRight } alt="arrow to change the day to the next"></img>}
+                        { checkNextIndex() && <img src = { arrowRight } alt="arrow to change the day to the next" onClick={ () => rightShift() }></img>}
                     </div>
                 }
                 <div className="next-timetable">
