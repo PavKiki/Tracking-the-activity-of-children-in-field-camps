@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { ITimetable } from "../models";
-import { useActivities } from "../hooks/activities";
+import { ITimetable } from "../../models";
+import { useActivities } from "../../hooks/activities";
 import { Activity } from "./Activity";
-import "../css-components/Timetable.css";
+import "../../css-components/Timetable.css";
 
 interface TimetalbeProps {
     timetable: ITimetable

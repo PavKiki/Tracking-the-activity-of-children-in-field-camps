@@ -1,0 +1,24 @@
+.activity {
+    display: flex;
+    gap: 20px;
+    width: 93%;
+    margin-left: 30px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.time-picker {
+    gap: 15px;
+    margin-top: 20px;
+    width: 7%;
+}
+
+.name-description {
+    width: 100%;
+    margin-right: 80px;
+}
+
+.time-picker > div, .name-description > div {
+    margin-top: 15px;
+}

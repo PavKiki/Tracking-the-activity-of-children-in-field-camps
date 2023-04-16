@@ -1,0 +1,30 @@
+.container-of-fields {
+    width: 100%;
+}
+
+.date-picker {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.add-timetable-button {
+    padding: 15px 30px;
+    border-radius: 50px;
+    background-color: #497cff;
+    width: fit-content;
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+}
+
+.add-timetable-button > p {
+    color: white;
+    margin: 0px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.add-timetable-button:hover {
+    cursor: pointer;
+    background-color: #365fc6;
+}

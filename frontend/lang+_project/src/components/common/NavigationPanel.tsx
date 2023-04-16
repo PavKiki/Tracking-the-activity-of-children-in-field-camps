@@ -1,7 +1,7 @@
-import '../css-components/NavigationPanel.css'
-import langLogo from '../data/images/logo_language.png'
-import signInLogo from '../data/images/login.svg'
-import userLogo from '../data/images/person.svg'
+import '../../css-components/NavigationPanel.css'
+import langLogo from '../../data/images/logo_language.png'
+import signInLogo from '../../data/images/login.svg'
+import userLogo from '../../data/images/person.svg'
 import { useState } from 'react'
 
 export function NavigationPanel() {

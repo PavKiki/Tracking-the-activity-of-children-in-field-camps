@@ -1,5 +1,5 @@
-import { IActivity } from "../models";
-import '../css-components/Activity.css';
+import { IActivity } from "../../models";
+import '../../css-components/Activity.css';
 import moment from "moment";
 
 interface ActivityProps {

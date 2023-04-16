@@ -1,6 +1,6 @@
-import { ITimetable } from "../models";
+import { ITimetable } from "../../models";
 import { Timetable } from "./Timetable";
-import "../css-components/CurrentTimetable.css";
+import "../../css-components/CurrentTimetable.css";
 
 interface CurrentTimetableProps {
     timetable: ITimetable;
