@@ -1,7 +1,7 @@
 .activity {
     display: flex;
     gap: 20px;
-    width: 93%;
+    width: 95vw;
     margin-left: 30px;
     padding-left: 10px;
     padding-bottom: 20px;
@@ -9,16 +9,41 @@
 }
 
 .time-picker {
+    position: relative;
     gap: 15px;
     margin-top: 20px;
-    width: 7%;
+    max-width: 6vw;
 }
 
 .name-description {
-    width: 100%;
-    margin-right: 80px;
+    width: 86vw;
+    /* margin-right: 80px; */
 }
 
 .time-picker > div, .name-description > div {
     margin-top: 15px;
+}
+
+.delete-activity {
+    position: relative;
+    right: 0;
+    width: 3vw;
+    height: 3vw;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 0;
+    background-color: white;
+    padding: 0;
+}
+
+.delete-activity img {
+    filter: invert(94%) sepia(0%) saturate(2307%) hue-rotate(43deg) brightness(96%) contrast(67%);
+    height: 100%;
+    width: 100%;
+}
+
+.delete-activity img:hover {
+    filter: invert(0);
+    cursor: pointer;
 }

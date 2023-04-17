@@ -8,6 +8,7 @@
 }
 
 .add-timetable-button {
+    border: none;
     padding: 15px 30px;
     border-radius: 50px;
     background-color: #497cff;
@@ -27,4 +28,37 @@
 .add-timetable-button:hover {
     cursor: pointer;
     background-color: #365fc6;
+}
+
+.add-new-activity {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.add-new-activity-button {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border: 0;
+    background-color: white;
+    gap: 30px;
+    padding: 0px 20px;
+    border-radius: 40px;
+}
+
+.add-new-activity-button:hover {
+    cursor: pointer;
+    background-color: rgb(235, 235, 235);
+}
+
+.add-new-activity-button > img {
+    filter: invert(100%) sepia(13%) saturate(9%) hue-rotate(292deg) brightness(84%) contrast(80%);
+}
+
+.add-new-activity-button > p {
+    color: #c4c4c4;
+    font-size: 24px;
+    font-family: 'Inter', sans-serif;
 }

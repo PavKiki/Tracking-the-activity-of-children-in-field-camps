@@ -3,12 +3,13 @@ import { MainPage } from './pages/MainPage';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { AddDayPage } from './pages/AddDayPage';
+import { AddDayContextProvider } from './context/AddDayContext';
 
 function App() {
   return (
     <LocalizationProvider dateAdapter = { AdapterMoment }>
       {/* <MainPage/> */}
-      <AddDayPage/>
+      <AddDayContextProvider><AddDayPage/></AddDayContextProvider>
     </LocalizationProvider>
   )
 }

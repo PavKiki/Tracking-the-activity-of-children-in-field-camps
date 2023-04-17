@@ -12,6 +12,7 @@ class ActivityEntity (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
     val title: String,
+    val description: String,
     val startAt: OffsetTime,
     val endAt: OffsetTime,
     @ManyToOne
@@ -24,6 +25,7 @@ fun ActivityEntity.toDto(): ActivityDto {
     return ActivityDto(
         id = this.id,
         title = this.title,
+        description = this.description,
         startAt = this.startAt.format(formatter),
         endAt = this.endAt.format(formatter),
         timetableId = this.timetable.id
