@@ -17,6 +17,6 @@ export interface ITimetable {
 export interface IActivityToAdd {
     title: string;
     description: string;
-    startAt: string;
-    endAt: string;
+    startAt: Moment | null;
+    endAt: Moment | null;
 }

@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import { NavigationPanel } from "../components/common/NavigationPanel";
@@ -10,6 +10,8 @@ import '../css-components/AddDayPage.css';
 
 export function AddDayPage() {
     const { activitiesToAdd } = useContext(AddDayContext)
+    
+    useEffect(() => console.log(activitiesToAdd), [activitiesToAdd])
 
     return (
         <>
