@@ -8,8 +8,8 @@ import { AddDayContextProvider } from './context/AddDayContext';
 function App() {
   return (
     <LocalizationProvider dateAdapter = { AdapterMoment }>
-      {/* <MainPage/> */}
-      <AddDayContextProvider><AddDayPage/></AddDayContextProvider>
+      <MainPage/>
+      {/* <AddDayContextProvider><AddDayPage/></AddDayContextProvider> */}
     </LocalizationProvider>
   )
 }

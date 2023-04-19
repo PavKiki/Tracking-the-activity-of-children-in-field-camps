@@ -19,5 +19,4 @@ export interface IActivityToAdd {
     description: string;
     startAt: Moment | null;
     endAt: Moment | null;
-    timetableId: number;
 }
