@@ -20,3 +20,7 @@ fun TimetableEntity.toDto(): TimetableDto {
     val formatter = DateTimeFormatter.ofPattern("EEEE - dd/MM/yy")
     return TimetableDto(this.id, this.date.format(formatter))
 }
+
+fun TimetableEntity.addActivity(activity: ActivityEntity) {
+    activities = activities + activity
+}

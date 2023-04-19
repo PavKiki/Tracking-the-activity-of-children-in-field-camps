@@ -2,13 +2,10 @@ package com.diploma.langPlus.controller
 
 import com.diploma.langPlus.dto.ActivityDto
 import com.diploma.langPlus.entity.toDto
+import com.diploma.langPlus.exception.TimetableNotFound
 import com.diploma.langPlus.service.ActivityService
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @CrossOrigin
@@ -20,5 +17,18 @@ class ActivityController(val activityService: ActivityService) {
     @GetMapping("/get")
     fun getByTimetableIdSortByTime(@RequestParam("id") timetableId: Int): List<ActivityDto> {
         return activityService.getByTimetableIdSortByTime(timetableId).map { it.toDto() }
+    }
+
+    @PostMapping("/add")
+    fun addActivityToTimetable(
+        @RequestBody activityDto: ActivityDto
+    ): ResponseEntity<String> {
+        try {
+            activityService.addActivity(activityDto)
+            return ResponseEntity.ok("Активность успешно добавлена.")
+        }
+        catch (e: TimetableNotFound) {
+            return ResponseEntity.badRequest().body(e.message)
+        }
     }
 }

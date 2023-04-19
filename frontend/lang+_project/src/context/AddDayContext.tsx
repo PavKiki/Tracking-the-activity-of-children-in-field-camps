@@ -24,16 +24,16 @@ export const AddDayContext = createContext<IAddDayContext>({
 
 export const AddDayContextProvider = ({children}: {children: React.ReactNode}) => {
     const [activitiesToAdd, setActivitiesToAdd] = useState<IActivityToAdd[]>([
-        {description: "вейки вейки", title: "Wake up!", startAt: moment("8:15", "HH:mm"), endAt: moment("8:30", "HH:mm")},
-        {description: "все станем качками", title: "Morning exercises", startAt: moment("8:30", "HH:mm"), endAt: moment("9:00", "HH:mm")},
-        {description: "ну жрём", title: "Breakfast", startAt: moment("9:00", "HH:mm"), endAt: moment("9:45", "HH:mm")},
-        {description: "слушаем че будет", title: "Program announcement", startAt: moment("9:45", "HH:mm"), endAt: moment("10:00", "HH:mm")}
+        {description: "вейки вейки", title: "Wake up!", startAt: moment("8:15", "HH:mm"), endAt: moment("8:30", "HH:mm"), timetableId: 0},
+        {description: "все станем качками", title: "Morning exercises", startAt: moment("8:30", "HH:mm"), endAt: moment("9:00", "HH:mm"), timetableId: 0},
+        {description: "ну жрём", title: "Breakfast", startAt: moment("9:00", "HH:mm"), endAt: moment("9:45", "HH:mm"), timetableId: 0},
+        {description: "слушаем че будет", title: "Program announcement", startAt: moment("9:45", "HH:mm"), endAt: moment("10:00", "HH:mm"), timetableId: 0}
     ])
 
     function addActivity() {
         let newArr: IActivityToAdd[]
-        if (activitiesToAdd.length !== 0) newArr = [...activitiesToAdd, {description: "", title: "", startAt: activitiesToAdd[activitiesToAdd.length - 1].endAt, endAt: null}]
-        else newArr = [...activitiesToAdd, {description: "", title: "", startAt: null, endAt: null}]
+        if (activitiesToAdd.length !== 0) newArr = [...activitiesToAdd, {description: "", title: "", startAt: activitiesToAdd[activitiesToAdd.length - 1].endAt, endAt: null, timetableId: 0}]
+        else newArr = [...activitiesToAdd, {description: "", title: "", startAt: null, endAt: null, timetableId: 0}]
         setActivitiesToAdd(newArr)
     }
 
