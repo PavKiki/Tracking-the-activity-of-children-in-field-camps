@@ -11,6 +11,7 @@
 
 .time-timetable-container {
     display: flex;
+    position: relative;
 }
 
 .time {

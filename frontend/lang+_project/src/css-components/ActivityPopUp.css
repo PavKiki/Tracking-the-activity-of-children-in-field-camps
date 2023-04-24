@@ -1,0 +1,39 @@
+.activity-pop-up {
+    font-family: 'Inter', sans-serif;
+    border: 6px solid #497cff;
+    border-radius: 32px;
+    min-width: 300px;
+    max-width: fit-content;
+    margin-left: 25%;
+    position: absolute;
+    background-color: white;
+}
+
+.title-time {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.title {
+    max-width: fit-content;
+    margin-left: 5%;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.time {
+    max-width: fit-content;
+    margin-right: 5%;
+    font-weight: 400;
+    font-size: 10px;
+}
+
+.description {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-weight: 300;
+    font-size: 15px;
+    margin-left: 5%;
+}
+

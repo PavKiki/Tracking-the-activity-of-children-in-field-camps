@@ -1,12 +1,13 @@
+
+import arrowRight from "../data/images/chevron_right_FILL0_wght400_GRAD0_opsz48.svg";
+import arrowLeft from "../data/images/chevron_left_FILL0_wght400_GRAD0_opsz48.svg";
+import '../css-components/MainPage.css';
+
 import { NavigationPanel } from "../components/common/NavigationPanel";
 import { Timetable } from "../components/main_page/Timetable";
 import { CurrentTimetable } from "../components/main_page/CurrentTimetable";
 import { useTimetables } from "../hooks/timetables";
-import arrowRight from "../data/images/chevron_right_FILL0_wght400_GRAD0_opsz48.svg"
-import arrowLeft from "../data/images/chevron_left_FILL0_wght400_GRAD0_opsz48.svg"
-import '../css-components/MainPage.css';
 import { useInitDays } from "../hooks/init_days";
-
 
 export function MainPage() {
     const { timetables, loading, error } = useTimetables()
@@ -15,7 +16,7 @@ export function MainPage() {
 
     return (
     <>
-        <NavigationPanel></NavigationPanel>
+        <NavigationPanel/>
         { loading && <div>Loading...</div>}
         { error && <div>{ error }</div>}
         <div className="timetables-view">

@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
-import { IActivityToAdd } from "../models";
+import { IActivity, IActivityToAdd, ITimetable } from "../models";
 import moment, { Moment } from "moment";
+import axios, { AxiosError } from "axios";
 
 interface IAddDayContext {
     currentDate: Moment | null
@@ -12,6 +13,7 @@ interface IAddDayContext {
     handleChangeStartAt: (time: Moment | null, i: number) => void
     handleChangeEndAt: (time: Moment | null, i: number) => void
     handleChangeDate: (date: Moment | null) => void
+    uploadTimetable: (date: Moment) => void
 }
 
 export const AddDayContext = createContext<IAddDayContext>({
@@ -23,7 +25,8 @@ export const AddDayContext = createContext<IAddDayContext>({
     handleChangeDescription: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => {},
     handleChangeStartAt: (time: Moment | null, i: number) => {},
     handleChangeEndAt: (time: Moment | null, i: number) => {},
-    handleChangeDate: (date: Moment | null) => {}
+    handleChangeDate: (date: Moment | null) => {},
+    uploadTimetable: (date: Moment) => {}
 })
 
 export const AddDayContextProvider = ({children}: {children: React.ReactNode}) => {
@@ -81,6 +84,41 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         setCurrentDate(date)
     }
 
+    async function uploadTimetable(date: Moment) {
+        try {
+            //можно добавить стэйт, который будет изменять кнопку
+            const timetableToUpload: ITimetable = { 
+                "id": 0,
+                "date": date.format("dddd - DD/MM/YY") 
+            }
+            const response = await axios.post("http://localhost:8080/api/v1/timetable/create", timetableToUpload)
+            const timetableId: number = response.data
+            activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity))
+        }
+        catch (err) {
+            const error = err as AxiosError
+            console.log(error.message)
+        }
+    }
+
+    async function uploadActivity(timetableId: number, activity: IActivityToAdd) {
+        try {
+            const activityToUpload: IActivity = {
+                "id": 0,
+                "title": activity.title,
+                "description": activity.description,
+                "startAt": activity.startAt!!.format("HH:mm"),
+                "endAt": activity.endAt!!.format("HH:mm"),
+                "timetableId": timetableId
+            }
+            const response = await axios.post("http://localhost:8080/api/v1/activity/add", activityToUpload)
+        }
+        catch (err) {
+            const error = err as AxiosError
+            console.log(error.message)
+        }
+    }
+
     const value = {
         currentDate,
         activitiesToAdd,
@@ -90,7 +128,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         handleChangeDescription,
         handleChangeStartAt,
         handleChangeEndAt,
-        handleChangeDate
+        handleChangeDate, 
+        uploadTimetable
     }
 
     return (
