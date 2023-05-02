@@ -15,6 +15,36 @@ export function useInitDays(timetables: ITimetable[]) {
         initDays(moment())
     }, [timetables])
 
+    function setDayInRange(index: number) {
+        setCurrentDay(timetables[index])
+        setCurrentIndex(index)
+        if (index + 1 < timetables.length) setNextDay(timetables[index + 1])
+        setNextIndex(index + 1)
+        if (index - 1 >= 0) setPreviousDay(timetables[index - 1])
+        setPreviousIndex(index - 1)
+    }
+
+    function findNearestDay(day: Moment) {
+        let min = Number.MAX_VALUE
+        let minIndex = -1
+        for (let i = 0; i < timetables.length; i++) {
+            const timetableDate = moment(timetables[i].date, "dddd - DD/MM/YY")
+            const difference = day.diff(timetableDate, "days")
+            if (difference < min) {
+                min = difference
+                minIndex = i
+            }
+            else break
+        }
+        setDayInRange(minIndex - 1)
+        // setCurrentDay(timetables[minIndex])
+        // setCurrentIndex(minIndex)
+        // if (minIndex + 1 < timetables.length) setNextDay(timetables[minIndex + 1])
+        // setNextIndex(minIndex + 1)
+        // if (minIndex - 1 >= 0) setPreviousDay(timetables[minIndex - 1])
+        // setPreviousIndex(minIndex - 1)
+    }
+
     function initDays(day: Moment) {
         if (timetables.length > 0) {
             if (day.isBefore(moment(timetables[0].date, "dddd - DD/MM/YY"), "days")) {
@@ -35,15 +65,17 @@ export function useInitDays(timetables: ITimetable[]) {
                 for (let i = 0; i < timetables.length; i++) {
                     const timetableDate = moment(timetables[i].date, "dddd - DD/MM/YY")
                     if (day.isSame(timetableDate, "day")) {
-                        setCurrentDay(timetables[i])
-                        setCurrentIndex(i)
-                        if (i + 1 < timetables.length) setNextDay(timetables[i + 1])
-                        setNextIndex(i + 1)
-                        if (i - 1 >= 0) setPreviousDay(timetables[i - 1])
-                        setPreviousIndex(i - 1)
-                        break
+                        setDayInRange(i)
+                        // setCurrentDay(timetables[i])
+                        // setCurrentIndex(i)
+                        // if (i + 1 < timetables.length) setNextDay(timetables[i + 1])
+                        // setNextIndex(i + 1)
+                        // if (i - 1 >= 0) setPreviousDay(timetables[i - 1])
+                        // setPreviousIndex(i - 1)
+                        return
                     }
                 }
+                findNearestDay(day)
             }
         }
     }

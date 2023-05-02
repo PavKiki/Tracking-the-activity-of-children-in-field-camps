@@ -21,7 +21,7 @@ export function MainPage() {
         { error && <div>{ error }</div>}
         <div className="timetables-view">
             <div className="previous-timetable">
-                { checkPreviousIndex() && <Timetable timetable={ previousDay!! } key={ previousDay!!.id }></Timetable> }
+                { checkPreviousIndex() && <Timetable timetable={ previousDay!! } key={ previousDay!!.id } isCurrentTimetable={ false }></Timetable> }
             </div>
             {currentDay &&
                 <div className="current-timetable">
@@ -31,7 +31,7 @@ export function MainPage() {
                 </div>
             }
             <div className="next-timetable">
-                { checkNextIndex() && <Timetable timetable={ nextDay!! } key={ nextDay!!.id }></Timetable> }
+                { checkNextIndex() && <Timetable timetable={ nextDay!! } key={ nextDay!!.id } isCurrentTimetable={ false }></Timetable> }
             </div>
         </div>
     </>

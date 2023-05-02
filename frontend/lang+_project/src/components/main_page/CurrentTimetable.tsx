@@ -25,7 +25,7 @@ export function CurrentTimetable({ timetable }: CurrentTimetableProps) {
                 <div className="time">
                     { times.map(time => <p>{ time }</p>) }
                 </div>
-                <Timetable timetable={ timetable }/>
+                <Timetable timetable={ timetable } isCurrentTimetable = { true }/>
                 { isHovering && activity && <ActivityPopUp activity = { activity }/> }
             </div>
         </div>

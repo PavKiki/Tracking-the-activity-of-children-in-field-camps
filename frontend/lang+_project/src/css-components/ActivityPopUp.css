@@ -4,9 +4,10 @@
     border-radius: 32px;
     min-width: 300px;
     max-width: fit-content;
-    margin-left: 25%;
+    margin-left: 75%;
     position: absolute;
     background-color: white;
+    z-index: 9;
 }
 
 .title-time {
