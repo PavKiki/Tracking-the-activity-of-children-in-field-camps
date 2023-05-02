@@ -26,7 +26,7 @@ export function NavigationPanel() {
     }
 
     return (
-    <div className="navigation-panel">
+    <nav className="navigation-panel">
         <div className="navigation-panel-logo">
             <img src={langLogo} alt="logo"></img>
         </div>
@@ -34,6 +34,6 @@ export function NavigationPanel() {
             <p>{ caption }</p>
             <img src={ logo } alt="icon"></img>
         </div>
-    </div>
+    </nav>
     );
 }

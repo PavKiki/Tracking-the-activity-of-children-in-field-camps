@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/v1/child")
 class ChildController(val childService: ChildService) {
     @GetMapping("/all")

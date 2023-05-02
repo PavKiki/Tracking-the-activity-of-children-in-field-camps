@@ -1,4 +1,3 @@
-
 import arrowRight from "../data/images/chevron_right_FILL0_wght400_GRAD0_opsz48.svg";
 import arrowLeft from "../data/images/chevron_left_FILL0_wght400_GRAD0_opsz48.svg";
 import '../css-components/MainPage.css';

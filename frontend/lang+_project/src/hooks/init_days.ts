@@ -37,12 +37,6 @@ export function useInitDays(timetables: ITimetable[]) {
             else break
         }
         setDayInRange(minIndex - 1)
-        // setCurrentDay(timetables[minIndex])
-        // setCurrentIndex(minIndex)
-        // if (minIndex + 1 < timetables.length) setNextDay(timetables[minIndex + 1])
-        // setNextIndex(minIndex + 1)
-        // if (minIndex - 1 >= 0) setPreviousDay(timetables[minIndex - 1])
-        // setPreviousIndex(minIndex - 1)
     }
 
     function initDays(day: Moment) {
@@ -66,12 +60,6 @@ export function useInitDays(timetables: ITimetable[]) {
                     const timetableDate = moment(timetables[i].date, "dddd - DD/MM/YY")
                     if (day.isSame(timetableDate, "day")) {
                         setDayInRange(i)
-                        // setCurrentDay(timetables[i])
-                        // setCurrentIndex(i)
-                        // if (i + 1 < timetables.length) setNextDay(timetables[i + 1])
-                        // setNextIndex(i + 1)
-                        // if (i - 1 >= 0) setPreviousDay(timetables[i - 1])
-                        // setPreviousIndex(i - 1)
                         return
                     }
                 }
