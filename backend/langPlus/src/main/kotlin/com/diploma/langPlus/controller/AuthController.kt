@@ -2,12 +2,14 @@ package com.diploma.langPlus.controller
 
 import com.diploma.langPlus.dto.LoginDto
 import com.diploma.langPlus.dto.RegisterDto
+import com.diploma.langPlus.entity.TokenEntity
 import com.diploma.langPlus.entity.UserEntity
 import com.diploma.langPlus.entity.toUserDto
 import com.diploma.langPlus.exception.EmailAlreadyRegistered
 import com.diploma.langPlus.exception.IncorrectPassword
 import com.diploma.langPlus.exception.UserDoesntExist
 import com.diploma.langPlus.exception.UsernameAlreadyRegistered
+import com.diploma.langPlus.security.TokenType
 import com.diploma.langPlus.service.AuthService
 import com.diploma.langPlus.service.UserService
 import jakarta.servlet.http.HttpServletResponse
@@ -68,9 +70,11 @@ class AuthController(
         @RequestBody loginDto: LoginDto,
     ): ResponseEntity<Any> {
         val user: UserEntity
+        val jwt: TokenEntity
         try {
             user = authService.findByEmailOrUsername(loginDto.login)
             authService.authenticateUser(user.username, loginDto.password)
+            jwt = authService.createAccessToken(user)
         }
         catch (e: UserDoesntExist) {
             return ResponseEntity.badRequest().body(e.message)
@@ -81,6 +85,6 @@ class AuthController(
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok(authService.createAccessToken(user))
+        return ResponseEntity.ok(jwt.token)
     }
 }

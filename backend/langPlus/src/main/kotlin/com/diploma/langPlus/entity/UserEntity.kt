@@ -20,7 +20,9 @@ class UserEntity(
     private val username: String,
     val email: String,
     @Enumerated(EnumType.STRING)
-    val role: Role
+    val role: Role,
+    @OneToMany(mappedBy = "user")
+    val tokens: MutableList<TokenEntity>
 ): UserDetails {
     private var password: String = ""
 

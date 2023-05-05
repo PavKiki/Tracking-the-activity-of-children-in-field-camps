@@ -7,14 +7,17 @@ import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.authentication.logout.LogoutHandler
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
     val jwtAuthFilter: JwtAuthFilter,
-    val authenticationProvider: AuthenticationProvider
+    val authenticationProvider: AuthenticationProvider,
+    val logoutHandler: LogoutHandler
 ) {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -34,6 +37,10 @@ class SecurityConfig(
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .logout()
+            .logoutUrl("/api/v1/logout")
+            .addLogoutHandler(logoutHandler)
+            .logoutSuccessHandler { request, response, authentication -> SecurityContextHolder.clearContext() }
 
         return http.build()
     }

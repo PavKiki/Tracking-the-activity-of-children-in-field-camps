@@ -2,13 +2,16 @@ package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.dto.LoginDto
 import com.diploma.langPlus.dto.RegisterDto
+import com.diploma.langPlus.entity.TokenEntity
 import com.diploma.langPlus.entity.UserEntity
 import com.diploma.langPlus.exception.EmailAlreadyRegistered
 import com.diploma.langPlus.exception.IncorrectPassword
 import com.diploma.langPlus.exception.UserDoesntExist
 import com.diploma.langPlus.exception.UsernameAlreadyRegistered
+import com.diploma.langPlus.repository.TokenRepository
 import com.diploma.langPlus.repository.UserRepository
 import com.diploma.langPlus.security.Role
+import com.diploma.langPlus.security.TokenType
 import com.diploma.langPlus.service.AuthService
 import com.diploma.langPlus.service.JwtService
 import io.jsonwebtoken.Jwts
@@ -29,7 +32,8 @@ class AuthServiceImpl(
     val userRepository: UserRepository,
     val passwordEncoder: PasswordEncoder,
     val jwtService: JwtService,
-    val authenticationManager: AuthenticationManager
+    val authenticationManager: AuthenticationManager,
+    val tokenRepository: TokenRepository
 ): AuthService {
     //if true => user with this email/username already exists
     override fun checkEmail(email: String) {
@@ -53,7 +57,8 @@ class AuthServiceImpl(
             registerDto.surname,
             registerDto.username,
             registerDto.email,
-            Role.ADMIN
+            Role.ADMIN,
+            mutableListOf()
         )
         newUser.setPassword(passwordEncoder.encode(registerDto.password))
         return userRepository.save(newUser)
@@ -68,5 +73,20 @@ class AuthServiceImpl(
         )
     }
 
-    override fun createAccessToken(user: UserEntity) = jwtService.generateToken(user, mapOf())
+    override fun createAccessToken(user: UserEntity): TokenEntity {
+        val jwt = jwtService.generateToken(user, mapOf())
+        val token = TokenEntity(0, jwt, TokenType.BEARER, false, false, user)
+        user.tokens.add(token)
+        revokeAllValidTokens(user)
+        return tokenRepository.save(token)
+    }
+
+    override fun revokeAllValidTokens(user: UserEntity) {
+        val validTokens = tokenRepository.findAllValidTokensByUserId(user.id)
+        validTokens.forEach {
+            it.revoked = true
+            it.expired = true
+        }
+        tokenRepository.saveAll(validTokens)
+    }
 }
