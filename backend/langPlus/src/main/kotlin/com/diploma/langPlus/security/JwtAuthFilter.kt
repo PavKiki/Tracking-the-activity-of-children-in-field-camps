@@ -8,13 +8,13 @@ import com.diploma.langPlus.service.JwtService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
-const val AUTHORIZATION = "Authorization"
 const val BEARER = "Bearer "
 
 @Component
@@ -28,7 +28,7 @@ class JwtAuthFilter(
         response: HttpServletResponse,
         filterChain: FilterChain,
     ) {
-        val authHeader = request.getHeader(AUTHORIZATION)
+        val authHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
         if (authHeader == null || !authHeader.startsWith(BEARER)) {
             filterChain.doFilter(request, response)
             return
@@ -41,7 +41,7 @@ class JwtAuthFilter(
                 val token = tokenRepository.findByToken(jwt)
                 return@run !(token == null || token.expired || token.revoked)
             }
-            if (jwtService.isTokenValid(jwt, userDetails as UserEntity) && isTokenValid) {
+            if (jwtService.isAccessTokenValid(jwt, userDetails as UserEntity) && isTokenValid) {
                 val authToken = UsernamePasswordAuthenticationToken(
                     userDetails,
                     null,

@@ -1,10 +1,10 @@
 package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.repository.TokenRepository
-import com.diploma.langPlus.security.AUTHORIZATION
 import com.diploma.langPlus.security.BEARER
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.stereotype.Service
@@ -18,7 +18,7 @@ class LogoutServiceImpl(
         response: HttpServletResponse?,
         authentication: Authentication?
     ) {
-        val authHeader = request?.getHeader(AUTHORIZATION)
+        val authHeader = request?.getHeader(HttpHeaders.AUTHORIZATION)
         if (authHeader == null || !authHeader.startsWith(BEARER)) {
             return
         }
