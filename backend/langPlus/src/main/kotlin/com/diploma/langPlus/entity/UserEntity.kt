@@ -2,7 +2,11 @@ package com.diploma.langPlus.entity
 
 import com.diploma.langPlus.dto.LoginDto
 import com.diploma.langPlus.dto.UserDto
+import com.diploma.langPlus.security.Role
 import jakarta.persistence.*
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Entity
@@ -10,17 +14,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Long,
     val name: String,
     val surname: String,
-    val username: String,
-    val email: String
-) {
-    var password: String = ""
-        set(value: String) {
-            val passwordEncoder = BCryptPasswordEncoder()
-            field = passwordEncoder.encode(value)
-        }
+    private val username: String,
+    val email: String,
+    @Enumerated(EnumType.STRING)
+    val role: Role
+): UserDetails {
+    private var password: String = ""
+
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        return mutableListOf(SimpleGrantedAuthority(role.name))
+    }
+
+    override fun getPassword(): String {
+        return password
+    }
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
+
+    override fun getUsername(): String = username
+
+    override fun isAccountNonExpired(): Boolean = true
+    override fun isAccountNonLocked(): Boolean = true
+    override fun isCredentialsNonExpired(): Boolean = true
+    override fun isEnabled(): Boolean = true
 }
 
 fun UserEntity.toUserDto(): UserDto = UserDto(name, surname, username, email)

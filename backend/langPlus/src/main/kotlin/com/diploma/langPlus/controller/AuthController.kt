@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1")
-class AuthController(val authService: AuthService, val userService: UserService) {
+@RequestMapping("/api/v1/auth")
+class AuthController(
+    val authService: AuthService,
+) {
     @PostMapping("register")
     fun registerUser(@RequestBody body: RegisterDto): ResponseEntity<Any> {
         try {
@@ -35,15 +37,40 @@ class AuthController(val authService: AuthService, val userService: UserService)
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok(userService.addUser(body).toUserDto())
+        return ResponseEntity.ok(authService.addUser(body).toUserDto())
     }
 
+//    @PostMapping("login")
+//    fun loginUser(
+//        @RequestBody loginDto: LoginDto,
+//        response: HttpServletResponse
+//    ): ResponseEntity<Any> {
+//        val user: UserEntity
+//        try {
+//            user = authService.findByEmailOrUsername(loginDto.login)
+//            authService.checkPasswords(loginDto.password, user.password)
+//        }
+//        catch (e: UserDoesntExist) {
+//            return ResponseEntity.badRequest().body(e.message)
+//        }
+//        catch (e: IncorrectPassword) {
+//            return ResponseEntity.badRequest().body(e.message)
+//        }
+//        catch (e: Exception) {
+//            return ResponseEntity.badRequest().body(e.message)
+//        }
+//        authService.setJwt(user.id.toString(), response)
+//        return ResponseEntity.ok("Success!")
+//    }
+
     @PostMapping("login")
-    fun loginUser(@RequestBody loginDto: LoginDto, response: HttpServletResponse): ResponseEntity<Any> {
+    fun loginUser(
+        @RequestBody loginDto: LoginDto,
+    ): ResponseEntity<Any> {
         val user: UserEntity
         try {
             user = authService.findByEmailOrUsername(loginDto.login)
-            authService.checkPasswords(loginDto.password, user.password)
+            authService.authenticateUser(user.username, loginDto.password)
         }
         catch (e: UserDoesntExist) {
             return ResponseEntity.badRequest().body(e.message)
@@ -54,7 +81,6 @@ class AuthController(val authService: AuthService, val userService: UserService)
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        authService.setJwt(user.id.toString(), response)
-        return ResponseEntity.ok("Success!")
+        return ResponseEntity.ok(authService.createAccessToken(user))
     }
 }

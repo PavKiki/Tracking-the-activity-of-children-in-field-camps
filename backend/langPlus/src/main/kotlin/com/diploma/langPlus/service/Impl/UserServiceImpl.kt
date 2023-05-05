@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserServiceImpl(val userRepository: UserRepository): UserService {
-    override fun addUser(registerDto: RegisterDto): UserEntity = userRepository.save(registerDto.toEntity())
+//    override fun addUser(registerDto: RegisterDto): UserEntity = userRepository.save(registerDto.toEntity())
 }
