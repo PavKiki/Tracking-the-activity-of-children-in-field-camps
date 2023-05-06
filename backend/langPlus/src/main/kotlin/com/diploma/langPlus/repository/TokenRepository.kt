@@ -1,6 +1,7 @@
 package com.diploma.langPlus.repository
 
 import com.diploma.langPlus.entity.TokenEntity
+import com.diploma.langPlus.security.TokenType
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
@@ -10,9 +11,12 @@ interface TokenRepository: CrudRepository<TokenEntity, Long> {
 
     @Query("""
         select t from TokenEntity t inner join UserEntity u on t.user.id = u.id
-        where u.id = :userId and (t.expired = false or t.revoked = false) and t.tokenType = "BEARER-ACCESS"
+        where u.id = :userId and (t.expired = false or t.revoked = false) and t.tokenType = :accessToken
     """)
-    fun findAllValidAccessTokensByUserId(@Param("userId") userId: Long): List<TokenEntity>
+    fun findAllValidAccessTokensByUserId(
+        @Param("userId") userId: Long,
+        @Param("accessToken") accessToken: TokenType
+    ): List<TokenEntity>
 
     @Query("""
         select t from TokenEntity t inner join UserEntity u on t.user.id = u.id

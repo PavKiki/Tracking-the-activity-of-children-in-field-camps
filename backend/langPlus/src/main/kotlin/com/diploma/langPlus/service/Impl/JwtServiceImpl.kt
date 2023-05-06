@@ -16,6 +16,8 @@ import java.util.Date
 
 const val accessTokenExpiration: Long = 1800000 //30 minutes
 const val refreshTokenExpiration: Long = 604800000 //7 days
+//const val accessTokenExpiration: Long = 10000 //10 seconds
+//const val refreshTokenExpiration: Long = 30000 //30 seconds
 const val TYPE = "type"
 @Service
 class JwtServiceImpl(

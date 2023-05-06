@@ -1,10 +1,9 @@
 package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.repository.TokenRepository
-import com.diploma.langPlus.security.BEARER
+import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.http.HttpHeaders
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.stereotype.Service
@@ -32,5 +31,13 @@ class LogoutServiceImpl(
                 tokenRepository.save(storedToken)
             }
         }
+
+        val jwtAccess = Cookie("jwt-access", "")
+        jwtAccess.path = "/api/v1"
+        jwtAccess.maxAge = 0
+        val jwtRefresh = Cookie("jwt-refresh", "")
+        jwtRefresh.maxAge = 0
+        response?.addCookie(jwtAccess)
+        response?.addCookie(jwtRefresh)
     }
 }

@@ -5,6 +5,7 @@ import com.diploma.langPlus.repository.TokenRepository
 import com.diploma.langPlus.service.AuthService
 import com.diploma.langPlus.service.CustomUserDetailsService
 import com.diploma.langPlus.service.JwtService
+import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -38,7 +39,15 @@ class JwtAuthFilter(
         if (jwtAccessCookie.size != 1) return
         val jwt = jwtAccessCookie[0].value
 
-        val username = jwtService.extractUsername(jwt)
+        val username: String
+        try {
+            username = jwtService.extractUsername(jwt)
+        }
+        catch (e: ExpiredJwtException) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         if (SecurityContextHolder.getContext().authentication == null) {
             val userDetails = userDetailsService.loadUserByUsername(username)
             if (jwtService.isAccessTokenValid(jwt, userDetails as UserEntity)) {

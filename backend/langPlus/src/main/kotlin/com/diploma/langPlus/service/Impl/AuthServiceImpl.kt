@@ -103,14 +103,14 @@ class AuthServiceImpl(
             tokenRepository.save(refreshToken)
             val cookieRefresh = Cookie("jwt-refresh", jwtRefreshToken)
             cookieRefresh.isHttpOnly = true
-            cookieRefresh.path = "/api/v1/auth/refresh-token"
+            cookieRefresh.path = "/api/v1/auth"
             response.addCookie(cookieRefresh)
         }
     }
 
     override fun revokeAllValidAccessTokens(user: UserEntity) {
         val validTokens = tokenRepository
-            .findAllValidAccessTokensByUserId(user.id)
+            .findAllValidAccessTokensByUserId(user.id, TokenType.BEARER_ACCESS)
         validTokens.forEach {
             it.revoked = true
             it.expired = true

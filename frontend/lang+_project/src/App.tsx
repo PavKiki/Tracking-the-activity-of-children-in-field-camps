@@ -10,8 +10,8 @@ import { ActivityPopUpContextProvider } from './context/ActivityPopUpContext';
 function App() {
   return (
     <LocalizationProvider dateAdapter = { AdapterMoment }>
-      <ActivityPopUpContextProvider><MainPage/></ActivityPopUpContextProvider>
-      {/* <AddDayContextProvider><AddDayPage/></AddDayContextProvider> */}
+      {/* <ActivityPopUpContextProvider><MainPage/></ActivityPopUpContextProvider> */}
+      <AddDayContextProvider><AddDayPage/></AddDayContextProvider>
     </LocalizationProvider>
   )
 }
