@@ -12,7 +12,9 @@ interface AuthService {
     fun findByEmailOrUsername(login: String): UserEntity
     fun addUser(registerDto: RegisterDto): UserEntity
     fun authenticateUser(username: String, password: String)
-    fun createTokens(user: UserEntity): AuthResponseDto
-    fun refreshToken(request: HttpServletRequest): AuthResponseDto
+    fun createTokens(user: UserEntity, response: HttpServletResponse)
+    fun refreshAccessToken(refreshToken: String?, response: HttpServletResponse)
     fun revokeAllValidTokens(user: UserEntity)
+    fun revokeAllValidAccessTokens(user: UserEntity)
+    fun refreshCookies(response: HttpServletResponse, user: UserEntity, refreshToken: String? = null)
 }

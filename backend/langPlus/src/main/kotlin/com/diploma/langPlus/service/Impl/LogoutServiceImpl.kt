@@ -18,16 +18,19 @@ class LogoutServiceImpl(
         response: HttpServletResponse?,
         authentication: Authentication?
     ) {
-        val authHeader = request?.getHeader(HttpHeaders.AUTHORIZATION)
-        if (authHeader == null || !authHeader.startsWith(BEARER)) {
-            return
-        }
-        val jwt = authHeader.substring(BEARER.length)
-        val storedToken = tokenRepository.findByToken(jwt)
-        if (storedToken != null) {
-            storedToken.expired = true
-            storedToken.revoked = true
-            tokenRepository.save(storedToken)
+        if (request?.cookies == null) return
+
+        val jwtCookies = request
+            .cookies
+            .filter { cookie -> cookie.name == "jwt-access" || cookie.name == "jwt-refresh" }
+        val storedJwt = jwtCookies
+            .map { cookie -> tokenRepository.findByToken(cookie.value) }
+        for (storedToken in storedJwt) {
+            if (storedToken != null) {
+                storedToken.expired = true
+                storedToken.revoked = true
+                tokenRepository.save(storedToken)
+            }
         }
     }
 }

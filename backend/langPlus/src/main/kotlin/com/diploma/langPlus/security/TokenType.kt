@@ -1,5 +1,6 @@
 package com.diploma.langPlus.security
 
 enum class TokenType {
-    BEARER
+    BEARER_ACCESS,
+    BEARER_REFRESH
 }

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.apache.coyote.Response
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CookieValue
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -45,13 +46,13 @@ class AuthController(
     @PostMapping("login")
     fun loginUser(
         @RequestBody loginDto: LoginDto,
+        response: HttpServletResponse
     ): ResponseEntity<Any> {
         val user: UserEntity
-        val response: AuthResponseDto
         try {
             user = authService.findByEmailOrUsername(loginDto.login)
             authService.authenticateUser(user.username, loginDto.password)
-            response = authService.createTokens(user)
+            authService.createTokens(user, response)
         }
         catch (e: UserDoesntExist) {
             return ResponseEntity.badRequest().body(e.message)
@@ -62,17 +63,17 @@ class AuthController(
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok("Success")
     }
 
     @PostMapping("refresh-token")
     fun refreshToken(
-        request: HttpServletRequest,
+        @CookieValue("jwt-refresh") refreshToken: String?,
+        response: HttpServletResponse
     ): ResponseEntity<Any>
     {
-        val response: AuthResponseDto
         try {
-            response = authService.refreshToken(request)
+            authService.refreshAccessToken(refreshToken, response)
         }
         catch(e: UserDoesntExist) {
             return ResponseEntity.badRequest().body(e.message)
@@ -80,6 +81,6 @@ class AuthController(
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok("Success")
     }
 }

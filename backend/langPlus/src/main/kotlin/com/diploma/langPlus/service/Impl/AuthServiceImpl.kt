@@ -14,6 +14,7 @@ import com.diploma.langPlus.security.Role
 import com.diploma.langPlus.security.TokenType
 import com.diploma.langPlus.service.AuthService
 import com.diploma.langPlus.service.JwtService
+import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders
@@ -30,7 +31,6 @@ class AuthServiceImpl(
     val authenticationManager: AuthenticationManager,
     val tokenRepository: TokenRepository
 ): AuthService {
-    //if true => user with this email/username already exists
     override fun checkEmail(email: String) {
         if (userRepository.findByEmail(email) != null) throw EmailAlreadyRegistered("User with email $email is already registered!")
     }
@@ -68,37 +68,58 @@ class AuthServiceImpl(
         )
     }
 
-    override fun createTokens(user: UserEntity): AuthResponseDto {
-        val jwtAccessToken = jwtService.generateAccessToken(user, mapOf(TYPE to ACCESS))
-        val jwtRefreshToken = jwtService.generateRefreshToken(user)
-        val token = TokenEntity(0, jwtAccessToken, TokenType.BEARER, false, false, user)
-        user.tokens.add(token)
+    override fun createTokens(user: UserEntity, response: HttpServletResponse) {
         revokeAllValidTokens(user)
-        tokenRepository.save(token)
-        return AuthResponseDto(jwtAccessToken, jwtRefreshToken)
+        refreshCookies(response, user)
     }
 
-    override fun refreshToken(request: HttpServletRequest): AuthResponseDto {
-        val authHeader = request.getHeader(HttpHeaders.AUTHORIZATION)
-        if (authHeader == null || !authHeader.startsWith(BEARER)) {
-            throw Exception("Invalid header!")
-        }
-        val refreshToken = authHeader.substring(BEARER.length)
+    override fun refreshAccessToken(refreshToken: String?, response: HttpServletResponse) {
+        if (refreshToken == null) throw Exception("Refresh token is missing!")
+
         val username = jwtService.extractUsername(refreshToken)
         val userDetails = userRepository.findByUsername(username)
             ?: throw UserDoesntExist("User with username $username doesn't exist!")
-        if (!jwtService.isRefreshTokenValid(refreshToken, userDetails)) throw Exception("Token is invalid!")
-        val accessToken = jwtService.generateAccessToken(userDetails, mapOf(TYPE to ACCESS))
-        val token = TokenEntity(0, accessToken, TokenType.BEARER, false, false, userDetails)
-        userDetails.tokens.add(token)
-        revokeAllValidTokens(userDetails)
-        tokenRepository.save(token)
 
-        return AuthResponseDto(accessToken, refreshToken)
+        if (!jwtService.isRefreshTokenValid(refreshToken, userDetails)) throw Exception("Token is invalid!")
+
+        revokeAllValidAccessTokens(userDetails)
+        refreshCookies(response, userDetails, refreshToken)
     }
 
+    override fun refreshCookies(response: HttpServletResponse, user: UserEntity, refreshToken: String?) {
+        val jwtAccessToken = jwtService.generateAccessToken(user, mapOf())
+        val accessToken = TokenEntity(0, jwtAccessToken, TokenType.BEARER_ACCESS, false, false, user)
+        user.tokens.add(accessToken)
+        tokenRepository.save(accessToken)
+        val cookieAccess = Cookie("jwt-access", jwtAccessToken)
+        cookieAccess.isHttpOnly = true
+        cookieAccess.path = "/api/v1"
+        response.addCookie(cookieAccess)
+
+        if (refreshToken == null) {
+            val jwtRefreshToken = jwtService.generateRefreshToken(user)
+            val refreshToken = TokenEntity(0, jwtRefreshToken, TokenType.BEARER_REFRESH, false, false, user)
+            user.tokens.add(refreshToken)
+            tokenRepository.save(refreshToken)
+            val cookieRefresh = Cookie("jwt-refresh", jwtRefreshToken)
+            cookieRefresh.isHttpOnly = true
+            cookieRefresh.path = "/api/v1/auth/refresh-token"
+            response.addCookie(cookieRefresh)
+        }
+    }
+
+    override fun revokeAllValidAccessTokens(user: UserEntity) {
+        val validTokens = tokenRepository
+            .findAllValidAccessTokensByUserId(user.id)
+        validTokens.forEach {
+            it.revoked = true
+            it.expired = true
+        }
+        tokenRepository.saveAll(validTokens)
+    }
     override fun revokeAllValidTokens(user: UserEntity) {
-        val validTokens = tokenRepository.findAllValidTokensByUserId(user.id)
+        val validTokens = tokenRepository
+            .findAllValidTokensByUserId(user.id)
         validTokens.forEach {
             it.revoked = true
             it.expired = true

@@ -10,6 +10,12 @@ interface TokenRepository: CrudRepository<TokenEntity, Long> {
 
     @Query("""
         select t from TokenEntity t inner join UserEntity u on t.user.id = u.id
+        where u.id = :userId and (t.expired = false or t.revoked = false) and t.tokenType = "BEARER-ACCESS"
+    """)
+    fun findAllValidAccessTokensByUserId(@Param("userId") userId: Long): List<TokenEntity>
+
+    @Query("""
+        select t from TokenEntity t inner join UserEntity u on t.user.id = u.id
         where u.id = :userId and (t.expired = false or t.revoked = false)
     """)
     fun findAllValidTokensByUserId(@Param("userId") userId: Long): List<TokenEntity>

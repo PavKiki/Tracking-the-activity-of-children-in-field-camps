@@ -1,6 +1,8 @@
 package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.entity.UserEntity
+import com.diploma.langPlus.repository.TokenRepository
+import com.diploma.langPlus.security.TokenType
 import com.diploma.langPlus.service.JwtService
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
@@ -14,11 +16,11 @@ import java.util.Date
 
 const val accessTokenExpiration: Long = 1800000 //30 minutes
 const val refreshTokenExpiration: Long = 604800000 //7 days
-const val ACCESS = "access"
-const val REFRESH = "refresh"
 const val TYPE = "type"
 @Service
-class JwtServiceImpl: JwtService {
+class JwtServiceImpl(
+    val tokenRepository: TokenRepository
+): JwtService {
     @Value("\${app.security.jwt.secret-key}")
     private lateinit var secretKey: String
     override fun extractUsername(token: String): String = extractClaim(token, Claims::getSubject)
@@ -53,22 +55,26 @@ class JwtServiceImpl: JwtService {
     }
 
     override fun generateAccessToken(userDetails: UserEntity, extraClaims: Map<String, Any>): String {
-        return buildToken(userDetails, extraClaims, accessTokenExpiration)
+        return buildToken(userDetails, mapOf(TYPE to TokenType.BEARER_ACCESS) + extraClaims, accessTokenExpiration)
     }
 
     override fun generateRefreshToken(userDetails: UserEntity): String {
-        return buildToken(userDetails, mapOf(TYPE to REFRESH), refreshTokenExpiration)
+        return buildToken(userDetails, mapOf(TYPE to TokenType.BEARER_REFRESH), refreshTokenExpiration)
     }
     override fun isTokenValid(token: String, userDetails: UserEntity): Boolean {
-        return userDetails.username == extractUsername(token) && !isTokenExpired(token)
+        val isTokenValid: Boolean = run {
+            val curToken = tokenRepository.findByToken(token)
+            return@run !(curToken == null || curToken.expired || curToken.revoked)
+        }
+        return userDetails.username == extractUsername(token) && isTokenValid
     }
 
     override fun isAccessTokenValid(token: String, userDetails: UserEntity): Boolean {
-        return isTokenValid(token, userDetails) && extractType(token) == ACCESS
+        return isTokenValid(token, userDetails) && extractType(token) == TokenType.BEARER_ACCESS.name
     }
 
     override fun isRefreshTokenValid(token: String, userDetails: UserEntity): Boolean {
-        return isTokenValid(token, userDetails) && extractType(token) == REFRESH
+        return isTokenValid(token, userDetails) && extractType(token) == TokenType.BEARER_REFRESH.name
     }
 
     override fun isTokenExpired(token: String): Boolean = extractExpiration(token).before(Date())
