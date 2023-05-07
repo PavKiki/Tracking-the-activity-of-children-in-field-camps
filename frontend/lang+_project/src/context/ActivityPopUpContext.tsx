@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { IActivity } from "../models";
+import { IActivity } from "models";
 
 interface IActivityPopUpContext {
     activity: IActivity | undefined

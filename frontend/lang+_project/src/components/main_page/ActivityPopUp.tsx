@@ -1,9 +1,9 @@
-import { IActivity } from "../../models";
-
-import "../../css-components/ActivityPopUp.css";
+import "css-components/ActivityPopUp.css";
 
 import { useContext } from "react";
-import { ActivityPopUpContext } from "../../context/ActivityPopUpContext";
+
+import { IActivity } from "models";
+import { ActivityPopUpContext } from "context/ActivityPopUpContext";
 
 interface ActivityPopUpProps {
     activity: IActivity

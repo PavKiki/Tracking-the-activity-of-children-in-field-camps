@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { ITimetable } from "../models";
+import { ITimetable } from "models";
 
 export function useTimetables() {
     const [timetables, setTimetables] = useState<ITimetable[]>([])

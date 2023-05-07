@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios"
 import { useEffect, useState } from "react"
-import { IActivity } from "../models"
+import { IActivity } from "models"
 
 export function useActivities(timetableId: number) {
     const [activities, setActivities] = useState<IActivity[]>([])
@@ -15,7 +15,10 @@ export function useActivities(timetableId: number) {
         try {
             setError("")
             setLoading(true)
-            const response = await axios.get<IActivity[]>("http://localhost:8080/api/v1/activity/get", { params: { id: timetableId } })
+            const response = await axios.get<IActivity[]>(
+                "http://localhost:8080/api/v1/activity/get", 
+                { params: { id: timetableId } }
+            )
             setActivities(response.data)
             setLoading(false)
         }

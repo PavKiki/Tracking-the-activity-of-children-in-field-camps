@@ -1,11 +1,11 @@
 import { useContext } from "react";
 
-import "../../css-components/CurrentTimetable.css";
+import "css-components/CurrentTimetable.css";
 
-import { ITimetable } from "../../models";
-import { Timetable } from "./Timetable";
-import { ActivityPopUpContext } from "../../context/ActivityPopUpContext";
-import { ActivityPopUp } from "./ActivityPopUp";
+import { ITimetable } from "models";
+import { Timetable } from "components/main_page/Timetable";
+import { ActivityPopUpContext } from "context/ActivityPopUpContext";
+import { ActivityPopUp } from "components/main_page/ActivityPopUp";
 
 interface CurrentTimetableProps {
     timetable: ITimetable;
@@ -23,7 +23,7 @@ export function CurrentTimetable({ timetable }: CurrentTimetableProps) {
             </div>
             <div className="time-timetable-container">
                 <div className="time">
-                    { times.map(time => <p>{ time }</p>) }
+                    { times.map(time => <p key={time}>{ time }</p>) }
                 </div>
                 <Timetable timetable={ timetable } isCurrentTimetable = { true }/>
                 { isHovering && activity && <ActivityPopUp activity = { activity }/> }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ITimetable } from "../models";
+import { ITimetable } from "models";
 import moment, { Moment } from "moment";
 
 export function useInitDays(timetables: ITimetable[]) {

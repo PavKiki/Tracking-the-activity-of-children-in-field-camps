@@ -1,11 +1,11 @@
 import { useContext } from "react";
 
-import { IActivity, ITimetable } from "../../models";
-import { useActivities } from "../../hooks/activities";
-import { Activity } from "./Activity";
-import { ActivityPopUpContext } from "../../context/ActivityPopUpContext";
+import { IActivity, ITimetable } from "models";
+import { useActivities } from "hooks/activities";
+import { Activity } from "components/main_page/Activity";
+import { ActivityPopUpContext } from "context/ActivityPopUpContext";
 
-import "../../css-components/Timetable.css";
+import "css-components/Timetable.css";
 
 interface TimetalbeProps {
     timetable: ITimetable

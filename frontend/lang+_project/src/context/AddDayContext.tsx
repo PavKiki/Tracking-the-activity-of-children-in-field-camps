@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { IActivity, IActivityToAdd, ITimetable } from "../models";
+import { IActivity, IActivityToAdd, ITimetable } from "models";
 import moment, { Moment } from "moment";
 import axios, { AxiosError } from "axios";
 
@@ -91,7 +91,13 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
                 "id": 0,
                 "date": date.format("dddd - DD/MM/YY") 
             }
-            const response = await axios.post("http://localhost:8080/api/v1/timetable/create", timetableToUpload)
+            const response = await axios.post(
+                "http://localhost:8080/api/v1/timetable/create", 
+                timetableToUpload,
+                {
+                    withCredentials: true,
+                }
+            )
             const timetableId: number = response.data
             activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity))
         }
@@ -111,7 +117,13 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
                 "endAt": activity.endAt!!.format("HH:mm"),
                 "timetableId": timetableId
             }
-            const response = await axios.post("http://localhost:8080/api/v1/activity/add", activityToUpload)
+            const response = await axios.post(
+                "http://localhost:8080/api/v1/activity/add", 
+                activityToUpload,
+                {
+                    withCredentials: true
+                }
+            )
         }
         catch (err) {
             const error = err as AxiosError

@@ -93,7 +93,8 @@ class AuthServiceImpl(
         tokenRepository.save(accessToken)
         val cookieAccess = Cookie("jwt-access", jwtAccessToken)
         cookieAccess.isHttpOnly = true
-        cookieAccess.path = "/api/v1"
+        //можно менять потом на /api/v1
+        cookieAccess.path = "/"
         response.addCookie(cookieAccess)
 
         if (refreshToken == null) {
@@ -103,7 +104,8 @@ class AuthServiceImpl(
             tokenRepository.save(refreshToken)
             val cookieRefresh = Cookie("jwt-refresh", jwtRefreshToken)
             cookieRefresh.isHttpOnly = true
-            cookieRefresh.path = "/api/v1/auth"
+            //можно менять потом на /api/v1/auth
+            cookieRefresh.path = "/"
             response.addCookie(cookieRefresh)
         }
     }

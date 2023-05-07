@@ -1,4 +1,4 @@
-.activity {
+.activity-to-add {
     display: flex;
     gap: 20px;
     width: 95vw;
@@ -8,23 +8,23 @@
     border-bottom: 1px solid #c4c4c4;
 }
 
-.time-picker {
+.activity-to-add .time-picker {
     position: relative;
     gap: 15px;
     margin-top: 20px;
     max-width: 6vw;
 }
 
-.name-description {
+.activity-to-add .name-description {
     width: 86vw;
     /* margin-right: 80px; */
 }
 
-.time-picker > div, .name-description > div {
+.activity-to-add .time-picker > div, .name-description > div {
     margin-top: 15px;
 }
 
-.delete-activity {
+.activity-to-add .delete-activity {
     position: relative;
     right: 0;
     width: 3vw;
@@ -37,13 +37,13 @@
     padding: 0;
 }
 
-.delete-activity img {
+.activity-to-add .delete-activity img {
     filter: invert(94%) sepia(0%) saturate(2307%) hue-rotate(43deg) brightness(96%) contrast(67%);
     height: 100%;
     width: 100%;
 }
 
-.delete-activity img:hover {
+.activity-to-add .delete-activity img:hover {
     filter: invert(0);
     cursor: pointer;
 }

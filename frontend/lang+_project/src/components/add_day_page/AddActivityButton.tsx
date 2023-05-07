@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { AddDayContext } from "../../context/AddDayContext";
+import { AddDayContext } from "context/AddDayContext";
 
-import addCircle from "../../data/images/add_circle_FILL1_wght700_GRAD0_opsz48.svg"
-import "../../css-components/AddActivityButton.css";
+import addCircle from "data/images/add_circle_FILL1_wght700_GRAD0_opsz48.svg"
+import "css-components/AddActivityButton.css";
 
 export function AddActivityButton() {
 

@@ -5,7 +5,7 @@
     justify-content: center;
 }
 
-.add-new-activity-button {
+.add-new-activity .add-new-activity-button {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -16,16 +16,16 @@
     border-radius: 40px;
 }
 
-.add-new-activity-button:hover {
+.add-new-activity .add-new-activity-button:hover {
     cursor: pointer;
     background-color: rgb(235, 235, 235);
 }
 
-.add-new-activity-button > img {
+.add-new-activity .add-new-activity-button > img {
     filter: invert(100%) sepia(13%) saturate(9%) hue-rotate(292deg) brightness(84%) contrast(80%);
 }
 
-.add-new-activity-button > p {
+.add-new-activity .add-new-activity-button > p {
     color: #c4c4c4;
     font-size: 24px;
     font-family: 'Inter', sans-serif;
