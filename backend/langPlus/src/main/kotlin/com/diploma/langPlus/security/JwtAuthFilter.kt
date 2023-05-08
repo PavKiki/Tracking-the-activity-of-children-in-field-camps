@@ -9,6 +9,7 @@ import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -23,6 +24,8 @@ class JwtAuthFilter(
     val jwtService: JwtService,
     val userDetailsService: CustomUserDetailsService,
 ): OncePerRequestFilter() {
+    @Value("\${app.security.jwt.access-token.path}")
+    private lateinit var accessPath: String
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -34,10 +37,16 @@ class JwtAuthFilter(
         }
 
         val jwtAccessCookie = request.cookies
-            .filter { it.name == "jwt-access" }
+            .find { it.name == "jwt-access"}
 
-        if (jwtAccessCookie.size != 1) return
-        val jwt = jwtAccessCookie[0].value
+        val jwt: String
+        if (jwtAccessCookie == null) {
+            filterChain.doFilter(request, response)
+            return
+        }
+        else {
+            jwt = jwtAccessCookie.value
+        }
 
         val username: String
         try {

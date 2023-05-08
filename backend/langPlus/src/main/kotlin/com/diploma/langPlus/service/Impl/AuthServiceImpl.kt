@@ -17,6 +17,7 @@ import com.diploma.langPlus.service.JwtService
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -31,18 +32,22 @@ class AuthServiceImpl(
     val authenticationManager: AuthenticationManager,
     val tokenRepository: TokenRepository
 ): AuthService {
+    @Value("\${app.security.jwt.access-token.path}")
+    private lateinit var accessPath: String
+    @Value("\${app.security.jwt.refresh-token.path}")
+    private lateinit var refreshPath: String
     override fun checkEmail(email: String) {
-        if (userRepository.findByEmail(email) != null) throw EmailAlreadyRegistered("User with email $email is already registered!")
+        if (userRepository.findByEmail(email) != null) throw EmailAlreadyRegistered("User with email \"$email\" is already registered!")
     }
     override fun checkUsername(username: String) {
-        if (userRepository.findByUsername(username) != null) throw UsernameAlreadyRegistered("User with username $username is already registered!")
+        if (userRepository.findByUsername(username) != null) throw UsernameAlreadyRegistered("User with username \"$username\" is already registered!")
     }
 
     override fun findByEmailOrUsername(login: String): UserEntity {
         val user: UserEntity? = userRepository.findByEmail(login)
             ?: userRepository.findByUsername(login)
         return user
-            ?: throw UserDoesntExist("User with email/username $login doesn't exist!")
+            ?: throw UserDoesntExist("User with email/username \"$login\" doesn't exist!")
     }
 
     override fun addUser(registerDto: RegisterDto): UserEntity {
@@ -78,7 +83,7 @@ class AuthServiceImpl(
 
         val username = jwtService.extractUsername(refreshToken)
         val userDetails = userRepository.findByUsername(username)
-            ?: throw UserDoesntExist("User with username $username doesn't exist!")
+            ?: throw UserDoesntExist("User with username \"$username\" doesn't exist!")
 
         if (!jwtService.isRefreshTokenValid(refreshToken, userDetails)) throw Exception("Token is invalid!")
 
@@ -94,7 +99,7 @@ class AuthServiceImpl(
         val cookieAccess = Cookie("jwt-access", jwtAccessToken)
         cookieAccess.isHttpOnly = true
         //можно менять потом на /api/v1
-        cookieAccess.path = "/"
+        cookieAccess.path = accessPath
         response.addCookie(cookieAccess)
 
         if (refreshToken == null) {
@@ -105,7 +110,7 @@ class AuthServiceImpl(
             val cookieRefresh = Cookie("jwt-refresh", jwtRefreshToken)
             cookieRefresh.isHttpOnly = true
             //можно менять потом на /api/v1/auth
-            cookieRefresh.path = "/"
+            cookieRefresh.path = refreshPath
             response.addCookie(cookieRefresh)
         }
     }

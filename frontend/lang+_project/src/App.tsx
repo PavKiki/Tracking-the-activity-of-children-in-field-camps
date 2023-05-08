@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -12,23 +12,50 @@ import { SignInPage } from "pages/SignInPage"
 import { AddDayContextProvider } from 'context/AddDayContext';
 import { ActivityPopUpContextProvider } from 'context/ActivityPopUpContext';
 
-import { NavigationPanel } from 'components/common/NavigationPanel';
+import { NavigationPanel } from 'components/navigation/NavigationPanel';
 import { SignUpPage } from 'pages/SignUpPage';
+import { UserContext } from 'context/UserContext';
+import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
+import { ProtectedRoute } from 'components/ProtectedRoute';
 
 function App() {
+  const { isAuthorized } = useContext(UserContext)
+
   return (
     <>
-      {/* <NavigationPanel/>
-      <ActivityPopUpContextProvider><MainPage/></ActivityPopUpContextProvider>
-      <AddDayContextProvider><AddDayPage/></AddDayContextProvider> */}
       <BrowserRouter>
         <LocalizationProvider dateAdapter = { AdapterMoment }>
-          <NavigationPanel/>
+          {isAuthorized ? <NavigationPanel/> : <NotAuthNavigationPanel/>}
           <Routes>
-            <Route path='/' element={<ActivityPopUpContextProvider><MainPage/></ActivityPopUpContextProvider>}/>
-            <Route path='/add-day' element={<AddDayContextProvider><AddDayPage/></AddDayContextProvider>}/>
-            <Route path="/login" element={ <SignInPage /> }/>
-            <Route path='/register' element= { <SignUpPage/> }/>
+            <Route 
+              path='/' 
+              element={
+                <ActivityPopUpContextProvider>
+                  <MainPage/>
+                </ActivityPopUpContextProvider>
+              }
+            />
+            <Route element={<ProtectedRoute isAllowed={isAuthorized} children={ null }/>}>
+              <Route 
+                path='/add-day' 
+                element={
+                    <AddDayContextProvider>
+                      <AddDayPage/>
+                    </AddDayContextProvider>
+                }
+              />
+            </Route>
+            <Route element={<ProtectedRoute isAllowed={!isAuthorized} children={ null }/>}>
+              <Route 
+                path="/login" 
+                element={ <SignInPage /> }
+              />
+              <Route 
+                path='/register' 
+                element= { <SignUpPage/> }
+              />
+            </Route>
+            <Route path='*' element={<div>404 not found</div>}/>
           </Routes>
         </LocalizationProvider>
       </BrowserRouter>

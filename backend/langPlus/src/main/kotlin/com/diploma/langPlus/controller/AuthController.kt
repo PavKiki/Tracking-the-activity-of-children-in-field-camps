@@ -30,6 +30,7 @@ class AuthController(
         try {
             authService.checkEmail(body.email)
             authService.checkUsername(body.username)
+            authService.addUser(body)
         }
         catch (e: EmailAlreadyRegistered) {
             return ResponseEntity.badRequest().body(e.message)
@@ -40,7 +41,7 @@ class AuthController(
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok(authService.addUser(body).toUserDto())
+        return ResponseEntity.ok("Successfully registered!")
     }
 
     @PostMapping("login")
@@ -63,7 +64,7 @@ class AuthController(
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
-        return ResponseEntity.ok("Success")
+        return ResponseEntity.ok(user.toUserDto())
     }
 
     @PostMapping("refresh-token")
