@@ -14,10 +14,6 @@ import org.springframework.stereotype.Service
 import java.security.Key
 import java.util.Date
 
-const val accessTokenExpiration: Long = 1800000 //30 minutes
-const val refreshTokenExpiration: Long = 604800000 //7 days
-//const val accessTokenExpiration: Long = 10000 //10 seconds
-//const val refreshTokenExpiration: Long = 30000 //30 seconds
 const val TYPE = "type"
 @Service
 class JwtServiceImpl(
@@ -25,6 +21,10 @@ class JwtServiceImpl(
 ): JwtService {
     @Value("\${app.security.jwt.secret-key}")
     private lateinit var secretKey: String
+    @Value("\${app.security.jwt.access-token.expiration}")
+    private lateinit var accessTokenExpiration: String
+    @Value("\${app.security.jwt.refresh-token.expiration}")
+    private lateinit var refreshTokenExpiration: String
     override fun extractUsername(token: String): String = extractClaim(token, Claims::getSubject)
 
     override fun extractType(token: String): String {
@@ -57,11 +57,19 @@ class JwtServiceImpl(
     }
 
     override fun generateAccessToken(userDetails: UserEntity, extraClaims: Map<String, Any>): String {
-        return buildToken(userDetails, mapOf(TYPE to TokenType.BEARER_ACCESS) + extraClaims, accessTokenExpiration)
+        return buildToken(
+            userDetails,
+            mapOf(TYPE to TokenType.BEARER_ACCESS) + extraClaims,
+            accessTokenExpiration.toLong()
+        )
     }
 
     override fun generateRefreshToken(userDetails: UserEntity): String {
-        return buildToken(userDetails, mapOf(TYPE to TokenType.BEARER_REFRESH), refreshTokenExpiration)
+        return buildToken(
+            userDetails,
+            mapOf(TYPE to TokenType.BEARER_REFRESH),
+            refreshTokenExpiration.toLong()
+        )
     }
     override fun isTokenValid(token: String, userDetails: UserEntity): Boolean {
         val isTokenValid: Boolean = run {

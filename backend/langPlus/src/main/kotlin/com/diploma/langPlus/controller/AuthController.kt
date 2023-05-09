@@ -9,10 +9,15 @@ import com.diploma.langPlus.exception.EmailAlreadyRegistered
 import com.diploma.langPlus.exception.IncorrectPassword
 import com.diploma.langPlus.exception.UserDoesntExist
 import com.diploma.langPlus.exception.UsernameAlreadyRegistered
+import com.diploma.langPlus.repository.TokenRepository
 import com.diploma.langPlus.service.AuthService
+import com.diploma.langPlus.service.Impl.LogoutServiceImpl
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.JwtException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.apache.coyote.Response
+import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -23,7 +28,7 @@ import org.springframework.web.bind.annotation.*
 )
 @RequestMapping("/api/v1/auth")
 class AuthController(
-    val authService: AuthService,
+    val authService: AuthService
 ) {
     @PostMapping("register")
     fun registerUser(@RequestBody body: RegisterDto): ResponseEntity<Any> {
@@ -79,6 +84,9 @@ class AuthController(
         catch(e: UserDoesntExist) {
             return ResponseEntity.badRequest().body(e.message)
         }
+        catch(e: ExpiredJwtException) {
+            return ResponseEntity.status(444).body("JWT refresh-token expired!")
+        }
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)
         }
@@ -92,6 +100,9 @@ class AuthController(
         try {
             val userDto = authService.findUserByAccessToken(accessToken)
             return ResponseEntity.ok(userDto)
+        }
+        catch (e: ExpiredJwtException) {
+            return ResponseEntity.status(401).body("JWT access-token expired!")
         }
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)

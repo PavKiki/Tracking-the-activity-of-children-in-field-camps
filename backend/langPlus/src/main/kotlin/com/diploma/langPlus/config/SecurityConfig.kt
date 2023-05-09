@@ -1,11 +1,10 @@
 package com.diploma.langPlus.config
 
 import com.diploma.langPlus.security.JwtAuthFilter
-import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.Ordered
 import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -14,8 +13,8 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
 import java.util.*
 
 
@@ -27,9 +26,19 @@ class SecurityConfig(
     val logoutHandler: LogoutHandler
 ) {
     @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("http://localhost:3000")
+        configuration.allowedMethods = listOf("*")
+        configuration.allowedHeaders = listOf("*")
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+    @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            //CORS killed here
             .cors()
             .and()
             .csrf()
@@ -53,6 +62,7 @@ class SecurityConfig(
             .logoutUrl("/api/v1/auth/logout")
             .addLogoutHandler(logoutHandler)
             .logoutSuccessHandler { request, response, authentication -> SecurityContextHolder.clearContext() }
+            .deleteCookies("jwt-access", "jwt-refresh")
 
         return http.build()
     }

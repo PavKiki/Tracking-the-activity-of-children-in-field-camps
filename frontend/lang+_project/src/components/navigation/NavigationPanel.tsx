@@ -4,7 +4,7 @@ import userLogo from 'data/images/person.svg'
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UserContext } from 'context/AuthContext'
-import { NavigationPopUp } from "components/navigation/NavigationPopUp"
+import { NavigationDropdown } from "components/navigation/NavigationDropdown"
 
 export function NavigationPanel() {
     const [isPopUpActive, setIsPopUpActive] = useState<boolean>(false)
@@ -12,16 +12,16 @@ export function NavigationPanel() {
     const { userInfo } = useContext(UserContext)
 
     return (
-        <nav className="navigation-panel">
+        <nav className="navigation-panel" >
             <Link to="/">
                 <div className="navigation-panel-logo">
                     <img src={langLogo} alt="logo"></img>
                 </div>
             </Link>
-            <div className="navigation-panel-account-info" onClick={ () => { setIsPopUpActive(true) } }>
+            <div className="navigation-panel-account-info" onClick={ () => { setIsPopUpActive(true) } } >
                 <p>{ userInfo?.username }</p>
                 <img src={ userLogo } alt="icon"></img>
-                { isPopUpActive && <NavigationPopUp/> }
+                { isPopUpActive && <NavigationDropdown setIsPopUpActive={setIsPopUpActive}/> }
             </div>
         </nav>
     );

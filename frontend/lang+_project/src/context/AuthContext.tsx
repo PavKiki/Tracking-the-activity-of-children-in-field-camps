@@ -1,6 +1,6 @@
-import { IUserInfo } from "models";
+import { ILogin, IUserInfo } from "models";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios from "api/axios";
+import api from "api/axios";
 
 interface IUserContext {
     userInfo: IUserInfo | null;
@@ -11,7 +11,7 @@ interface IUserContext {
 export const UserContext = createContext<IUserContext>({
     userInfo: null,
     auth: null,
-    setAuth: (auth: boolean | null) => {}
+    setAuth: (auth: boolean | null) => {},
 })
 
 export const useAuth = () => useContext(UserContext)
@@ -28,7 +28,7 @@ export const UserContextProvider = ({children}: {children: React.ReactNode}) => 
     }, [auth])
 
     async function isAuth() {
-        await axios.get(
+        await api.get(
             "auth/user",
             {
                 withCredentials: true
@@ -40,8 +40,6 @@ export const UserContextProvider = ({children}: {children: React.ReactNode}) => 
         })
         .catch (error => {
             console.error(error)
-            setUserInfo(null)
-            localStorage.removeItem("auth")
         })
     }
 

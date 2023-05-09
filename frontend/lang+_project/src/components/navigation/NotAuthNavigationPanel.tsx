@@ -1,10 +1,15 @@
 import 'css-components/NavigationPanel.css'
 import langLogo from 'data/images/logo_language.png'
 import signInLogo from 'data/images/login.svg'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export function NotAuthNavigationPanel() {
     const SIGN_IN: string = "Войти"
+
+    const showSignInButton = (location: string) => {
+        if (location === "/register" || location === "/login") return false
+        else return true
+    }
 
     return (
         <nav className="navigation-panel">
@@ -13,12 +18,12 @@ export function NotAuthNavigationPanel() {
                     <img src={langLogo} alt="logo"></img>
                 </div>
             </Link>
-            <Link style={{textDecoration: 'none'}} to="/login">
+            {showSignInButton(useLocation().pathname) && <Link style={{textDecoration: 'none'}} to="/login">
                 <div className="navigation-panel-account-info">
                     <p>{ SIGN_IN }</p>
                     <img src={ signInLogo } alt="icon"></img>
                 </div>
-            </Link>
+            </Link>}
         </nav>
     );
 }

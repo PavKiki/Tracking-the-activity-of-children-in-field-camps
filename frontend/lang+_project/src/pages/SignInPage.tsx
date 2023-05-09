@@ -11,8 +11,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ILogin } from 'models';
 import { useContext, useState } from 'react';
 import { UserContext } from 'context/AuthContext';
-import axios from 'api/axios';
 import { useNavigate } from 'react-router';
+import api from 'api/axios';
 
 const theme = createTheme();
 
@@ -21,7 +21,25 @@ export function SignInPage() {
     const [responseError, setResponseError] = useState<string>("")
 
     const navigate = useNavigate()
+
     const { setAuth } = useContext(UserContext)
+
+    async function signInRequest({user, setButton, setResponseError} : { user: ILogin, setButton: (title: string) => void, setResponseError: (title: string) => void }) {
+        await api
+            .post(
+                "auth/login", 
+                user, 
+                { withCredentials: true }
+            )
+            .then(() => {
+                setAuth(true)
+                navigate("/")
+            })
+            .catch(error => {
+                setResponseError(error.response.data)
+                setButton("Войти")
+            })
+    } 
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -34,24 +52,7 @@ export function SignInPage() {
         }
 
         setButton("Загрузка...")
-
-        await axios
-            .post(
-                "auth/login", 
-                userInfo, 
-                { withCredentials: true }
-            )
-            .then(response =>
-                {
-                    setAuth(true)
-                    navigate("/")
-                }
-
-            )
-            .catch(error => {
-                setResponseError(error.response.data)
-                setButton("Войти")
-            })
+        signInRequest({ user: userInfo, setButton, setResponseError })
     };
 
     return (

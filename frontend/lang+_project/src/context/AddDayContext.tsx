@@ -1,7 +1,8 @@
 import { createContext, useState } from "react";
 import { IActivity, IActivityToAdd, ITimetable } from "models";
 import moment, { Moment } from "moment";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import api from "api/axios";
 
 interface IAddDayContext {
     currentDate: Moment | null
@@ -14,6 +15,7 @@ interface IAddDayContext {
     handleChangeEndAt: (time: Moment | null, i: number) => void
     handleChangeDate: (date: Moment | null) => void
     uploadTimetable: (date: Moment) => void
+    redirect: boolean
 }
 
 export const AddDayContext = createContext<IAddDayContext>({
@@ -26,7 +28,8 @@ export const AddDayContext = createContext<IAddDayContext>({
     handleChangeStartAt: (time: Moment | null, i: number) => {},
     handleChangeEndAt: (time: Moment | null, i: number) => {},
     handleChangeDate: (date: Moment | null) => {},
-    uploadTimetable: (date: Moment) => {}
+    uploadTimetable: (date: Moment) => {},
+    redirect: false
 })
 
 export const AddDayContextProvider = ({children}: {children: React.ReactNode}) => {
@@ -38,6 +41,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         {description: "ну жрём", title: "Breakfast", startAt: moment("9:00", "HH:mm"), endAt: moment("9:45", "HH:mm")},
         {description: "слушаем че будет", title: "Program announcement", startAt: moment("9:45", "HH:mm"), endAt: moment("10:00", "HH:mm")}
     ])
+
+    const [redirect, setRedirect] = useState<boolean>(false)
 
     function addActivity() {
         let newArr: IActivityToAdd[]
@@ -91,8 +96,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
                 "id": 0,
                 "date": date.format("dddd - DD/MM/YY") 
             }
-            const response = await axios.post(
-                "http://localhost:8080/api/v1/timetable/create", 
+            const response = await api.post(
+                "timetable/create", 
                 timetableToUpload,
                 {
                     withCredentials: true,
@@ -104,6 +109,7 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         catch (err) {
             const error = err as AxiosError
             console.log(error.message)
+            setRedirect(error?.response?.status === 444)
         }
     }
 
@@ -117,8 +123,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
                 "endAt": activity.endAt!!.format("HH:mm"),
                 "timetableId": timetableId
             }
-            const response = await axios.post(
-                "http://localhost:8080/api/v1/activity/add", 
+            const response = await api.post(
+                "activity/add", 
                 activityToUpload,
                 {
                     withCredentials: true
@@ -128,6 +134,7 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         catch (err) {
             const error = err as AxiosError
             console.log(error.message)
+            setRedirect(error?.response?.status === 444)
         }
     }
 
@@ -141,7 +148,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         handleChangeStartAt,
         handleChangeEndAt,
         handleChangeDate, 
-        uploadTimetable
+        uploadTimetable,
+        redirect
     }
 
     return (

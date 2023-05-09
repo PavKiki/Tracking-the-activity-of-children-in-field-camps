@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IRegister } from 'models';
-import axios from 'axios';
+import api from 'api/axios';
 import { useState } from 'react';
 import { Navigate } from 'react-router';
 
@@ -37,7 +37,7 @@ export function SignUpPage() {
 
         setButton("Загрузка...")
 
-        const response = await axios
+        await api
             .post(
                 "http://localhost:8080/api/v1/auth/register", 
                 userInfo,

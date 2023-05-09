@@ -4,14 +4,20 @@ import com.diploma.langPlus.repository.TokenRepository
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.logout.LogoutHandler
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.CrossOrigin
 
 @Service
 class LogoutServiceImpl(
     val tokenRepository: TokenRepository
 ): LogoutHandler {
+    @Value("\${app.security.jwt.access-token.path}")
+    private lateinit var accessPath: String
+    @Value("\${app.security.jwt.refresh-token.path}")
+    private lateinit var refreshPath: String
     override fun logout(
         request: HttpServletRequest?,
         response: HttpServletResponse?,
@@ -33,9 +39,10 @@ class LogoutServiceImpl(
         }
 
         val jwtAccess = Cookie("jwt-access", "")
-        jwtAccess.path = "/api/v1"
+        jwtAccess.path = accessPath
         jwtAccess.maxAge = 0
         val jwtRefresh = Cookie("jwt-refresh", "")
+        jwtRefresh.path = refreshPath
         jwtRefresh.maxAge = 0
         response?.addCookie(jwtAccess)
         response?.addCookie(jwtRefresh)

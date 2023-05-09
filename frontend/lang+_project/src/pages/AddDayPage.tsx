@@ -6,9 +6,14 @@ import { AddActivityButton } from "components/add_day_page/AddActivityButton";
 import { AddDayContext } from "context/AddDayContext";
 
 import 'css-components/AddDayPage.css';
+import { Navigate } from 'react-router';
 
 export function AddDayPage() {
-    const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable } = useContext(AddDayContext)
+    const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect } = useContext(AddDayContext)
+
+    if (redirect) {
+        return <Navigate to="/"/>
+    }
 
     return (
         <>
