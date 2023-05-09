@@ -2,6 +2,7 @@ package com.diploma.langPlus.service
 
 import com.diploma.langPlus.dto.AuthResponseDto
 import com.diploma.langPlus.dto.RegisterDto
+import com.diploma.langPlus.dto.UserDto
 import com.diploma.langPlus.entity.UserEntity
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -17,4 +18,5 @@ interface AuthService {
     fun revokeAllValidTokens(user: UserEntity)
     fun revokeAllValidAccessTokens(user: UserEntity)
     fun refreshCookies(response: HttpServletResponse, user: UserEntity, refreshToken: String? = null)
+    fun findUserByAccessToken(accessToken: String?): UserDto
 }

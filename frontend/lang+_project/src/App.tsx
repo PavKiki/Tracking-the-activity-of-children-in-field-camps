@@ -14,18 +14,18 @@ import { ActivityPopUpContextProvider } from 'context/ActivityPopUpContext';
 
 import { NavigationPanel } from 'components/navigation/NavigationPanel';
 import { SignUpPage } from 'pages/SignUpPage';
-import { UserContext } from 'context/UserContext';
+import { useAuth } from 'context/AuthContext';
 import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
 import { ProtectedRoute } from 'components/ProtectedRoute';
 
 function App() {
-  const { isAuthorized } = useContext(UserContext)
+  const { auth } = useAuth()
 
   return (
     <>
       <BrowserRouter>
         <LocalizationProvider dateAdapter = { AdapterMoment }>
-          {isAuthorized ? <NavigationPanel/> : <NotAuthNavigationPanel/>}
+          {auth ? <NavigationPanel/> : <NotAuthNavigationPanel/>}
           <Routes>
             <Route 
               path='/' 
@@ -35,7 +35,7 @@ function App() {
                 </ActivityPopUpContextProvider>
               }
             />
-            <Route element={<ProtectedRoute isAllowed={isAuthorized} children={ null }/>}>
+            <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
               <Route 
                 path='/add-day' 
                 element={
@@ -45,7 +45,7 @@ function App() {
                 }
               />
             </Route>
-            <Route element={<ProtectedRoute isAllowed={!isAuthorized} children={ null }/>}>
+            <Route element={<ProtectedRoute isAllowed={ !auth } children={ null }/>}>
               <Route 
                 path="/login" 
                 element={ <SignInPage /> }

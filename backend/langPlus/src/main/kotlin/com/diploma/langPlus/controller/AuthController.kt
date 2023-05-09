@@ -84,4 +84,17 @@ class AuthController(
         }
         return ResponseEntity.ok("Success")
     }
+
+    @GetMapping("user")
+    fun getUser(
+        @CookieValue("jwt-access") accessToken: String?
+    ): ResponseEntity<Any> {
+        try {
+            val userDto = authService.findUserByAccessToken(accessToken)
+            return ResponseEntity.ok(userDto)
+        }
+        catch (e: Exception) {
+            return ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }

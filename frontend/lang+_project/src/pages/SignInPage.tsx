@@ -9,9 +9,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ILogin } from 'models';
-import axios from 'axios';
 import { useContext, useState } from 'react';
-import { UserContext } from 'context/UserContext';
+import { UserContext } from 'context/AuthContext';
+import axios from 'api/axios';
+import { useNavigate } from 'react-router';
 
 const theme = createTheme();
 
@@ -19,7 +20,8 @@ export function SignInPage() {
     const [button, setButton] = useState<string>("Войти")
     const [responseError, setResponseError] = useState<string>("")
 
-    const { setIsAuthorized, setUserInfo } = useContext(UserContext)
+    const navigate = useNavigate()
+    const { setAuth } = useContext(UserContext)
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -35,21 +37,20 @@ export function SignInPage() {
 
         await axios
             .post(
-                "http://localhost:8080/api/v1/auth/login", 
+                "auth/login", 
                 userInfo, 
                 { withCredentials: true }
             )
-            .then(
-                (response) => {
-                    localStorage.setItem("userInfo", JSON.stringify(response.data))
-                    setUserInfo(response.data)
-                    setIsAuthorized(true)
+            .then(response =>
+                {
+                    setAuth(true)
+                    navigate("/")
                 }
+
             )
             .catch(error => {
                 setResponseError(error.response.data)
                 setButton("Войти")
-                return
             })
     };
 

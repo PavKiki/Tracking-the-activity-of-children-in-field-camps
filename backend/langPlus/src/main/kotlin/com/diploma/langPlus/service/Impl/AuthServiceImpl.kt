@@ -2,8 +2,10 @@ package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.dto.AuthResponseDto
 import com.diploma.langPlus.dto.RegisterDto
+import com.diploma.langPlus.dto.UserDto
 import com.diploma.langPlus.entity.TokenEntity
 import com.diploma.langPlus.entity.UserEntity
+import com.diploma.langPlus.entity.toUserDto
 import com.diploma.langPlus.exception.EmailAlreadyRegistered
 import com.diploma.langPlus.exception.UserDoesntExist
 import com.diploma.langPlus.exception.UsernameAlreadyRegistered
@@ -132,5 +134,17 @@ class AuthServiceImpl(
             it.expired = true
         }
         tokenRepository.saveAll(validTokens)
+    }
+
+    override fun findUserByAccessToken(accessToken: String?): UserDto {
+        if (accessToken == null) throw Exception("Access token is missing!")
+
+        val username = jwtService.extractUsername(accessToken)
+        val userDetails = userRepository.findByUsername(username)
+            ?: throw UserDoesntExist("User with username \"$username\" doesn't exist!")
+
+        if (!jwtService.isAccessTokenValid(accessToken, userDetails)) throw Exception("Token is invalid!")
+
+        return userDetails.toUserDto()
     }
 }
