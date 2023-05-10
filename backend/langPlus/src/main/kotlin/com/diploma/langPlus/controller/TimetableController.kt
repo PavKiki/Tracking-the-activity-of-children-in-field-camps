@@ -26,12 +26,16 @@ class TimetableController (private val timetableService: TimetableService) {
     fun getAllSortByDate(): List<TimetableDto> = timetableService.getAllSortByDate().map { it.toDto() }
 
     @PostMapping("/create")
-    fun createTimetable(@RequestBody timetableDto: TimetableDto): ResponseEntity<String> {
+    fun createTimetable(@RequestBody timetableDto: TimetableDto): ResponseEntity<Any> {
         try {
-            return ResponseEntity.ok(timetableService.createTimetable(timetableDto).toString())
+            val timetableId = timetableService.createTimetable(timetableDto)
+            return ResponseEntity.ok(timetableId)
         }
         catch (e: DateAlreadyExists) {
-            return ResponseEntity.badRequest().body("Timetable with date ${timetableDto.date} already exists!")
+            return ResponseEntity.badRequest().body(e.message)
+        }
+        catch (e: Exception) {
+            return ResponseEntity.badRequest().body(e.message)
         }
     }
 }

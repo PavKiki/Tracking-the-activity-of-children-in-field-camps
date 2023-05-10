@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
-import { IActivity, IActivityToAdd, ITimetable } from "models";
+import { IActivity, IActivityToAdd, IModal, ITimetable } from "models";
 import moment, { Moment } from "moment";
-import { AxiosError } from "axios";
 import api from "api/axios";
 
 interface IAddDayContext {
@@ -14,7 +13,7 @@ interface IAddDayContext {
     handleChangeStartAt: (time: Moment | null, i: number) => void
     handleChangeEndAt: (time: Moment | null, i: number) => void
     handleChangeDate: (date: Moment | null) => void
-    uploadTimetable: (date: Moment) => void
+    uploadTimetable: (date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) => void
     redirect: boolean
 }
 
@@ -28,7 +27,7 @@ export const AddDayContext = createContext<IAddDayContext>({
     handleChangeStartAt: (time: Moment | null, i: number) => {},
     handleChangeEndAt: (time: Moment | null, i: number) => {},
     handleChangeDate: (date: Moment | null) => {},
-    uploadTimetable: (date: Moment) => {},
+    uploadTimetable: (date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) => {},
     redirect: false
 })
 
@@ -89,53 +88,73 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         setCurrentDate(date)
     }
 
-    async function uploadTimetable(date: Moment) {
-        try {
-            //можно добавить стэйт, который будет изменять кнопку
-            const timetableToUpload: ITimetable = { 
-                "id": 0,
-                "date": date.format("dddd - DD/MM/YY") 
-            }
-            const response = await api.post(
-                "timetable/create", 
-                timetableToUpload,
-                {
-                    withCredentials: true,
-                }
-            )
-            const timetableId: number = response.data
-            activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity))
-        }
-        catch (err) {
-            const error = err as AxiosError
-            console.log(error.message)
-            setRedirect(error?.response?.status === 444)
-        }
+    function handleModal(modal: IModal, setModal: (modal: IModal | null) => void) {
+        setModal(modal)
+        setTimeout(() => {
+            setModal(null)
+        }, 5000)
     }
 
-    async function uploadActivity(timetableId: number, activity: IActivityToAdd) {
-        try {
-            const activityToUpload: IActivity = {
-                "id": 0,
-                "title": activity.title,
-                "description": activity.description,
-                "startAt": activity.startAt!!.format("HH:mm"),
-                "endAt": activity.endAt!!.format("HH:mm"),
-                "timetableId": timetableId
+    async function uploadTimetable(date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) {
+        const timetableToUpload: ITimetable = { 
+            "id": 0,
+            "date": date.format("dddd - DD/MM/YY") 
+        }
+
+        setTitle("Loading...")
+        
+        await api.post(
+            "timetable/create", 
+            timetableToUpload,
+            {
+                withCredentials: true,
             }
-            const response = await api.post(
-                "activity/add", 
-                activityToUpload,
-                {
-                    withCredentials: true
-                }
+        )
+        .then(response => {
+            const timetableId: number = response.data
+            activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity, setTitle, setModal))
+            setTitle("Добавить")
+            handleModal(
+                {text: `Расписание на \"${date.format("DD/MM/YY")}\" успешно добавлено.`, style: { border: "dashed green 10px" }}, 
+                setModal
             )
-        }
-        catch (err) {
-            const error = err as AxiosError
-            console.log(error.message)
+        })
+        .catch (error => {
+            console.log(error)
+            handleModal(
+                {text: error?.response?.data, style: { border: "dashed red 10px" }},
+                setModal
+            )
+            setTitle("Добавить")
             setRedirect(error?.response?.status === 444)
+        })             
+    }
+
+    async function uploadActivity(timetableId: number, activity: IActivityToAdd, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) {
+        const activityToUpload: IActivity = {
+            "id": 0,
+            "title": activity.title,
+            "description": activity.description,
+            "startAt": activity.startAt!!.format("HH:mm"),
+            "endAt": activity.endAt!!.format("HH:mm"),
+            "timetableId": timetableId
         }
+        const response = await api.post(
+            "activity/add", 
+            activityToUpload,
+            {
+                withCredentials: true
+            }
+        )
+        .catch((error) => {
+            console.error(error)
+            handleModal(
+                {text: error?.response?.data, style: { border: "dashed red 10px" }},
+                setModal
+            )
+            setTitle("Добавить")
+            setRedirect(error?.response?.status === 444)
+        })
     }
 
     const value = {

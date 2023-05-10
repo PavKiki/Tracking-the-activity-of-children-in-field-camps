@@ -39,17 +39,17 @@ class AuthServiceImpl(
     @Value("\${app.security.jwt.refresh-token.path}")
     private lateinit var refreshPath: String
     override fun checkEmail(email: String) {
-        if (userRepository.findByEmail(email) != null) throw EmailAlreadyRegistered("User with email \"$email\" is already registered!")
+        if (userRepository.findByEmail(email) != null) throw EmailAlreadyRegistered("Пользователь с email \"$email\" уже зарегистрирован!")
     }
     override fun checkUsername(username: String) {
-        if (userRepository.findByUsername(username) != null) throw UsernameAlreadyRegistered("User with username \"$username\" is already registered!")
+        if (userRepository.findByUsername(username) != null) throw UsernameAlreadyRegistered("Пользователь с \"$username\" уже зарегистрирован!")
     }
 
     override fun findByEmailOrUsername(login: String): UserEntity {
         val user: UserEntity? = userRepository.findByEmail(login)
             ?: userRepository.findByUsername(login)
         return user
-            ?: throw UserDoesntExist("User with email/username \"$login\" doesn't exist!")
+            ?: throw UserDoesntExist("Пользователя с email/username \"$login\" не существует!")
     }
 
     override fun addUser(registerDto: RegisterDto): UserEntity {
@@ -85,7 +85,7 @@ class AuthServiceImpl(
 
         val username = jwtService.extractUsername(refreshToken)
         val userDetails = userRepository.findByUsername(username)
-            ?: throw UserDoesntExist("User with username \"$username\" doesn't exist!")
+            ?: throw UserDoesntExist("Пользователя с username \"$username\" не существует!")
 
         if (!jwtService.isRefreshTokenValid(refreshToken, userDetails)) throw Exception("Token is invalid!")
 
@@ -141,7 +141,7 @@ class AuthServiceImpl(
 
         val username = jwtService.extractUsername(accessToken)
         val userDetails = userRepository.findByUsername(username)
-            ?: throw UserDoesntExist("User with username \"$username\" doesn't exist!")
+            ?: throw UserDoesntExist("Пользователя с username \"$username\" не существует!")
 
         if (!jwtService.isAccessTokenValid(accessToken, userDetails)) throw Exception("Token is invalid!")
 

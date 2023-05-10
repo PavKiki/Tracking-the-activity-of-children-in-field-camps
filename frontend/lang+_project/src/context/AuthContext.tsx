@@ -40,6 +40,7 @@ export const UserContextProvider = ({children}: {children: React.ReactNode}) => 
         })
         .catch (error => {
             console.error(error)
+            localStorage.removeItem("auth")
         })
     }
 

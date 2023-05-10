@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse
 import org.apache.coyote.Response
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -65,6 +66,9 @@ class AuthController(
         }
         catch (e: IncorrectPassword) {
             return ResponseEntity.badRequest().body(e.message)
+        }
+        catch (e: BadCredentialsException) {
+            return ResponseEntity.badRequest().body("Введён неверный пароль!")
         }
         catch (e: Exception) {
             return ResponseEntity.badRequest().body(e.message)

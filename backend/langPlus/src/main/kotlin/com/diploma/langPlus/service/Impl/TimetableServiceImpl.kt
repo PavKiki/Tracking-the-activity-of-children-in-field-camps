@@ -14,7 +14,9 @@ class TimetableServiceImpl(private val timetableRepository: TimetableRepository)
     override fun getAllSortByDate(): List<TimetableEntity> = timetableRepository.findAllByOrderByDate().toList()
     override fun createTimetable(timetableDto: TimetableDto): Int {
         val entity = timetableDto.toEntity()
-        if (timetableRepository.findByDate(entity.date) != null) throw DateAlreadyExists("Timetable with this date already exists!")
+        if (timetableRepository.findByDate(entity.date) != null) {
+            throw DateAlreadyExists("Расписание на \"${entity.date}\" уже добавлено!")
+        }
         val newTimetable: TimetableEntity = timetableRepository.save(entity)
         return newTimetable.id
     }

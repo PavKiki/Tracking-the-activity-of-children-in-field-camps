@@ -40,3 +40,10 @@ export interface IUserInfo {
     username: string;
     email: string;
 }
+
+export interface IModal {
+    text: string;
+    style: {
+        border: string;
+    };
+}

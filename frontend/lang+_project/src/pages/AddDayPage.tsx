@@ -1,15 +1,19 @@
-import { useContext} from 'react';
+import { useContext, useState} from 'react';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import { ActivityToAdd } from "components/add_day_page/ActivityToAdd";
 import { AddActivityButton } from "components/add_day_page/AddActivityButton";
 import { AddDayContext } from "context/AddDayContext";
 
-import 'css-components/AddDayPage.css';
 import { Navigate } from 'react-router';
+import { IModal } from 'models';
+
+import 'css-components/AddDayPage.css';
 
 export function AddDayPage() {
     const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect } = useContext(AddDayContext)
+    const [button, setButton] = useState<string>("Добавить")
+    const [modal, setModal] = useState<IModal | null>(null)
 
     if (redirect) {
         return <Navigate to="/"/>
@@ -17,6 +21,9 @@ export function AddDayPage() {
 
     return (
         <>
+            {modal && <div className='add-day-modal' style={ modal.style }>
+                <p>{ modal.text }</p>
+            </div>}
             <div className="container-of-fields">
                 <div className="date-picker">
                     <DatePicker 
@@ -29,8 +36,8 @@ export function AddDayPage() {
                     { activitiesToAdd.map ( (activity, index) => <ActivityToAdd activity = { activity } index={ index } key={index}/> ) }
                 </div>
                 <AddActivityButton/>
-                <button className="add-timetable-button" onClick={ () => uploadTimetable(currentDate!!) }>
-                    <p>Добавить</p>
+                <button className="add-timetable-button" onClick={ () => uploadTimetable(currentDate!!, setButton, setModal) }>
+                    <p>{ button }</p>
                 </button>
             </div>
         </>
