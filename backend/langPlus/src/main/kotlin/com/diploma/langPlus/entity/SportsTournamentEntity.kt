@@ -14,4 +14,4 @@ class SportsTournamentEntity(
     var events: List<SportsEventEntity>
 )
 
-fun SportsTournamentEntity.toDto(): SportsTournamentDto = SportsTournamentDto(this.title)
+fun SportsTournamentEntity.toDto(): SportsTournamentDto = SportsTournamentDto(this.id, this.title)

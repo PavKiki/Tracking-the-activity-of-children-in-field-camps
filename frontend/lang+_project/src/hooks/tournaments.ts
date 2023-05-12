@@ -15,7 +15,7 @@ export function useSportsTournaments() {
     async function addTournament(setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void) {
         setButtonLoading()
         
-        const tournamentToUpload: ISportsTournament = { title: tournamentTitle }
+        const tournamentToUpload: ISportsTournament = { id: 0, title: tournamentTitle }
 
         await api.post(
             "sports/tournament/add",

@@ -1,9 +1,11 @@
 package com.diploma.langPlus.service.Impl
 
+import com.diploma.langPlus.dto.GridDto
 import com.diploma.langPlus.dto.SportsEventDto
 import com.diploma.langPlus.dto.SportsTournamentDto
 import com.diploma.langPlus.dto.toEntity
 import com.diploma.langPlus.entity.SportsEventEntity
+import com.diploma.langPlus.entity.TeamEntity
 import com.diploma.langPlus.entity.toDto
 import com.diploma.langPlus.exception.TeamNotFound
 import com.diploma.langPlus.repository.SportsEventRepository
@@ -32,7 +34,7 @@ class SportsServiceImpl(
             ?: throw TeamNotFound("Команды с названием ${dto.teamTwoName} не существует!")
 
         if (sportsEventRepository.findGame(team1, team2, sport) != null) {
-            throw Exception("Игра команды \"${team1.title}\" и \"${team2.title}\" в турнире \"${sport.title}\" уже добавлена!")
+            throw Exception("Игра команды \"${team1.title}\" и \"${team2.title}\" в турнире \"${sport.title}\" уже сыграна!")
         }
 
         //в дальнейшем удалить за ненадобностью
@@ -56,5 +58,48 @@ class SportsServiceImpl(
     override fun addTournament(dto: SportsTournamentDto) {
         if (sportsTournamentRepository.findByTitle(dto.title) != null) throw Exception("Турнир \"${dto.title}\" уже существует!")
         else sportsTournamentRepository.save(dto.toEntity())
+    }
+
+    override fun getGridBySport(tournamentId: Int): GridDto {
+        val sport = sportsTournamentRepository.findById(tournamentId.toLong())
+        if (sport.isEmpty) throw Exception("Турнира не существует!")
+
+        val teams = teamRepository.findAll().toList()
+        val grid: Array<Array<SportsEventDto?>> = Array(teams.size) { Array(teams.size) { null } }
+
+        for (i in 0..teams.lastIndex) {
+            for (j in i + 1..teams.lastIndex) {
+                val curEvent = sportsEventRepository.findGame(teams[i], teams[j], sport.get())
+                if (curEvent != null) {
+                    grid[i][j] = formSportsEventDtoByTeam(teams[i], curEvent)
+                    grid[j][i] = formSportsEventDtoByTeam(teams[j], curEvent)
+                }
+            }
+        }
+
+        return GridDto(teams.map { it.toDto() }, grid)
+    }
+
+    private fun formSportsEventDtoByTeam(team: TeamEntity, event: SportsEventEntity): SportsEventDto {
+        if (team == event.teamOne) {
+            return SportsEventDto(
+                event.teamOne.title,
+                event.teamTwo.title,
+                event.teamOnePoints,
+                event.teamTwoPoints,
+                event.date.toString(),
+                event.tournament.title
+            )
+        }
+        else {
+            return SportsEventDto(
+                event.teamTwo.title,
+                event.teamOne.title,
+                event.teamTwoPoints,
+                event.teamOnePoints,
+                event.date.toString(),
+                event.tournament.title
+            )
+        }
     }
 }

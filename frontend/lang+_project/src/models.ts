@@ -49,5 +49,24 @@ export interface IModal {
 }
 
 export interface ISportsTournament {
+    id: number;
     title: string;
+}
+
+export interface ISportsEvent {
+    teamOneName: string;
+    teamTwoName: string;
+    teamOnePoints: string;
+    teamTwoPoints: string;
+    date: string;
+    sportTitle: string;
+}
+
+export interface ITeam {
+    title: string;
+}
+
+export interface IGrid {
+    teams: ITeam[];
+    events: ISportsEvent[][];
 }

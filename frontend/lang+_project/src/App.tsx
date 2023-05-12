@@ -17,7 +17,7 @@ import { SignUpPage } from 'pages/SignUpPage';
 import { useAuth } from 'context/AuthContext';
 import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
 import { ProtectedRoute } from 'components/ProtectedRoute';
-import { TournamentGrid } from 'components/TournamentGrid';
+import { TournamentGridPage } from 'pages/TournamentGridPage';
 import { AddSportsTournamentPage } from 'pages/AddSportsTournamentPage';
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
             <Route 
               path='/grid' 
               element={
-                <TournamentGrid/>
+                <TournamentGridPage/>
               }
             />
             <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
