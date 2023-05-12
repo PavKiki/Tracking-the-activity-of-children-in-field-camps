@@ -1,14 +1,15 @@
-.add-new-activity {
+.add-new-something {
     width: 100%;
     margin-top: 20px;
     display: flex;
     justify-content: center;
 }
 
-.add-new-activity .add-new-activity-button {
+.add-new-something .add-new-something-button {
     display: flex;
     justify-content: center;
     text-align: center;
+    vertical-align: middle;
     border: 0;
     background-color: white;
     gap: 30px;
@@ -16,16 +17,17 @@
     border-radius: 40px;
 }
 
-.add-new-activity .add-new-activity-button:hover {
+.add-new-something .add-new-something-button:hover {
     cursor: pointer;
     background-color: rgb(235, 235, 235);
 }
 
-.add-new-activity .add-new-activity-button > img {
+.add-new-something .add-new-something-button > img {
     filter: invert(100%) sepia(13%) saturate(9%) hue-rotate(292deg) brightness(84%) contrast(80%);
+    margin: auto;
 }
 
-.add-new-activity .add-new-activity-button > p {
+.add-new-something .add-new-something-button > p {
     color: #c4c4c4;
     font-size: 24px;
     font-family: 'Inter', sans-serif;

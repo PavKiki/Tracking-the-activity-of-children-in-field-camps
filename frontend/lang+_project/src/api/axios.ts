@@ -2,8 +2,7 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8080/api/v1';
 
 const api = axios.create({
-    baseURL: BASE_URL,
-    withCredentials: true
+    baseURL: BASE_URL
 });
 
 api.interceptors.response.use(response => response, async error => {

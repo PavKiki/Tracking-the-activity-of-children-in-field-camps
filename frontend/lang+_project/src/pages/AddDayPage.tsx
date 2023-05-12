@@ -1,24 +1,25 @@
-import { useContext, useEffect, useState} from 'react';
+import { useContext } from 'react';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import { ActivityToAdd } from "components/add_day_page/ActivityToAdd";
-import { AddActivityButton } from "components/add_day_page/AddActivityButton";
 import { AddDayContext } from "context/AddDayContext";
 
 import { Navigate } from 'react-router';
-import { IModal } from 'models';
 
-import 'css-components/AddDayPage.css';
 import { useModal } from 'hooks/modal';
 import { ModalWindow } from 'components/ModalWindow';
-import { BlueAddButton } from 'components/BlueAddButton';
-import { useBlueAddButton } from 'hooks/blue-add-button';
+
+import { BlueUploadButton } from 'components/BlueUploadButton';
+import { useBlueUploadButton } from 'hooks/blue-upload-button';
+import { GrayAddButton } from 'components/GrayAddButton';
+
+import 'css-components/AddDayPage.css';
 
 export function AddDayPage() {
-    const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect } = useContext(AddDayContext)
+    const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect, addActivity } = useContext(AddDayContext)
 
     const { showModal, modal } = useModal()
-    const { button, setBlueButtonDefault, setBlueButtonLoading } = useBlueAddButton({defaultText: "Добавить"})
+    const { button, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
  
     if (redirect) {
         return <Navigate to="/"/>
@@ -38,10 +39,10 @@ export function AddDayPage() {
                 <div className="container-of-activities">
                     { activitiesToAdd.map ( (activity, index) => <ActivityToAdd activity = { activity } index={ index } key={index}/> ) }
                 </div>
-                <AddActivityButton/>
-                <BlueAddButton onClick={ () => uploadTimetable(currentDate!!, setBlueButtonLoading, setBlueButtonDefault, showModal) }>
+                <GrayAddButton onClick={ () => addActivity() }><p>Добавить мероприятие</p></GrayAddButton>
+                <BlueUploadButton onClick={ () => uploadTimetable(currentDate!!, setBlueButtonLoading, setBlueButtonDefault, showModal) }>
                     <p>{ button }</p>
-                </BlueAddButton>
+                </BlueUploadButton>
             </div>
         </>
     )

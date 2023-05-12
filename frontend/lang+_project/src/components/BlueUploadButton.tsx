@@ -1,8 +1,8 @@
-import "css-components/BlueAddButton.css"
+import "css-components/BlueUploadButton.css"
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export function BlueAddButton(props: ButtonProps): React.ReactElement<ButtonProps> {
+export function BlueUploadButton(props: ButtonProps): React.ReactElement<ButtonProps> {
     const { children, ...rest } = props;
     return (
         <button className="blue-add-button" {...rest}>

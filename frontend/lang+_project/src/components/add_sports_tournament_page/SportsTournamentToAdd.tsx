@@ -1,12 +1,21 @@
 import { TextField } from "@mui/material";
 
-export function SportsTournamentToAdd({setTournamentTitle, tournamentTitle}: {setTournamentTitle: (tournamentTitle: string) => void, tournamentTitle: string}) {
+interface ISportsTournamentToAdd {
+    setTournamentTitle: (tournamentTitle: string) => void;
+    tournamentTitle: string;
+}
+
+export function SportsTournamentToAdd(props : ISportsTournamentToAdd) {
     return (
-        <TextField 
-            label="Название нового турнира" 
-            variant="standard" 
-            value={ tournamentTitle }
-            onChange={ (event) => setTournamentTitle(event.target.value) }
-        />
+        <div className="tournament-title-text-field">
+            <TextField 
+                fullWidth
+                multiline 
+                rows="2" 
+                label="Название нового турнира" 
+                value={ props.tournamentTitle } 
+                onChange={ (event) => props.setTournamentTitle(event.target.value) }
+            />
+        </div>
     );
 }

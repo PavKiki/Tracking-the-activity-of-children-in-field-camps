@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export function useBlueAddButton({defaultText} : {defaultText: string}) {
+export function useBlueUploadButton({defaultText} : {defaultText: string}) {
     const [button, setButton] = useState<string>(defaultText)
 
     function setBlueButtonLoading() {
