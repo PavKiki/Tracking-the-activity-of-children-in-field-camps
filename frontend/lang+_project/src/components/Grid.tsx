@@ -14,16 +14,16 @@ export function Grid(props: IGridProps) {
     const actualGrid = grid?.events
 
     return (
-        <table>
+        <table className="sports-grid">
             {teams && actualGrid &&
                 <tbody>
                     { teams.map((team, i) => {
-                        return <GridLine teamName={ teams[i].title } teamEvents={ actualGrid[i] }/>
+                        return <GridLine teamName={ teams[i].title } teamEvents={ actualGrid[i]} lineIndex={ i }/>
                     }) }
                     <tr>
                         <th></th>
-                        {teams.map((team) => {
-                            return <th>{ team.title }</th>
+                        {teams.map((team, i) => {
+                            return <th key={ i }>{ team.title }</th>
                         })}
                     </tr>
                 </tbody>

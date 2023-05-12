@@ -1,12 +1,11 @@
 .grid-page-container {
-    position: relative;
+    width: 100%;
 }
 
 .head-switcher {
     margin-top: 4vh;
-    position: absolute;
-    left: 30vw;
-    right: 30vw;
+    margin-left: auto;
+    margin-right: auto;
     width: 40vw;
     display: flex;
     justify-content: space-between;
@@ -21,4 +20,26 @@
 
 .head-switcher > img {
     filter: invert(100%) sepia(13%) saturate(9%) hue-rotate(292deg) brightness(84%) contrast(80%);
+}
+
+.grid-page-container .sports-grid {
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sports-grid > table, td, th {
+    border: 1px solid;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+
+.sports-grid th {
+    height: 7vh;
+    width: 10vw;
+}
+
+.sports-grid td {
+    text-align: center;
 }

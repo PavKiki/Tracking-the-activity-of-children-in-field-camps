@@ -12,15 +12,17 @@ export function TournamentGridPage() {
     const [curIndex, setCurIndex] = useState<number>(0)    
 
     return (
-        <div className="grid-page-container">
-            {tournaments &&
+        <>
+        {tournaments &&
+            <div className="grid-page-container">
                 <div className="head-switcher">
                     {curIndex > 0 && <img src = { arrowLeft } onClick={ () => setCurIndex(curIndex - 1) } alt="arrow to change the tournament to the previous"/>}
                     <p>{ tournaments[curIndex]?.title }</p>
                     {curIndex < tournaments.length - 1 && <img src = { arrowRight } onClick={ () => setCurIndex(curIndex + 1) } alt="arrow to change the tournament to the next"/>}
                 </div>
-            }
-            {tournaments && <Grid tournament={ tournaments[curIndex] }/>}
-        </div>
+                <Grid tournament={ tournaments[curIndex] }/>
+            </div>
+        }
+        </>
     )
 }

@@ -56,8 +56,8 @@ export interface ISportsTournament {
 export interface ISportsEvent {
     teamOneName: string;
     teamTwoName: string;
-    teamOnePoints: string;
-    teamTwoPoints: string;
+    teamOnePoints: number;
+    teamTwoPoints: number;
     date: string;
     sportTitle: string;
 }
