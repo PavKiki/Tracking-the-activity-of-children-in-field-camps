@@ -1,4 +1,4 @@
-import { useContext, useState} from 'react';
+import { useContext, useEffect, useState} from 'react';
 
 import { DatePicker } from "@mui/x-date-pickers";
 import { ActivityToAdd } from "components/add_day_page/ActivityToAdd";
@@ -9,21 +9,24 @@ import { Navigate } from 'react-router';
 import { IModal } from 'models';
 
 import 'css-components/AddDayPage.css';
+import { useModal } from 'hooks/modal';
+import { ModalWindow } from 'components/ModalWindow';
+import { BlueAddButton } from 'components/BlueAddButton';
+import { useBlueAddButton } from 'hooks/blue-add-button';
 
 export function AddDayPage() {
     const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect } = useContext(AddDayContext)
-    const [button, setButton] = useState<string>("Добавить")
-    const [modal, setModal] = useState<IModal | null>(null)
 
+    const { showModal, modal } = useModal()
+    const { button, setBlueButtonDefault, setBlueButtonLoading } = useBlueAddButton({defaultText: "Добавить"})
+ 
     if (redirect) {
         return <Navigate to="/"/>
     }
 
     return (
         <>
-            {modal && <div className='add-day-modal' style={ modal.style }>
-                <p>{ modal.text }</p>
-            </div>}
+            <ModalWindow modal={modal}/>
             <div className="container-of-fields">
                 <div className="date-picker">
                     <DatePicker 
@@ -36,9 +39,9 @@ export function AddDayPage() {
                     { activitiesToAdd.map ( (activity, index) => <ActivityToAdd activity = { activity } index={ index } key={index}/> ) }
                 </div>
                 <AddActivityButton/>
-                <button className="add-timetable-button" onClick={ () => uploadTimetable(currentDate!!, setButton, setModal) }>
+                <BlueAddButton onClick={ () => uploadTimetable(currentDate!!, setBlueButtonLoading, setBlueButtonDefault, showModal) }>
                     <p>{ button }</p>
-                </button>
+                </BlueAddButton>
             </div>
         </>
     )

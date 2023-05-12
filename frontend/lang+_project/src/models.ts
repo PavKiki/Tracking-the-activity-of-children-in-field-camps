@@ -47,3 +47,7 @@ export interface IModal {
         border: string;
     };
 }
+
+export interface ISportsTournament {
+    title: string;
+}

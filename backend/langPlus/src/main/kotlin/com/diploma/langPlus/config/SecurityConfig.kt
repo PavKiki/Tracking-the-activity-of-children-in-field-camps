@@ -44,6 +44,7 @@ class SecurityConfig(
             .csrf()
             .disable()
             .authorizeHttpRequests()
+            //разрешенные всем api
             .requestMatchers(
                 "/api/v1/auth/**",
                 "/api/v1/activity/get",

@@ -2,7 +2,7 @@ package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.entity.UserEntity
 import com.diploma.langPlus.repository.TokenRepository
-import com.diploma.langPlus.security.TokenType
+import com.diploma.langPlus.enums.TokenType
 import com.diploma.langPlus.service.JwtService
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts

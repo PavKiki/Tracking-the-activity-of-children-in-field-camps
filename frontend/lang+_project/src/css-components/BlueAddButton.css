@@ -1,0 +1,22 @@
+.blue-add-button {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    background-color: #497cff;
+    width: fit-content;
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+}
+
+.blue-add-button > p {
+    color: white;
+    margin: 0px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.blue-add-button:hover {
+    cursor: pointer;
+    background-color: #365fc6;
+}

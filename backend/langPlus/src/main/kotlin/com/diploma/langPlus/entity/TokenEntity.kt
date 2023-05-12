@@ -1,6 +1,6 @@
 package com.diploma.langPlus.entity
 
-import com.diploma.langPlus.security.TokenType
+import com.diploma.langPlus.enums.TokenType
 import jakarta.persistence.*
 
 @Entity

@@ -1,0 +1,23 @@
+.modal {
+    position: fixed;
+    top: 42%;
+    bottom: 42%;
+    left: 32%;
+    right: 32%;
+
+    width: 36vw;
+    height: 16vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    z-index: 9;
+
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+}
+
+.modal > p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    margin: 20px;
+}

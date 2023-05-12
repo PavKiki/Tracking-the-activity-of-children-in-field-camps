@@ -86,13 +86,13 @@ class AuthController(
             authService.refreshAccessToken(refreshToken, response)
         }
         catch(e: UserDoesntExist) {
-            return ResponseEntity.badRequest().body(e.message)
+            return ResponseEntity.status(444).body(e.message)
         }
         catch(e: ExpiredJwtException) {
             return ResponseEntity.status(444).body("JWT refresh-token expired!")
         }
         catch (e: Exception) {
-            return ResponseEntity.badRequest().body(e.message)
+            return ResponseEntity.status(444).body(e.message)
         }
         return ResponseEntity.ok("Success")
     }

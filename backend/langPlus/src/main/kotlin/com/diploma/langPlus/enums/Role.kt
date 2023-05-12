@@ -1,4 +1,4 @@
-package com.diploma.langPlus.security
+package com.diploma.langPlus.enums
 
 enum class Role {
     USER,

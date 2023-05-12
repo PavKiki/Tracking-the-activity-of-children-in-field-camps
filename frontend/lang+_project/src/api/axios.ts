@@ -2,11 +2,13 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:8080/api/v1';
 
 const api = axios.create({
-    baseURL: BASE_URL
+    baseURL: BASE_URL,
+    withCredentials: true
 });
 
 api.interceptors.response.use(response => response, async error => {
-    if (error.response.status === 401 || error.response.status === 403) {
+    if ((error.response.status === 401 || error.response.status === 403) && !error.config.__isRetryRequest) {
+        error.config.__isRetryRequest = true
         const response = await api
             .post(
                 "auth/refresh-token", 

@@ -1,6 +1,5 @@
 package com.diploma.langPlus.service.Impl
 
-import com.diploma.langPlus.dto.AuthResponseDto
 import com.diploma.langPlus.dto.RegisterDto
 import com.diploma.langPlus.dto.UserDto
 import com.diploma.langPlus.entity.TokenEntity
@@ -11,16 +10,13 @@ import com.diploma.langPlus.exception.UserDoesntExist
 import com.diploma.langPlus.exception.UsernameAlreadyRegistered
 import com.diploma.langPlus.repository.TokenRepository
 import com.diploma.langPlus.repository.UserRepository
-import com.diploma.langPlus.security.BEARER
-import com.diploma.langPlus.security.Role
-import com.diploma.langPlus.security.TokenType
+import com.diploma.langPlus.enums.Role
+import com.diploma.langPlus.enums.TokenType
 import com.diploma.langPlus.service.AuthService
 import com.diploma.langPlus.service.JwtService
 import jakarta.servlet.http.Cookie
-import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder

@@ -17,6 +17,8 @@ import { SignUpPage } from 'pages/SignUpPage';
 import { useAuth } from 'context/AuthContext';
 import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
 import { ProtectedRoute } from 'components/ProtectedRoute';
+import { TournamentGrid } from 'components/TournamentGrid';
+import { AddSportsTournamentPage } from 'pages/AddSportsTournamentPage';
 
 function App() {
   const { auth } = useAuth()
@@ -35,6 +37,12 @@ function App() {
                 </ActivityPopUpContextProvider>
               }
             />
+            <Route 
+              path='/grid' 
+              element={
+                <TournamentGrid/>
+              }
+            />
             <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
               <Route 
                 path='/add-day' 
@@ -42,6 +50,12 @@ function App() {
                     <AddDayContextProvider>
                       <AddDayPage/>
                     </AddDayContextProvider>
+                }
+              />
+              <Route 
+                path='/add-sports' 
+                element={
+                    <AddSportsTournamentPage/>
                 }
               />
             </Route>

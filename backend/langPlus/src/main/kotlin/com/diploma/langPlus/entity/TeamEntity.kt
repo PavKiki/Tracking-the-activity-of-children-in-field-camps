@@ -11,7 +11,11 @@ class TeamEntity(
     val id: Int,
     val title: String,
     @OneToMany(mappedBy = "team")
-    var children: List<ChildEntity>
+    var children: List<ChildEntity>,
+    @OneToMany(mappedBy = "teamOne")
+    var sportEventsFirst: List<SportsEventEntity>,
+    @OneToMany(mappedBy = "teamTwo")
+    var sportEventsSecond: List<SportsEventEntity>
 )
 
 fun TeamEntity.toDto(): TeamDto = TeamDto(title)

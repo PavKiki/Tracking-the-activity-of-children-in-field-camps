@@ -4,16 +4,16 @@ import moment, { Moment } from "moment";
 import api from "api/axios";
 
 interface IAddDayContext {
-    currentDate: Moment | null
-    activitiesToAdd: IActivityToAdd[]
-    addActivity: () => void
-    deleteActivity: (i: number) => void
-    handleChangeTitle: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void
-    handleChangeDescription: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void
-    handleChangeStartAt: (time: Moment | null, i: number) => void
-    handleChangeEndAt: (time: Moment | null, i: number) => void
-    handleChangeDate: (date: Moment | null) => void
-    uploadTimetable: (date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) => void
+    currentDate: Moment | null;
+    activitiesToAdd: IActivityToAdd[];
+    addActivity: () => void;
+    deleteActivity: (i: number) => void;
+    handleChangeTitle: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
+    handleChangeDescription: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, i: number) => void;
+    handleChangeStartAt: (time: Moment | null, i: number) => void;
+    handleChangeEndAt: (time: Moment | null, i: number) => void;
+    handleChangeDate: (date: Moment | null) => void;
+    uploadTimetable: (date: Moment, setLoading: () => void, setDefault: () => void, showModal: (text: string, isError: boolean) => void) => void;
     redirect: boolean
 }
 
@@ -27,7 +27,7 @@ export const AddDayContext = createContext<IAddDayContext>({
     handleChangeStartAt: (time: Moment | null, i: number) => {},
     handleChangeEndAt: (time: Moment | null, i: number) => {},
     handleChangeDate: (date: Moment | null) => {},
-    uploadTimetable: (date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) => {},
+    uploadTimetable: (date: Moment, setLoading: () => void, setDefault: () => void, showModal: (text: string, isError: boolean) => void) => {},
     redirect: false
 })
 
@@ -88,20 +88,18 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         setCurrentDate(date)
     }
 
-    function handleModal(modal: IModal, setModal: (modal: IModal | null) => void) {
-        setModal(modal)
-        setTimeout(() => {
-            setModal(null)
-        }, 5000)
-    }
-
-    async function uploadTimetable(date: Moment, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) {
+    async function uploadTimetable(
+        date: Moment, 
+        setLoading: () => void, 
+        setDefault: () => void, 
+        showModal: (text: string, isError: boolean) => void
+    ) {
         const timetableToUpload: ITimetable = { 
             "id": 0,
             "date": date.format("dddd - DD/MM/YY") 
         }
 
-        setTitle("Loading...")
+        setLoading()
         
         await api.post(
             "timetable/create", 
@@ -112,25 +110,25 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         )
         .then(response => {
             const timetableId: number = response.data
-            activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity, setTitle, setModal))
-            setTitle("Добавить")
-            handleModal(
-                {text: `Расписание на \"${date.format("DD/MM/YY")}\" успешно добавлено.`, style: { border: "dashed green 10px" }}, 
-                setModal
-            )
+            activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity, setLoading, setDefault, showModal))
+            setDefault()
+            showModal(`Расписание на \"${date.format("DD/MM/YY")}\" успешно добавлено.`, false)
         })
         .catch (error => {
             console.log(error)
-            handleModal(
-                {text: error?.response?.data, style: { border: "dashed red 10px" }},
-                setModal
-            )
-            setTitle("Добавить")
+            showModal(error?.response?.data, true)
+            setDefault()
             setRedirect(error?.response?.status === 444)
         })             
     }
 
-    async function uploadActivity(timetableId: number, activity: IActivityToAdd, setTitle: (title: string) => void, setModal: (modal: IModal | null) => void) {
+    async function uploadActivity(
+        timetableId: number, 
+        activity: IActivityToAdd, 
+        setLoading: () => void, 
+        setDefault: () => void,
+        showModal: (text: string, isError: boolean) => void
+    ) {
         const activityToUpload: IActivity = {
             "id": 0,
             "title": activity.title,
@@ -148,11 +146,8 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
         )
         .catch((error) => {
             console.error(error)
-            handleModal(
-                {text: error?.response?.data, style: { border: "dashed red 10px" }},
-                setModal
-            )
-            setTitle("Добавить")
+            showModal(error?.response?.data, true)
+            setDefault()
             setRedirect(error?.response?.status === 444)
         })
     }

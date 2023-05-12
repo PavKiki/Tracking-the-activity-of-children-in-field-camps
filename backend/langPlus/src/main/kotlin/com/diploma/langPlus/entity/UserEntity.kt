@@ -1,13 +1,11 @@
 package com.diploma.langPlus.entity
 
-import com.diploma.langPlus.dto.LoginDto
 import com.diploma.langPlus.dto.UserDto
-import com.diploma.langPlus.security.Role
+import com.diploma.langPlus.enums.Role
 import jakarta.persistence.*
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Entity
 @Table(name="end_user")

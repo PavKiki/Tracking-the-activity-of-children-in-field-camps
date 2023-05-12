@@ -1,7 +1,7 @@
 package com.diploma.langPlus.repository
 
 import com.diploma.langPlus.entity.TokenEntity
-import com.diploma.langPlus.security.TokenType
+import com.diploma.langPlus.enums.TokenType
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param

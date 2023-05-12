@@ -13,19 +13,19 @@ export function useTimetables() {
     }, [])
 
     async function fetchTimetables() {      
-        try {
-            setError("")
-            setLoading(true)
-            const response = await api.get<ITimetable[]>("timetable/allbydate")
-            setTimetables(response.data)
-            setLoading(false)
-        }
-        catch (err: unknown) {
-            const error = err as AxiosError
-            setError(error.message)
-            console.log(error.message)
-            setLoading(false) 
-        }
+        setError("")
+        setLoading(true)
+        await api
+            .get<ITimetable[]>("timetable/allbydate")
+            .then(response => {
+                setTimetables(response.data)
+                setLoading(false)
+            })
+            .catch(error => {
+                setError(error.message)
+                console.log(error.message)
+                setLoading(false)
+            }) 
     }
 
     return { timetables, loading, error }
