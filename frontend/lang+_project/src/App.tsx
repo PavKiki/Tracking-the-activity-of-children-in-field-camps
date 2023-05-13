@@ -18,7 +18,7 @@ import { useAuth } from 'context/AuthContext';
 import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
 import { ProtectedRoute } from 'components/ProtectedRoute';
 import { TournamentGridPage } from 'pages/TournamentGridPage';
-import { AddSportsTournamentPage } from 'pages/AddSportsTournamentPage';
+import { AddSportsPage } from 'pages/AddSportsPage';
 
 function App() {
   const { auth } = useAuth()
@@ -55,7 +55,7 @@ function App() {
               <Route 
                 path='/add-sports' 
                 element={
-                    <AddSportsTournamentPage/>
+                    <AddSportsPage/>
                 }
               />
             </Route>

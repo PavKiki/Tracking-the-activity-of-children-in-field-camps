@@ -18,7 +18,6 @@ export function useGrid(props: IUseGridProps) {
             .get(
                 "/sports/getGrid", 
                 { 
-                    withCredentials: true,
                     params: {
                         id: props.tournament.id
                     }

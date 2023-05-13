@@ -18,10 +18,17 @@ export function NavigationPanel() {
                     <img src={langLogo} alt="logo"></img>
                 </div>
             </Link>
-            <div className="navigation-panel-account-info" onClick={ () => { setIsPopUpActive(true) } } >
-                <p>{ userInfo?.username }</p>
-                <img src={ userLogo } alt="icon"></img>
-                { isPopUpActive && <NavigationDropdown setIsPopUpActive={setIsPopUpActive}/> }
+            <div className='right-part-navigation'>
+                <Link to="/grid" style={{ textDecoration: "none" }}>
+                    <div className="nav-item">
+                        <p>Спорт</p>
+                    </div>
+                </Link>
+                <div className="navigation-panel-account-info" onClick={ () => { setIsPopUpActive(true) } } >
+                    <p>{ userInfo?.username }</p>
+                    <img src={ userLogo } alt="icon"></img>
+                    { isPopUpActive && <NavigationDropdown setIsPopUpActive={setIsPopUpActive}/> }
+                </div>
             </div>
         </nav>
     );

@@ -4,7 +4,7 @@ import arrowLeft from "data/images/chevron_left_FILL0_wght400_GRAD0_opsz48.svg";
 
 import { useSportsTournaments } from "hooks/tournaments"
 import { useState } from "react";
-import { Grid } from "components/Grid";
+import { Grid } from "components/grid_page/Grid";
 
 export function TournamentGridPage() {
 

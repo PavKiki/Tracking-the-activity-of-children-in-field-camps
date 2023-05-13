@@ -48,7 +48,9 @@ class SecurityConfig(
             .requestMatchers(
                 "/api/v1/auth/**",
                 "/api/v1/activity/get",
-                "/api/v1/timetable/allbydate"
+                "/api/v1/timetable/allbydate",
+                "/api/v1/sports/tournament/getAll",
+                "/api/v1/sports/getGrid"
             )
             .permitAll()
             .anyRequest()

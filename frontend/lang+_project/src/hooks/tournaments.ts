@@ -42,9 +42,6 @@ export function useSportsTournaments() {
         await api
             .get<ISportsTournament[]>(
                 "sports/tournament/getAll",
-                {
-                    withCredentials: true
-                }
             )
             .then((response) => {
                 setTournaments(response.data)
