@@ -44,7 +44,7 @@ export interface IUserInfo {
 export interface IModal {
     text: string;
     style: {
-        border: string;
+        backgroundColor: string;
     };
 }
 

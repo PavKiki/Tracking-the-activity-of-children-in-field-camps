@@ -9,13 +9,13 @@ export function useModal() {
             {
                 text: text, 
                 style: { 
-                    border: isError ? "dashed red 10px" : "dashed green 10px" 
+                    backgroundColor: isError ? "#ffd8d8" : "#e0ffd8" 
                 }
             }
         )
         setTimeout(() => {
             setModal(null)
-        }, 5000)
+        }, 7000)
     }
 
     return { showModal, modal }

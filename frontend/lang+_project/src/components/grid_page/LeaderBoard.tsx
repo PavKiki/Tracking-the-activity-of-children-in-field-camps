@@ -18,7 +18,7 @@ export function LeaderBoard(props: ILeaderBoard) {
 
     return (
         <table className="sports-leaderboard">
-            {teamAndScore.length != 0 && 
+            {teamAndScore.length !== 0 && 
                 <tbody>
                     { teamAndScore.sort((a, b) => b.score.points - a.score.points).map((elem) => {
                         return (

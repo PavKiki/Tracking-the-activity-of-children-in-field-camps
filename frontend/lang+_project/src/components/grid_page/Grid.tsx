@@ -1,6 +1,5 @@
-import { useGrid } from "hooks/grid"
 import { GridLine } from "./GridLine"
-import { IGrid, ISportsTournament } from "models"
+import { IGrid } from "models"
 
 interface IGridProps {
     grid: IGrid;

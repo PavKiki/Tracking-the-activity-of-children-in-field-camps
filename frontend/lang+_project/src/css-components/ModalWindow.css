@@ -1,23 +1,21 @@
 .modal {
     position: fixed;
-    top: 42%;
-    bottom: 42%;
-    left: 32%;
-    right: 32%;
+    bottom: 0;
 
-    width: 36vw;
-    height: 16vh;
+    width: 100vw;
+    height: 8vh;
     overflow-y: hidden;
     overflow-x: hidden;
     z-index: 9;
 
-    background-color: rgb(255, 255, 255);
-    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .modal > p {
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 30px;
-    margin: 20px;
+    font-weight: 500;
+    font-size: 20px;
+    padding-right: 8vw;
 }

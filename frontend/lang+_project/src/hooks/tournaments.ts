@@ -1,4 +1,4 @@
-import { IModal, ISportsTournament } from "models";
+import { ISportsTournament } from "models";
 import api from "api/axios";
 import { useEffect, useState } from "react";
 
