@@ -5,6 +5,8 @@
 .existing-tournaments-container {
     margin-left: 6vw;
     margin-top: 3vh;
+    margin-bottom: 3vh;
+    position: relative;
 }
 
 .existing-tournaments-container > p {
@@ -33,13 +35,17 @@
     font-family: 'Inter', sans-serif;
 }
 
+.existing-tournaments-container .blue-add-button {
+    position: static;
+    float: right;
+}
+
 .new-sports-tournament {
-    margin-left: 6vw;
     margin-bottom: 6vh;
 }
 
 .new-sports-tournament .add-new-something {
-    width: 30vw;
+    width: 40vw;
 }
 
 .new-sports-tournament .tournament-title-text-field {
@@ -62,4 +68,21 @@
 
 .new-sports-event .team1, .team2 {
     display: flex;
+}
+
+.new-sports-event .team1 {
+    margin-top: 3vh;
+    gap: 2vw;
+}
+
+.new-sports-event .team2 {
+    margin-top: 2vh;
+    gap: 2vw;
+}
+
+.new-sports-event .blue-add-button {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    position: static;
+    float: right;
 }

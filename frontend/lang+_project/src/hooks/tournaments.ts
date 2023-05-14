@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 export function useSportsTournaments() {
     const [tournaments, setTournaments] = useState<ISportsTournament[]>([])
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState("")
+    const [loadingTournaments, setLoadingTournaments] = useState(false)
+    const [errorTournaments, setErrorTournaments] = useState("")
     const [tournamentTitle, setTournamentTitle] = useState<string>("")
 
     useEffect( () => { 
@@ -36,8 +36,8 @@ export function useSportsTournaments() {
     }
 
     async function fetchTournaments() {      
-        setError("")
-        setLoading(true)
+        setErrorTournaments("")
+        setLoadingTournaments(true)
         
         await api
             .get<ISportsTournament[]>(
@@ -45,19 +45,19 @@ export function useSportsTournaments() {
             )
             .then((response) => {
                 setTournaments(response.data)
-                setLoading(false)
+                setLoadingTournaments(false)
             })
             .catch((error) => {
-                setError(error.message)
+                setErrorTournaments(error.message)
                 console.log(error.message)
-                setLoading(false) 
+                setLoadingTournaments(false) 
             })
     }
 
     return { 
         tournaments, 
-        loading, 
-        error, 
+        loadingTournaments, 
+        errorTournaments, 
         setTournamentTitle,
         tournamentTitle, 
         addTournament 

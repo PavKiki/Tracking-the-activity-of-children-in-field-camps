@@ -19,6 +19,7 @@ import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationP
 import { ProtectedRoute } from 'components/ProtectedRoute';
 import { TournamentGridPage } from 'pages/TournamentGridPage';
 import { AddSportsPage } from 'pages/AddSportsPage';
+import { AddSportsContextProvider } from 'context/AddSportsContext';
 
 function App() {
   const { auth } = useAuth()
@@ -55,7 +56,9 @@ function App() {
               <Route 
                 path='/add-sports' 
                 element={
-                    <AddSportsPage/>
+                    <AddSportsContextProvider>
+                      <AddSportsPage/>
+                    </AddSportsContextProvider>
                 }
               />
             </Route>
