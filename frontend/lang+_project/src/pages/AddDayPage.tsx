@@ -19,7 +19,7 @@ export function AddDayPage() {
     const { currentDate, handleChangeDate, activitiesToAdd, uploadTimetable, redirect, addActivity } = useContext(AddDayContext)
 
     const { showModal, modal } = useModal()
-    const { button, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
+    const { blueButton, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
  
     if (redirect) {
         return <Navigate to="/"/>
@@ -41,7 +41,7 @@ export function AddDayPage() {
                 </div>
                 <GrayAddButton onClick={ () => addActivity() }><p>Добавить мероприятие</p></GrayAddButton>
                 <BlueUploadButton onClick={ () => uploadTimetable(currentDate!!, setBlueButtonLoading, setBlueButtonDefault, showModal) }>
-                    <p>{ button }</p>
+                    <p>{ blueButton }</p>
                 </BlueUploadButton>
             </div>
         </>

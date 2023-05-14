@@ -1,15 +1,15 @@
 import { useState } from "react"
 
 export function useBlueUploadButton({defaultText} : {defaultText: string}) {
-    const [button, setButton] = useState<string>(defaultText)
+    const [blueButton, setBlueButton] = useState<string>(defaultText)
 
     function setBlueButtonLoading() {
-        setButton("Loading...")
+        setBlueButton("Loading...")
     }
     
     function setBlueButtonDefault() {
-        setButton(defaultText)
+        setBlueButton(defaultText)
     }
 
-    return { button, setBlueButtonLoading, setBlueButtonDefault }
+    return { blueButton, setBlueButtonLoading, setBlueButtonDefault }
 }

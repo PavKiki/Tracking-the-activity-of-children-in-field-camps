@@ -51,6 +51,16 @@ class SportsServiceImpl(
         sportsEventRepository.save(newEvent)
     }
 
+    override fun deleteEvent(t1: String, t2: String, s: String) {
+        val team1 = teamRepository.findByTitle(t1)
+            ?: throw TeamNotFound("Команды \"$t1\" не существует!")
+        val team2 = teamRepository.findByTitle(t2)
+            ?: throw TeamNotFound("Команды \"$t2\" не существует!")
+        val sport = sportsTournamentRepository.findByTitle(s)
+            ?: throw Exception("Турнира \"$s\" не существует!")
+        sportsEventRepository.customDeleteEvent(team1, team2, sport)
+    }
+
     override fun addTournament(dto: SportsTournamentDto) {
         if (sportsTournamentRepository.findByTitle(dto.title) != null) throw Exception("Турнир \"${dto.title}\" уже существует!")
         else sportsTournamentRepository.save(dto.toEntity())

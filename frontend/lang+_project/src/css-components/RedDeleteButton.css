@@ -1,0 +1,22 @@
+.red-delete-button {
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    background-color: #ff2424;
+    width: fit-content;
+    position: fixed;
+    right: 5%;
+    bottom: 5%;
+}
+
+.red-delete-button > p {
+    color: white;
+    margin: 0px;
+    font-size: 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.red-delete-button:hover {
+    cursor: pointer;
+    background-color: #d10000;
+}

@@ -7,7 +7,7 @@ import { AddSportsContext } from "context/AddSportsContext"
 
 export function SportsTournaments() {
     const [show, setShow] = useState<boolean>(false)
-    const { button, setBlueButtonLoading, setBlueButtonDefault } = useBlueUploadButton({defaultText: "Добавить"})
+    const { blueButton, setBlueButtonLoading, setBlueButtonDefault } = useBlueUploadButton({defaultText: "Добавить"})
     const { tournaments, tournamentTitle, setTournamentTitle, addTournament, showModal } = useContext(AddSportsContext)
     
     return (
@@ -23,7 +23,7 @@ export function SportsTournaments() {
                     <SportsTournamentToAdd setTournamentTitle={ setTournamentTitle } tournamentTitle={ tournamentTitle }></SportsTournamentToAdd>
                 }
                 </div>
-                { show && <BlueUploadButton onClick={ () => addTournament(setBlueButtonLoading, setBlueButtonDefault, showModal) }><p>{ button }</p></BlueUploadButton> }
+                { show && <BlueUploadButton onClick={ () => addTournament(setBlueButtonLoading, setBlueButtonDefault, showModal) }><p>{ blueButton }</p></BlueUploadButton> }
             </div>
         </>
     )
