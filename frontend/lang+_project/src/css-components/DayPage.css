@@ -1,0 +1,40 @@
+.delete-timetable-container {
+    margin-top: 2vh;
+    margin-left: 2vw;
+}
+
+.delete-timetable-container > p:first-of-type {
+    margin: 0;
+    margin-bottom: 4vh;
+    font-size: 40px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+.delete-timetable-container .field-button {
+    display: flex;
+    gap: 4vw;
+}
+
+.delete-timetable-container .field-button .red-delete-button {
+    position: static;
+}
+
+.container-of-fields {
+    margin-top: 4vh;
+    width: 100%;
+}
+
+.container-of-fields > p:first-of-type {
+    margin: 0;
+    margin-bottom: 4vh;
+    font-size: 40px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    margin-left: 2vw;
+}
+
+.container-of-fields .date-picker {
+    margin-top: 20px;
+    margin-left: 20px;
+}

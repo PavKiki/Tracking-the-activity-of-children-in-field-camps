@@ -12,7 +12,7 @@ class TimetableEntity (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
     val date: LocalDate,
-    @OneToMany(mappedBy = "timetable")
+    @OneToMany(mappedBy = "timetable", cascade = [CascadeType.REMOVE])
     var activities: List<ActivityEntity>
 )
 

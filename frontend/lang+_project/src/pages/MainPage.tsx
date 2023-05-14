@@ -11,7 +11,6 @@ import { Navigate } from "react-router";
 
 export function MainPage() {
     const { timetables, loading, error } = useTimetables()
-
     const { previousDay, currentDay, nextDay, checkPreviousIndex, checkNextIndex, leftShift, rightShift } = useInitDays(timetables)
 
     return (

@@ -18,20 +18,21 @@ export function NotAuthNavigationPanel() {
                     <img src={langLogo} alt="logo"></img>
                 </div>
             </Link>
+            {showSignInButton(useLocation().pathname) &&
             <div className='right-part-navigation'>
                 <Link to="/grid" style={{ textDecoration: "none" }}>
                     <div className="nav-item">
                         <p>Спорт</p>
                     </div>
                 </Link>
-                {showSignInButton(useLocation().pathname) && 
                 <Link style={{textDecoration: 'none'}} to="/login">
                     <div className="navigation-panel-account-info">
                         <p>{ SIGN_IN }</p>
                         <img src={ signInLogo } alt="icon"></img>
                     </div>
-                </Link>}
+                </Link>
             </div>
+            }
         </nav>
     );
 }

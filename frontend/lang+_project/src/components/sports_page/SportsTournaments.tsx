@@ -3,14 +3,14 @@ import { useBlueUploadButton } from "hooks/blue-upload-button"
 import { useContext, useState } from "react"
 import { SportsTournamentToAdd } from "./SportsTournamentToAdd"
 import { BlueUploadButton } from "components/BlueUploadButton"
-import { AddSportsContext } from "context/AddSportsContext"
+import { SportsContext } from "context/SportsContext"
 
 import closeIcon from "data/images/cancel_FILL0_wght400_GRAD0_opsz48.svg"
 
 export function SportsTournaments() {
     const [show, setShow] = useState<boolean>(false)
     const { blueButton, setBlueButtonLoading, setBlueButtonDefault } = useBlueUploadButton({defaultText: "Добавить"})
-    const { tournaments, tournamentTitle, setTournamentTitle, addTournament, showModal, deleteSportsTournament } = useContext(AddSportsContext)
+    const { tournaments, tournamentTitle, setTournamentTitle, addTournament, showModal, deleteSportsTournament } = useContext(SportsContext)
     
     return (
         <>

@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { BlueUploadButton } from "components/BlueUploadButton";
 import { RedDeleteButton } from "components/RedDeleteButton";
-import { AddSportsContext } from "context/AddSportsContext";
+import { SportsContext } from "context/SportsContext";
 import { useBlueUploadButton } from "hooks/blue-upload-button";
 import { useRedDeleteButton } from "hooks/red-delete-button";
 import moment from "moment";
@@ -9,7 +9,7 @@ import { useContext, useState } from "react";
 
 export function AddSportsGame() {
 
-    const { tournaments, teams, showModal, addSportsEvent, deleteSportsEvent } = useContext(AddSportsContext)
+    const { tournaments, teams, showModal, addSportsEvent, deleteSportsEvent } = useContext(SportsContext)
     const { blueButton, setBlueButtonLoading, setBlueButtonDefault } = useBlueUploadButton({defaultText: "Добавить"})
     const { redButton, setRedButtonLoading, setRedButtonDefault } = useRedDeleteButton({defaultText: "Удалить"})
 

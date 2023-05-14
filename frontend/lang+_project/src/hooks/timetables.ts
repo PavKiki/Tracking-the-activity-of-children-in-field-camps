@@ -7,10 +7,11 @@ export function useTimetables() {
     const [timetables, setTimetables] = useState<ITimetable[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [refresh, setRefresh] = useState<boolean | null>(null)
 
     useEffect( () => { 
         fetchTimetables()
-    }, [])
+    }, [refresh])
 
     async function fetchTimetables() {      
         setError("")
@@ -28,5 +29,5 @@ export function useTimetables() {
             }) 
     }
 
-    return { timetables, loading, error }
+    return { timetables, loading, error, refresh, setRefresh }
 }

@@ -5,7 +5,7 @@ import { useSportsTournaments } from "hooks/tournaments";
 import { IModal, ISportsEvent, ISportsTournament, ITeam } from "models";
 import { createContext } from "react";
 
-interface IAddSportsContext {
+interface ISportsContext {
     tournaments: ISportsTournament[];
     loadingTournaments: boolean;
     errorTournaments: string;
@@ -20,7 +20,7 @@ interface IAddSportsContext {
     deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => void;
 };
 
-export const AddSportsContext = createContext<IAddSportsContext>({
+export const SportsContext = createContext<ISportsContext>({
     tournaments: [],
     loadingTournaments: false,
     errorTournaments: "",
@@ -35,7 +35,7 @@ export const AddSportsContext = createContext<IAddSportsContext>({
     deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => {}
 });
 
-export const AddSportsContextProvider = ({children}: {children: React.ReactNode}) => {
+export const SportsContextProvider = ({children}: {children: React.ReactNode}) => {
     const { 
         tournaments, 
         loadingTournaments, 
@@ -145,6 +145,6 @@ export const AddSportsContextProvider = ({children}: {children: React.ReactNode}
     }
 
     return (
-        <AddSportsContext.Provider value={ value }>{ children }</AddSportsContext.Provider>
+        <SportsContext.Provider value={ value }>{ children }</SportsContext.Provider>
     )
 }

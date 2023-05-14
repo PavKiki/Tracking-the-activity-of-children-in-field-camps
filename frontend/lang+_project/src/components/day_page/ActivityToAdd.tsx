@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { TimePicker } from "@mui/x-date-pickers";
 import { TextField } from '@mui/material';
 import { IActivityToAdd } from "models";
-import { AddDayContext } from "context/AddDayContext";
+import { DayContext } from "context/DayContext";
 
 import closeIcon from "data/images/cancel_FILL0_wght400_GRAD0_opsz48.svg"
 import "css-components/ActivityToAdd.css";
@@ -14,7 +14,7 @@ interface ActivityToAddProps {
 }
 
 export function ActivityToAdd({activity, index}: ActivityToAddProps) {
-    const { deleteActivity, handleChangeTitle, handleChangeDescription, handleChangeStartAt, handleChangeEndAt } = useContext(AddDayContext)
+    const { deleteActivity, handleChangeTitle, handleChangeDescription, handleChangeStartAt, handleChangeEndAt } = useContext(DayContext)
 
     return (
         <div className="activity-to-add">

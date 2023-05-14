@@ -1,4 +1,3 @@
-import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -6,10 +5,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 
 import { MainPage } from 'pages/MainPage';
-import { AddDayPage } from 'pages/AddDayPage';
+import { DayPage } from 'pages/DayPage';
 import { SignInPage } from "pages/SignInPage"
 
-import { AddDayContextProvider } from 'context/AddDayContext';
+import { DayContextProvider } from 'context/DayContext';
 import { ActivityPopUpContextProvider } from 'context/ActivityPopUpContext';
 
 import { NavigationPanel } from 'components/navigation/NavigationPanel';
@@ -18,8 +17,8 @@ import { useAuth } from 'context/AuthContext';
 import { NotAuthNavigationPanel } from 'components/navigation/NotAuthNavigationPanel';
 import { ProtectedRoute } from 'components/ProtectedRoute';
 import { TournamentGridPage } from 'pages/TournamentGridPage';
-import { AddSportsPage } from 'pages/AddSportsPage';
-import { AddSportsContextProvider } from 'context/AddSportsContext';
+import { SportsPage } from 'pages/SportsPage';
+import { SportsContextProvider } from 'context/SportsContext';
 
 function App() {
   const { auth } = useAuth()
@@ -46,19 +45,19 @@ function App() {
             />
             <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
               <Route 
-                path='/add-day' 
+                path='/day' 
                 element={
-                    <AddDayContextProvider>
-                      <AddDayPage/>
-                    </AddDayContextProvider>
+                    <DayContextProvider>
+                      <DayPage/>
+                    </DayContextProvider>
                 }
               />
               <Route 
-                path='/add-sports' 
+                path='/sports' 
                 element={
-                    <AddSportsContextProvider>
-                      <AddSportsPage/>
-                    </AddSportsContextProvider>
+                    <SportsContextProvider>
+                      <SportsPage/>
+                    </SportsContextProvider>
                 }
               />
             </Route>

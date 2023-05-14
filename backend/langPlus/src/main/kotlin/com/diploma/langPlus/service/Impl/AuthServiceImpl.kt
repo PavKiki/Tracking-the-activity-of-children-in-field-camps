@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AuthServiceImpl(
@@ -89,6 +90,7 @@ class AuthServiceImpl(
         refreshCookies(response, userDetails, refreshToken)
     }
 
+    @Transactional
     override fun refreshCookies(response: HttpServletResponse, user: UserEntity, refreshToken: String?) {
         val jwtAccessToken = jwtService.generateAccessToken(user, mapOf())
         val accessToken = TokenEntity(0, jwtAccessToken, TokenType.BEARER_ACCESS, false, false, user)
@@ -96,7 +98,6 @@ class AuthServiceImpl(
         tokenRepository.save(accessToken)
         val cookieAccess = Cookie("jwt-access", jwtAccessToken)
         cookieAccess.isHttpOnly = true
-        //можно менять потом на /api/v1
         cookieAccess.path = accessPath
         response.addCookie(cookieAccess)
 
@@ -107,7 +108,6 @@ class AuthServiceImpl(
             tokenRepository.save(refreshToken)
             val cookieRefresh = Cookie("jwt-refresh", jwtRefreshToken)
             cookieRefresh.isHttpOnly = true
-            //можно менять потом на /api/v1/auth
             cookieRefresh.path = refreshPath
             response.addCookie(cookieRefresh)
         }

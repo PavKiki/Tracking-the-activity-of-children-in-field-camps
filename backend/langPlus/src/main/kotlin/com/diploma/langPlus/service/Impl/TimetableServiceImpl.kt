@@ -7,6 +7,8 @@ import com.diploma.langPlus.exception.DateAlreadyExists
 import com.diploma.langPlus.repository.TimetableRepository
 import com.diploma.langPlus.service.TimetableService
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Service
 class TimetableServiceImpl(private val timetableRepository: TimetableRepository): TimetableService {
@@ -19,5 +21,10 @@ class TimetableServiceImpl(private val timetableRepository: TimetableRepository)
         }
         val newTimetable: TimetableEntity = timetableRepository.save(entity)
         return newTimetable.id
+    }
+
+    override fun deleteTimetable(date: String) {
+        val formatter = DateTimeFormatter.ofPattern("EEEE - dd/MM/yy")
+        timetableRepository.deleteByDate(LocalDate.parse(date, formatter))
     }
 }

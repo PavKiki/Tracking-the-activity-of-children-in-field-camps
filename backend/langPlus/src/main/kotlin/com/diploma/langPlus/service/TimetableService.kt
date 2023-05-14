@@ -7,4 +7,5 @@ interface TimetableService {
     fun getAll(): List<TimetableEntity>
     fun getAllSortByDate(): List<TimetableEntity>
     fun createTimetable(timetableDto: TimetableDto): Int
+    fun deleteTimetable(date: String)
 }

@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
-import { IActivity, IActivityToAdd, IModal, ITimetable } from "models";
+import { IActivity, IActivityToAdd, ITimetable } from "models";
 import moment, { Moment } from "moment";
 import api from "api/axios";
 
-interface IAddDayContext {
+interface IDayContext {
     currentDate: Moment | null;
     activitiesToAdd: IActivityToAdd[];
     addActivity: () => void;
@@ -17,7 +17,7 @@ interface IAddDayContext {
     redirect: boolean
 }
 
-export const AddDayContext = createContext<IAddDayContext>({
+export const DayContext = createContext<IDayContext>({
     currentDate: null,
     activitiesToAdd: [],
     addActivity: () => {},
@@ -31,7 +31,7 @@ export const AddDayContext = createContext<IAddDayContext>({
     redirect: false
 })
 
-export const AddDayContextProvider = ({children}: {children: React.ReactNode}) => {
+export const DayContextProvider = ({children}: {children: React.ReactNode}) => {
     const [currentDate, setCurrentDate] = useState<Moment>(moment().add(1, 'day'))
     
     const [activitiesToAdd, setActivitiesToAdd] = useState<IActivityToAdd[]>([
@@ -112,7 +112,7 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
             const timetableId: number = response.data
             activitiesToAdd.forEach ((activity) => uploadActivity(timetableId, activity, setLoading, setDefault, showModal))
             setDefault()
-            showModal(`Расписание на \"${date.format("DD/MM/YY")}\" успешно добавлено.`, false)
+            showModal(`Расписание на "${date.format("DD/MM/YY")}" успешно добавлено.`, false)
         })
         .catch (error => {
             console.log(error)
@@ -167,6 +167,6 @@ export const AddDayContextProvider = ({children}: {children: React.ReactNode}) =
     }
 
     return (
-        <AddDayContext.Provider value = { value }> {children} </AddDayContext.Provider>
+        <DayContext.Provider value = { value }> {children} </DayContext.Provider>
     );
 }

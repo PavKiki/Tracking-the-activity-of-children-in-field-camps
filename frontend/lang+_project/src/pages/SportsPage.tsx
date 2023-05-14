@@ -1,14 +1,14 @@
-import "css-components/AddSportsPage.css";
+import "css-components/SportsPage.css";
 
 import { ModalWindow } from "components/ModalWindow";
 import { useContext } from "react";
-import { SportsTournaments } from "components/add_sports_tournament_page/SportsTournaments";
-import { AddSportsContext } from "context/AddSportsContext";
-import { AddSportsGame } from "components/add_sports_tournament_page/AddSportsGame";
+import { SportsTournaments } from "components/sports_page/SportsTournaments";
+import { SportsContext } from "context/SportsContext";
+import { AddSportsGame } from "components/sports_page/AddSportsGame";
 
-export function AddSportsPage() {
+export function SportsPage() {
 
-    const { modal, loadingTournaments, errorTournaments, tournaments, teams } = useContext(AddSportsContext)
+    const { modal, loadingTournaments, errorTournaments, tournaments, teams } = useContext(SportsContext)
 
     return (
         <>
