@@ -66,6 +66,10 @@ class SportsServiceImpl(
         else sportsTournamentRepository.save(dto.toEntity())
     }
 
+    override fun deleteTournament(s: String) {
+        sportsTournamentRepository.deleteByTitle(s)
+    }
+
     override fun getGridBySport(tournamentId: Int): GridDto {
         val sport = sportsTournamentRepository.findById(tournamentId.toLong())
         if (sport.isEmpty) throw Exception("Турнира не существует!")

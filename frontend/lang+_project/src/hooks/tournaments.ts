@@ -3,6 +3,7 @@ import api from "api/axios";
 import { useEffect, useState } from "react";
 
 export function useSportsTournaments() {
+    const [refreshTournaments, setRefreshTornaments] = useState<boolean>(false)
     const [tournaments, setTournaments] = useState<ISportsTournament[]>([])
     const [loadingTournaments, setLoadingTournaments] = useState(false)
     const [errorTournaments, setErrorTournaments] = useState("")
@@ -10,9 +11,14 @@ export function useSportsTournaments() {
 
     useEffect( () => { 
         fetchTournaments()
-    }, [])
+    }, [refreshTournaments])
 
-    async function addTournament(setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void) {
+    async function addTournament(
+            setButtonLoading: () => void, 
+            setButtonDefault: () => void, 
+            showModal: (text: string, isError: boolean) => void,
+            setShow: (show: boolean) => void
+        ) {
         setButtonLoading()
         
         const tournamentToUpload: ISportsTournament = { id: 0, title: tournamentTitle }
@@ -27,6 +33,8 @@ export function useSportsTournaments() {
         .then(response => {
             setButtonDefault()
             showModal(`Турнир по ${tournamentToUpload.title} успешно добавлен!`, false)
+            setRefreshTornaments(!refreshTournaments)
+            setShow(false)
         })
         .catch (error => {
             console.log(error)
@@ -60,6 +68,8 @@ export function useSportsTournaments() {
         errorTournaments, 
         setTournamentTitle,
         tournamentTitle, 
-        addTournament 
+        addTournament,
+        refreshTournaments,
+        setRefreshTornaments
     }
 }

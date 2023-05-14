@@ -11,12 +11,13 @@ interface IAddSportsContext {
     errorTournaments: string;
     setTournamentTitle: (title: string) => void;
     tournamentTitle: string;
-    addTournament: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void) => void;
+    addTournament: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, setShow: (show: boolean) => void) => void;
     teams: ITeam[] | null;
     modal: IModal | null;
     showModal: (text: string, isError: boolean) => void;
     addSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToUpload: ISportsEvent) => void;
     deleteSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToDelete: ISportsEvent) => void;
+    deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => void;
 };
 
 export const AddSportsContext = createContext<IAddSportsContext>({
@@ -25,16 +26,27 @@ export const AddSportsContext = createContext<IAddSportsContext>({
     errorTournaments: "",
     setTournamentTitle: (title: string) => {},
     tournamentTitle: "",
-    addTournament: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void) => {},
+    addTournament: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, setShow: (show: boolean) => void) => {},
     teams: null,
     modal: null,
     showModal: (text: string, isError: boolean) => {},
     addSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToUpload: ISportsEvent) => {},
-    deleteSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToDelete: ISportsEvent) => {}
+    deleteSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToDelete: ISportsEvent) => {},
+    deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => {}
 });
 
 export const AddSportsContextProvider = ({children}: {children: React.ReactNode}) => {
-    const { tournaments, loadingTournaments, errorTournaments, setTournamentTitle, tournamentTitle, addTournament } = useSportsTournaments()
+    const { 
+        tournaments, 
+        loadingTournaments, 
+        errorTournaments, 
+        setTournamentTitle, 
+        tournamentTitle, 
+        addTournament,
+        refreshTournaments,
+        setRefreshTornaments
+    } = useSportsTournaments()
+
     const { teams } = useTeam()
     const { modal, showModal } = useModal()
 
@@ -94,6 +106,29 @@ export const AddSportsContextProvider = ({children}: {children: React.ReactNode}
         })   
     }
 
+    async function deleteSportsTournament(
+        showModal: (text: string, isError: boolean) => void,
+        tournamentTitle: string
+    ) {
+        await api.delete(
+            "sports/tournament/delete",
+            {
+                params: {
+                    s: tournamentTitle
+                },
+                withCredentials: true,
+            }
+        )
+        .then(response => {
+            showModal(`Турнир "${tournamentTitle}" успешно удален!`, false)
+            setRefreshTornaments(!refreshTournaments)
+        })
+        .catch (error => {
+            console.log(error)
+            showModal(error?.response?.data, true)
+        })   
+    }
+
     const value = {
         tournaments,
         loadingTournaments,
@@ -105,7 +140,8 @@ export const AddSportsContextProvider = ({children}: {children: React.ReactNode}
         modal,
         showModal,
         addSportsEvent,
-        deleteSportsEvent
+        deleteSportsEvent,
+        deleteSportsTournament
     }
 
     return (

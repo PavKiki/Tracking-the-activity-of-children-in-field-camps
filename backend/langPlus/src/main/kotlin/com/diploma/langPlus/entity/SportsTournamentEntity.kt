@@ -10,7 +10,7 @@ class SportsTournamentEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long,
     val title: String,
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(mappedBy = "tournament", cascade = [CascadeType.REMOVE])
     var events: List<SportsEventEntity>
 )
 

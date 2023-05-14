@@ -40,6 +40,19 @@ class SportsController(
         }
     }
 
+    @DeleteMapping("tournament/delete")
+    fun deleteSportsTournament(
+        @RequestParam s: String
+    ): ResponseEntity<Any> {
+        try {
+            sportsService.deleteTournament(s)
+            return ResponseEntity.ok("Success!")
+        }
+        catch (e: Exception) {
+            return ResponseEntity.badRequest().body(e.message)
+        }
+    }
+
     @PostMapping("event/add")
     fun addSportsEvent(@RequestBody body: SportsEventDto): ResponseEntity<Any> {
         try {
