@@ -1,17 +1,14 @@
 import { useGrid } from "hooks/grid"
 import { GridLine } from "./GridLine"
-import { ISportsTournament } from "models"
+import { IGrid, ISportsTournament } from "models"
 
 interface IGridProps {
-    tournament: ISportsTournament
+    grid: IGrid;
 }
 
-export function Grid(props: IGridProps) {
-
-    const { grid } = useGrid({tournament: props.tournament})
-    
-    const teams = grid?.teams
-    const actualGrid = grid?.events
+export function Grid(props: IGridProps) {    
+    const teams = props.grid.teams
+    const actualGrid = props.grid.events
 
     return (
         <table className="sports-grid">

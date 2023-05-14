@@ -1,9 +1,6 @@
 package com.diploma.langPlus.service.Impl
 
-import com.diploma.langPlus.dto.GridDto
-import com.diploma.langPlus.dto.SportsEventDto
-import com.diploma.langPlus.dto.SportsTournamentDto
-import com.diploma.langPlus.dto.toEntity
+import com.diploma.langPlus.dto.*
 import com.diploma.langPlus.entity.SportsEventEntity
 import com.diploma.langPlus.entity.TeamEntity
 import com.diploma.langPlus.entity.toDto
@@ -34,10 +31,9 @@ class SportsServiceImpl(
             ?: throw TeamNotFound("Команды с названием ${dto.teamTwoName} не существует!")
 
         if (sportsEventRepository.findGame(team1, team2, sport) != null) {
-            throw Exception("Игра команды \"${team1.title}\" и \"${team2.title}\" в турнире \"${sport.title}\" уже сыграна!")
+            throw Exception("Игра команды \"${team1.title}\" и \"${team2.title}\" в турнире \"${sport.title}\" уже существует!")
         }
 
-        //в дальнейшем удалить за ненадобностью
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yy")
         val newEvent = SportsEventEntity(
             id = 0,
@@ -66,6 +62,12 @@ class SportsServiceImpl(
 
         val teams = teamRepository.findAll().toList()
         val grid: Array<Array<SportsEventDto?>> = Array(teams.size) { Array(teams.size) { null } }
+        val leaderboard: List<TeamSportsScoreDto> = teams.map {
+            val wins = sportsEventRepository.findWinsOfTeam(it, sport.get())
+            val draws = sportsEventRepository.findDrawsOfTeam(it, sport.get())
+            val losses = sportsEventRepository.findLossesOfTeam(it, sport.get())
+            TeamSportsScoreDto(wins, draws, losses, 2 * wins + draws)
+        }
 
         for (i in 0..teams.lastIndex) {
             for (j in i + 1..teams.lastIndex) {
@@ -77,7 +79,7 @@ class SportsServiceImpl(
             }
         }
 
-        return GridDto(teams.map { it.toDto() }, grid)
+        return GridDto(teams.map { it.toDto() }, grid, leaderboard)
     }
 
     private fun formSportsEventDtoByTeam(team: TeamEntity, event: SportsEventEntity): SportsEventDto {

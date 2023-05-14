@@ -1,6 +1,5 @@
 package com.diploma.langPlus.entity
 
-import com.diploma.langPlus.enums.Result
 import jakarta.persistence.*
 import java.time.LocalDate
 

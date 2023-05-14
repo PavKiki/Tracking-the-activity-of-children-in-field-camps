@@ -17,4 +17,36 @@ interface SportsEventRepository: CrudRepository<SportsEventEntity, Long> {
         @Param("team2") team2: TeamEntity,
         @Param("sport") tournament: SportsTournamentEntity
     ): SportsEventEntity?
+
+    @Query("""
+        select count(e) from SportsEventEntity e
+        where ((e.teamOne = :team and e.teamOnePoints > e.teamTwoPoints) or 
+            (e.teamTwo = :team and e.teamOnePoints < e.teamTwoPoints)) and
+            e.tournament = :sport
+    """)
+    fun findWinsOfTeam(
+        @Param("team") team: TeamEntity,
+        @Param("sport") sport: SportsTournamentEntity
+    ): Long
+
+    @Query("""
+        select count(e) from SportsEventEntity e
+        where ((e.teamOne = :team and e.teamOnePoints < e.teamTwoPoints) or 
+            (e.teamTwo = :team and e.teamOnePoints > e.teamTwoPoints)) and
+            e.tournament = :sport
+    """)
+    fun findLossesOfTeam(
+        @Param("team") team: TeamEntity,
+        @Param("sport") sport: SportsTournamentEntity
+    ): Long
+
+    @Query("""
+        select count(e) from SportsEventEntity e
+        where ((e.teamOne = :team or e.teamTwo = :team) and e.teamOnePoints = e.teamTwoPoints) and
+            e.tournament = :sport
+    """)
+    fun findDrawsOfTeam(
+        @Param("team") team: TeamEntity,
+        @Param("sport") sport: SportsTournamentEntity
+    ): Long
 }

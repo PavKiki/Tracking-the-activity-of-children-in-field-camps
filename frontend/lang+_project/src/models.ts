@@ -66,7 +66,15 @@ export interface ITeam {
     title: string;
 }
 
+export interface ITeamSportsScore {
+    wins: number;
+    draws: number;
+    losses: number;
+    points: number;
+}
+
 export interface IGrid {
     teams: ITeam[];
     events: ISportsEvent[][];
+    scores: ITeamSportsScore[];
 }
