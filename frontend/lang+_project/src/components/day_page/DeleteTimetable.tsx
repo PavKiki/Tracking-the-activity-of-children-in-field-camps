@@ -48,7 +48,7 @@ export function DeleteTimetable(props: IDeleteTimetable) {
                             id="combo-box-tournamnets"
                             options={ timetables.map(timetable => timetable.date) }
                             sx={{ width: 300 }}
-                            renderInput={(params) => <TextField {...params} label="Введите день" />}
+                            renderInput={(params) => <TextField {...params} label="Выберите дату" />}
                             value={ curTimetable }
                             onChange={ (event, newValue) => setCurTimetable(newValue) }
                         />

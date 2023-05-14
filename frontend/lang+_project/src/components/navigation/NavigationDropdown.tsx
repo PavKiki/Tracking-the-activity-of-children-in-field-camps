@@ -27,15 +27,21 @@ export function NavigationDropdown({setIsPopUpActive}: {setIsPopUpActive: (isPop
 
     return (
         <div className="navigation-dropdown" onMouseLeave={ () => setIsPopUpActive(false) }>
-            <Link to="day" style={ {textDecoration: "none"} } >
+            <Link to="day" style={ {textDecoration: "none", color: "black"} } >
                 <div className="element">
                     <p>Расписание</p>
                 </div>
             </Link>
             <span/>
-            <Link to="sports" style={ {textDecoration: "none"} } >
+            <Link to="sports" style={ {textDecoration: "none", color: "black"} } >
                 <div className="element">
                     <p>Спорт</p>
+                </div>
+            </Link>
+            <span/>
+            <Link to="teams" style={ {textDecoration: "none", color: "black"} } >
+                <div className="element">
+                    <p>Команды</p>
                 </div>
             </Link>
             <span/>

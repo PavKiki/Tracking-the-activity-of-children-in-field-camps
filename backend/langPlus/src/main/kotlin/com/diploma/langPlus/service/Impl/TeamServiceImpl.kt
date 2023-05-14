@@ -14,4 +14,9 @@ class TeamServiceImpl(val teamRepository: TeamRepository): TeamService {
         if (teamRepository.findByTitle(teamDto.title) != null) throw Exception("Команда \"${teamDto.title}\" уже добавлена!")
         teamRepository.save(teamDto.toEntity())
     }
+
+    override fun deleteTeam(title: String) {
+        teamRepository.deleteByTitle(title)
+    }
+
 }

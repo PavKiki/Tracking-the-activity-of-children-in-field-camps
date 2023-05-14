@@ -1,0 +1,21 @@
+.add-delete-team-container {
+    margin-top: 2vh;
+    margin-left: 2vw;
+}
+
+.add-delete-team-container > p {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+.add-delete-team-container .autocomplete-add-delete {
+    display: flex;
+    margin-top: 3vh;
+    gap: 2vw;
+}
+
+.add-delete-team-container .autocomplete-add-delete .blue-add-button, .add-delete-team-container .autocomplete-add-delete .red-delete-button {
+    position: static;
+}

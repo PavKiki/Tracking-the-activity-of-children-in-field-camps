@@ -19,6 +19,7 @@ import { ProtectedRoute } from 'components/ProtectedRoute';
 import { TournamentGridPage } from 'pages/TournamentGridPage';
 import { SportsPage } from 'pages/SportsPage';
 import { SportsContextProvider } from 'context/SportsContext';
+import { TeamsKidsPage } from 'pages/TeamsKidsPage';
 
 function App() {
   const { auth } = useAuth()
@@ -58,6 +59,12 @@ function App() {
                     <SportsContextProvider>
                       <SportsPage/>
                     </SportsContextProvider>
+                }
+              />
+              <Route 
+                path='/teams' 
+                element={
+                  <TeamsKidsPage/>
                 }
               />
             </Route>

@@ -2,16 +2,13 @@ import api from "api/axios"
 import { ITeam } from "models"
 import { useEffect, useState } from "react"
 
-interface IUseTeam {
-
-}
-
 export function useTeam() {
     const [teams, setTeams] = useState<ITeam[] | null>(null)
+    const [refresh, setRefresh] = useState<boolean | null>(null)
     
     useEffect(() => {
         fetchTeams()
-    }, [])
+    }, [refresh])
 
     async function fetchTeams() {
         api
@@ -27,5 +24,5 @@ export function useTeam() {
             })
     }
 
-    return { teams }
+    return { teams, refresh, setRefresh }
 }

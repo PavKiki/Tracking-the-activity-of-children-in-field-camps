@@ -10,11 +10,11 @@ class TeamEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
     val title: String,
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = [CascadeType.REMOVE])
     var children: List<ChildEntity>,
-    @OneToMany(mappedBy = "teamOne")
+    @OneToMany(mappedBy = "teamOne", cascade = [CascadeType.REMOVE])
     var sportEventsFirst: List<SportsEventEntity>,
-    @OneToMany(mappedBy = "teamTwo")
+    @OneToMany(mappedBy = "teamTwo", cascade = [CascadeType.REMOVE])
     var sportEventsSecond: List<SportsEventEntity>
 )
 

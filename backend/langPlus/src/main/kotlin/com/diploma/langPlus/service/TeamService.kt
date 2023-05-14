@@ -6,4 +6,5 @@ import com.diploma.langPlus.entity.TeamEntity
 interface TeamService {
     fun getAll(): List<TeamEntity>
     fun addTeam(teamDto: TeamDto)
+    fun deleteTeam(title: String)
 }
