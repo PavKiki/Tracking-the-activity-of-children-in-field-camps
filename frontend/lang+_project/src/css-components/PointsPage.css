@@ -45,13 +45,15 @@
   
   @keyframes my-animation {
     from {
-      background-color: #c5c5c5;
+      background-color: #00ff44;
       width: 40vw;
       top: 10vh;
+      right: 5vw; 
     }
     to {
       background-color: #3643ff;
       width: 20vw;
       top: 20vh;
+      right: 15vw;
     }
   }
