@@ -1,9 +1,10 @@
 import { Autocomplete, TextField } from "@mui/material";
-import api from "api/axios";
 import { RedDeleteButton } from "components/RedDeleteButton";
 import { useRedDeleteButton } from "hooks/red-delete-button";
 import { useTimetables } from "hooks/timetables";
 import { useState } from "react";
+
+import authApi from "api/authApi"
 
 interface IDeleteTimetable {
     showModal: (text: string, isError: boolean) => void;
@@ -17,11 +18,10 @@ export function DeleteTimetable(props: IDeleteTimetable) {
 
     async function deleteTimetable() {
         setRedButtonLoading()
-        await api
+        await authApi
             .delete(
                 "timetable/delete",
                 {
-                    withCredentials: true,
                     params: { date: curTimetable }
                 }
             )

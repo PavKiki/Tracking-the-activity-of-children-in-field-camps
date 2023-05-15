@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { IActivity, IActivityToAdd, ITimetable } from "models";
 import moment, { Moment } from "moment";
-import api from "api/axios";
+import authApi from "api/authApi"
 
 interface IDayContext {
     currentDate: Moment | null;
@@ -101,12 +101,9 @@ export const DayContextProvider = ({children}: {children: React.ReactNode}) => {
 
         setLoading()
         
-        await api.post(
+        await authApi.post(
             "timetable/create", 
-            timetableToUpload,
-            {
-                withCredentials: true,
-            }
+            timetableToUpload
         )
         .then(response => {
             const timetableId: number = response.data
@@ -137,7 +134,7 @@ export const DayContextProvider = ({children}: {children: React.ReactNode}) => {
             "endAt": activity.endAt!!.format("HH:mm"),
             "timetableId": timetableId
         }
-        const response = await api.post(
+        const response = await authApi.post(
             "activity/add", 
             activityToUpload,
             {

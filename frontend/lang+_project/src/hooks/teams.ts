@@ -1,4 +1,4 @@
-import api from "api/axios"
+import defaultApi from "api/defaultApi"
 import { ITeam } from "models"
 import { useEffect, useState } from "react"
 
@@ -11,7 +11,7 @@ export function useTeam() {
     }, [refresh])
 
     async function fetchTeams() {
-        api
+        defaultApi
             .get(
                 "/team/all", 
             )

@@ -3,7 +3,7 @@ import { ITeam } from "models";
 import crown from "data/images/crown.svg"
 import muscle from 'data/images/arm-muscles-silhouette-svgrepo-com.svg'
 import { useEffect, useState } from "react";
-import api from "api/axios";
+import defaultApi from "api/defaultApi";
 
 interface ITeamDisplay {
     team: ITeam;
@@ -20,7 +20,7 @@ export function TeamDisplay(props: ITeamDisplay) {
 
     async function fetchPoints() {
         if (props.team === null) return
-        await api
+        await defaultApi
             .get(
                 "points/ofTeam",
                 {

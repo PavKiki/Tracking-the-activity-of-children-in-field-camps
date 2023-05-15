@@ -6,8 +6,6 @@ import { Timetable } from "components/main_page/Timetable";
 import { CurrentTimetable } from "components/main_page/CurrentTimetable";
 import { useTimetables } from "hooks/timetables";
 import { useInitDays } from "hooks/init_days";
-import { useAuth } from "context/AuthContext";
-import { Navigate } from "react-router";
 
 export function MainPage() {
     const { timetables, loading, error } = useTimetables()

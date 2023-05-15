@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { ITimetable } from "models";
-import api from "api/axios";
+import defaultApi from "api/defaultApi";
 
 export function useTimetables() {
     const [timetables, setTimetables] = useState<ITimetable[]>([])
@@ -16,7 +16,7 @@ export function useTimetables() {
     async function fetchTimetables() {      
         setError("")
         setLoading(true)
-        await api
+        await defaultApi
             .get<ITimetable[]>("timetable/allbydate")
             .then(response => {
                 setTimetables(response.data)

@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import api from "api/axios";
+import authApi from "api/authApi"
 import { BlueUploadButton } from "components/BlueUploadButton";
 import { RedDeleteButton } from "components/RedDeleteButton";
 import { useBlueUploadButton } from "hooks/blue-upload-button";
@@ -24,13 +24,10 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
     async function addTeam() {
         setBlueButtonLoading()
         
-        await api
+        await authApi
             .post(
                 "team/add",
-                { title: inputValue },
-                {
-                    withCredentials: true,
-                }
+                { title: inputValue }
             )
             .then(response => {
                 setBlueButtonDefault()
@@ -47,11 +44,10 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
     async function deleteTeam() {
         setRedButtonLoading()
         
-        await api
+        await authApi
             .delete(
                 "team/delete", 
                 {
-                    withCredentials: true,
                     params: {
                         title: value
                     }

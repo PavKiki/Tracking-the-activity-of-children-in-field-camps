@@ -1,7 +1,6 @@
-import { useContext } from "react";
-
 import "css-components/CurrentTimetable.css";
 
+import { useContext } from "react";
 import { ITimetable } from "models";
 import { Timetable } from "components/main_page/Timetable";
 import { ActivityPopUpContext } from "context/ActivityPopUpContext";

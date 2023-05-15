@@ -1,6 +1,6 @@
-import { ILogin, IUserInfo } from "models";
+import { IUserInfo } from "models";
 import { createContext, useContext, useEffect, useState } from "react";
-import api from "api/axios";
+import authApi from "api/authApi";
 
 interface IUserContext {
     userInfo: IUserInfo | null;
@@ -28,11 +28,8 @@ export const UserContextProvider = ({children}: {children: React.ReactNode}) => 
     }, [auth])
 
     async function isAuth() {
-        await api.get(
-            "auth/user",
-            {
-                withCredentials: true
-            } 
+        await authApi.get(
+            "auth/user"
         )
         .then (response => {
             setUserInfo(response.data)

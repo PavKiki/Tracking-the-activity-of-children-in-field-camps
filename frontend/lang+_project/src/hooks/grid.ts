@@ -1,4 +1,4 @@
-import api from "api/axios";
+import defaultApi from "api/defaultApi";
 import { IGrid, ISportsTournament } from "models";
 import { useEffect, useState } from "react";
 
@@ -14,7 +14,7 @@ export function useGrid(props: IUseGridProps) {
     }, [props.tournament])
 
     async function fetchGrid() {
-        api
+        defaultApi
             .get(
                 "/sports/getGrid", 
                 { 

@@ -1,10 +1,11 @@
 import { Autocomplete, TextField } from "@mui/material";
-import api from "api/axios";
 import { BlueUploadButton } from "components/BlueUploadButton";
 import { useBlueUploadButton } from "hooks/blue-upload-button";
 import { useTeam } from "hooks/teams";
 import { IPoints } from "models";
 import { useState } from "react";
+
+import authApi from "api/authApi"
 
 interface IAddPoints {
     showModal: (text: string, isError: boolean) => void;
@@ -27,12 +28,9 @@ export function AddPoints(props: IAddPoints) {
 
         const pointsToUpload: IPoints = { points: points!!, team: curTeam!! }
 
-        await api.post(
+        await authApi.post(
             "points/add",
-            pointsToUpload,
-            {
-                withCredentials: true,
-            }
+            pointsToUpload
         )
         .then(response => {
             setBlueButtonDefault()

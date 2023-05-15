@@ -1,7 +1,8 @@
-import api from "api/axios"
-import { useAuth } from "context/AuthContext"
 import "css-components/NavigationDropdown.css"
+
+import { useAuth } from "context/AuthContext"
 import { Link, useNavigate } from "react-router-dom"
+import authApi from "api/authApi"
 
 export function NavigationDropdown({setIsPopUpActive}: {setIsPopUpActive: (isPopUpActive: boolean) => void}) {
 
@@ -10,11 +11,10 @@ export function NavigationDropdown({setIsPopUpActive}: {setIsPopUpActive: (isPop
     const { setAuth } = useAuth()
 
     async function handleLogout() {
-        await api
+        await authApi
             .post(
                 "auth/logout", 
-                {},
-                { withCredentials: true }
+                {}
             )
             .then(() =>
                 {

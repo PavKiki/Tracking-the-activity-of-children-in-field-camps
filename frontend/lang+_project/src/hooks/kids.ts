@@ -1,4 +1,5 @@
-import api from "api/axios";
+import authApi from "api/authApi"
+import defaultApi from "api/defaultApi";
 import { IChild } from "models";
 import { useEffect, useState } from "react"
 
@@ -16,7 +17,7 @@ export function useKidsInTeam(props: IUseKids) {
 
     async function findParicipantsOfTeam() {
         if (props.curTeam === null) return
-        await api
+        await defaultApi
             .get(
                 "child/byteamTitle",
                 {
@@ -63,12 +64,11 @@ export function useKidsInTeam(props: IUseKids) {
             teamRole: role
         }
         
-        await api
+        await authApi
             .post(
                 "child/addToTeam",
                 kidToUpload,
                 {
-                    withCredentials: true,
                     params: {
                         title: props.curTeam
                     }
@@ -93,11 +93,10 @@ export function useKidsInTeam(props: IUseKids) {
     }
 
         async function deleteKid(showModal: (text: string, isError: boolean) => void, kid: IChild) {
-        await api
+        await authApi
             .delete(
                 "child/delete", 
                 {
-                    withCredentials: true,
                     params: {
                         id: kid.id
                     }

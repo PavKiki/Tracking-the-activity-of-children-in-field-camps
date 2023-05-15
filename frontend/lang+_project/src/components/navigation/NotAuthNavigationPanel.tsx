@@ -1,4 +1,5 @@
 import 'css-components/NavigationPanel.css'
+
 import langLogo from 'data/images/logo_language.png'
 import signInLogo from 'data/images/login.svg'
 import { Link, useLocation } from 'react-router-dom'

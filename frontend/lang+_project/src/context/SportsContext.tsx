@@ -1,4 +1,4 @@
-import api from "api/axios";
+import authApi from "api/authApi"
 import { useModal } from "hooks/modal";
 import { useTeam } from "hooks/teams";
 import { useSportsTournaments } from "hooks/tournaments";
@@ -58,12 +58,9 @@ export const SportsContextProvider = ({children}: {children: React.ReactNode}) =
     ) {
         setButtonLoading()
         
-        await api.post(
+        await authApi.post(
             "sports/event/add",
-            eventToUpload,
-            {
-                withCredentials: true,
-            }
+            eventToUpload
         )
         .then(response => {
             setButtonDefault()
@@ -84,15 +81,14 @@ export const SportsContextProvider = ({children}: {children: React.ReactNode}) =
     ) {
         setButtonLoading()
         
-        await api.delete(
+        await authApi.delete(
             "sports/event/delete",
             {
                 params: {
                     t1: eventToDelete.teamOneName,
                     t2: eventToDelete.teamTwoName,
                     s: eventToDelete.sportTitle
-                },
-                withCredentials: true,
+                }
             }
         )
         .then(response => {
@@ -110,13 +106,12 @@ export const SportsContextProvider = ({children}: {children: React.ReactNode}) =
         showModal: (text: string, isError: boolean) => void,
         tournamentTitle: string
     ) {
-        await api.delete(
+        await authApi.delete(
             "sports/tournament/delete",
             {
                 params: {
                     s: tournamentTitle
-                },
-                withCredentials: true,
+                }
             }
         )
         .then(response => {

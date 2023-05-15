@@ -1,7 +1,6 @@
 import { Autocomplete, Checkbox, FormControlLabel, TextField } from "@mui/material";
-import api from "api/axios";
-import { IChild, ITeam } from "models";
-import { useEffect, useState } from "react";
+import { ITeam } from "models";
+import { useState } from "react";
 import closeIcon from "data/images/cancel_FILL0_wght400_GRAD0_opsz48.svg"
 import { useBlueUploadButton } from "hooks/blue-upload-button";
 import { BlueUploadButton } from "components/BlueUploadButton";

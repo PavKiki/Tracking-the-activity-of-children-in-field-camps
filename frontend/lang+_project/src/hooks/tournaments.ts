@@ -1,5 +1,6 @@
+import authApi from "api/authApi"
+import defaultApi from "api/defaultApi";
 import { ISportsTournament } from "models";
-import api from "api/axios";
 import { useEffect, useState } from "react";
 
 export function useSportsTournaments() {
@@ -23,12 +24,9 @@ export function useSportsTournaments() {
         
         const tournamentToUpload: ISportsTournament = { id: 0, title: tournamentTitle }
 
-        await api.post(
+        await authApi.post(
             "sports/tournament/add",
-            tournamentToUpload,
-            {
-                withCredentials: true,
-            }
+            tournamentToUpload
         )
         .then(response => {
             setButtonDefault()
@@ -47,7 +45,7 @@ export function useSportsTournaments() {
         setErrorTournaments("")
         setLoadingTournaments(true)
         
-        await api
+        await defaultApi
             .get<ISportsTournament[]>(
                 "sports/tournament/getAll",
             )

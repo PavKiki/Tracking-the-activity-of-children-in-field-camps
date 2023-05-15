@@ -10,9 +10,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IRegister } from 'models';
-import api from 'api/axios';
 import { useState } from 'react';
 import { Navigate } from 'react-router';
+import defaultApi from 'api/defaultApi';
 
 const theme = createTheme();
 
@@ -37,13 +37,10 @@ export function SignUpPage() {
 
         setButton("Загрузка...")
 
-        await api
+        await defaultApi
             .post(
                 "http://localhost:8080/api/v1/auth/register", 
-                userInfo,
-                {
-                    withCredentials: true
-                }
+                userInfo
             )
             .then(
                 () => setRedirect(true)

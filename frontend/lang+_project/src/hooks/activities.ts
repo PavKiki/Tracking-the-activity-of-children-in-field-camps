@@ -1,7 +1,7 @@
 import { AxiosError } from "axios"
 import { useEffect, useState } from "react"
 import { IActivity } from "models"
-import api from "api/axios"
+import defaultApi from "api/defaultApi"
 
 export function useActivities(timetableId: number) {
     const [activities, setActivities] = useState<IActivity[]>([])
@@ -16,7 +16,7 @@ export function useActivities(timetableId: number) {
         try {
             setError("")
             setLoading(true)
-            const response = await api.get<IActivity[]>(
+            const response = await defaultApi.get<IActivity[]>(
                 "activity/get", 
                 { params: { id: timetableId } }
             )

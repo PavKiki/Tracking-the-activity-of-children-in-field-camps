@@ -12,7 +12,7 @@ import { ILogin } from 'models';
 import { useContext, useState } from 'react';
 import { UserContext } from 'context/AuthContext';
 import { useNavigate } from 'react-router';
-import api from 'api/axios';
+import authApi from "api/authApi"
 
 const theme = createTheme();
 
@@ -25,11 +25,10 @@ export function SignInPage() {
     const { setAuth } = useContext(UserContext)
 
     async function signInRequest({user, setButton, setResponseError} : { user: ILogin, setButton: (title: string) => void, setResponseError: (title: string) => void }) {
-        await api
+        await authApi
             .post(
                 "auth/login", 
-                user, 
-                { withCredentials: true }
+                user
             )
             .then(() => {
                 setAuth(true)

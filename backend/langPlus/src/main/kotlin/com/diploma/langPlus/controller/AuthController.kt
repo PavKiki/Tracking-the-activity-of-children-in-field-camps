@@ -23,10 +23,6 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@CrossOrigin(
-    allowCredentials = "true",
-    origins = ["http://localhost:3000", "http://localhost:8080"]
-)
 @RequestMapping("/api/v1/auth")
 class AuthController(
     val authService: AuthService
