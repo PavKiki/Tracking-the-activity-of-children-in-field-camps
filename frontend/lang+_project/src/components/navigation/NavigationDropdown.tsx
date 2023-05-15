@@ -27,6 +27,12 @@ export function NavigationDropdown({setIsPopUpActive}: {setIsPopUpActive: (isPop
 
     return (
         <div className="navigation-dropdown" onMouseLeave={ () => setIsPopUpActive(false) }>
+            <Link to="points" style={ {textDecoration: "none", color: "black"} } >
+                <div className="element">
+                    <p>Поинты</p>
+                </div>
+            </Link>
+            <span/>
             <Link to="day" style={ {textDecoration: "none", color: "black"} } >
                 <div className="element">
                     <p>Расписание</p>

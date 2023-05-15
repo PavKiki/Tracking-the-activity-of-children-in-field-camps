@@ -1,0 +1,57 @@
+.points-container {
+    display: flex;
+    position: relative;
+}
+
+.points-container .add-points-container {
+    padding-top: 4vh;
+    padding-left: 4vw;
+    width: 50vw;
+}
+
+.points-container .add-points-container > p#header {
+    margin: 0;
+    margin-bottom: 4vh;
+    font-size: 40px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+.points-container .add-points-container > #combo-box-teams {
+    margin-bottom: 3vh;
+}
+
+.points-container .add-points-container .blue-add-button {
+    position: static;
+    float: right;
+    margin-right: 20%;
+}
+
+.points-container > #animation {
+    /* animation properties */
+    animation-name: my-animation;
+    animation-duration: 5s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    
+    /* other properties */
+    width: 40vw;
+    height: 40vh;
+    border-radius: 10px;
+    position: absolute;
+    right: 5vw;
+  }
+  
+  @keyframes my-animation {
+    from {
+      background-color: #c5c5c5;
+      width: 40vw;
+      top: 10vh;
+    }
+    to {
+      background-color: #3643ff;
+      width: 20vw;
+      top: 20vh;
+    }
+  }

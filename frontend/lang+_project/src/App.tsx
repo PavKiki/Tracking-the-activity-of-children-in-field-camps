@@ -21,6 +21,7 @@ import { SportsPage } from 'pages/SportsPage';
 import { SportsContextProvider } from 'context/SportsContext';
 import { TeamsKidsPage } from 'pages/TeamsKidsPage';
 import { TeamsPresentation } from 'pages/TeamsPresentationPage';
+import { PointsPage } from 'pages/PointsPage';
 
 function App() {
   const { auth } = useAuth()
@@ -52,6 +53,12 @@ function App() {
               }
             />
             <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
+            <Route 
+                path='/points' 
+                element={
+                  <PointsPage/>
+                }
+              />
               <Route 
                 path='/day' 
                 element={

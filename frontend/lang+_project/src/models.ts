@@ -87,3 +87,8 @@ export interface IChild {
     age: number;
     teamRole: string;
 }
+
+export interface IPoints {
+    points: number;
+    team: string;
+}
