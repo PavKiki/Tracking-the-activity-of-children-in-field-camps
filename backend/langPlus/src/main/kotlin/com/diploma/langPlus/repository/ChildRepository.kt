@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 interface ChildRepository: CrudRepository<ChildEntity, Int> {
     fun findByTeamId(teamId: Int): List<ChildEntity>
-    fun findByTeamTitle(title: String): List<ChildEntity>
+    fun findByTeamTitleOrderByTeamRoleAsc(title: String): List<ChildEntity>
     @Transactional
     @Modifying
     fun deleteById(id: Long)

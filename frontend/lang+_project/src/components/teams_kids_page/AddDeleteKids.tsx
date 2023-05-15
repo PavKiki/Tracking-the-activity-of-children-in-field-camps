@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import closeIcon from "data/images/cancel_FILL0_wght400_GRAD0_opsz48.svg"
 import { useBlueUploadButton } from "hooks/blue-upload-button";
 import { BlueUploadButton } from "components/BlueUploadButton";
+import { useKidsInTeam } from "hooks/kids";
 
 interface IAddDeleteKids {
     showModal: (text: string, isError: boolean) => void;
@@ -13,8 +14,6 @@ interface IAddDeleteKids {
 
 export function AddDeleteKids(props: IAddDeleteKids) {
     const [curTeam, setCurTeam] = useState<string | null>(null)
-    const [participants, setParticipants] = useState<IChild[]>([])
-    const [refreshKids, setRefreshKids] = useState<boolean | null>(null)
 
     const [surname, setSurname] = useState<string | null>(null)
     const [name, setName] = useState<string | null>(null)
@@ -23,102 +22,8 @@ export function AddDeleteKids(props: IAddDeleteKids) {
     const [isCap, setIsCap] = useState<boolean>(false)
     const [isCocap, setIsCocap] = useState<boolean>(false)
 
-    useEffect(() => {
-        findParicipants()
-    }, [curTeam, refreshKids])
-
     const { blueButton, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
-    
-
-    async function findParicipants() {
-        if (curTeam === null) return
-        await api
-            .get(
-                "child/byteamTitle",
-                {
-                    withCredentials: true,
-                    params: {
-                        title: curTeam
-                    }
-                }
-            )
-            .then(response => {
-                setParticipants(response.data)
-                setRefreshKids(!refreshKids)
-            })
-            .catch (error => {
-                console.log(error)
-            })
-    }
-
-    async function addKid() {
-        if (curTeam === null) return
-        setBlueButtonLoading()
-
-        let role: string
-
-        if (isCap && !isCocap) role = "CAPTAIN"
-        else if (!isCap && isCocap) role = "COCAPTAIN"
-        else role = "DEFAULT"
-        
-        const kidToUpload: IChild = {
-            id: 0,
-            surname: surname!!,
-            name: name!!,
-            patronymic: patronymic!!,
-            age: age!!,
-            teamRole: role
-        }
-        
-        await api
-            .post(
-                "child/addToTeam",
-                kidToUpload,
-                {
-                    withCredentials: true,
-                    params: {
-                        title: curTeam
-                    }
-                }
-            )
-            .then(response => {
-                props.showModal(
-                    `${surname} ${name} ${patronymic} - ${age} лет успешно добавлен в команду ${curTeam}`,
-                    false
-                )
-                setBlueButtonDefault()
-                setRefreshKids(!refreshKids)
-            })
-            .catch (error => {
-                setBlueButtonDefault()
-                console.log(error)
-                props.showModal(
-                    error?.data?.response,
-                    true
-                )
-            })
-    }
-
-    async function deleteChild(kid: IChild) {
-        await api
-            .delete(
-                "child/delete", 
-                {
-                    withCredentials: true,
-                    params: {
-                        id: kid.id
-                    }
-                }
-            )
-            .then(response => {
-                props.showModal(`${kid.surname} ${kid.name} ${kid.patronymic} - ${kid.age} лет успешно удален`, false)
-                setRefreshKids(!refreshKids)
-            })
-            .catch (error => {
-                console.log(error)
-                props.showModal(error?.response?.data, true)
-            })             
-    }
+    const { participants, deleteKid, addKidInTeam } = useKidsInTeam({ curTeam: curTeam })
 
     return (
     <>
@@ -137,7 +42,7 @@ export function AddDeleteKids(props: IAddDeleteKids) {
                 { participants.map((kid, i) => {
                     return <div className="kid" key={ i }>
                                 <p>{i + 1}. { kid.surname } { kid.name } { kid.patronymic }  /  { kid.age } y.o.  /  { kid.teamRole }</p>
-                                <img src={ closeIcon } onClick={ () => {deleteChild(kid)} }/>
+                                <img src={ closeIcon } onClick={ () => {deleteKid(props.showModal, kid)} }/>
                             </div>
                 }) }
             </div>
@@ -187,7 +92,17 @@ export function AddDeleteKids(props: IAddDeleteKids) {
                     labelPlacement="top"
                 />
             </div>
-            <BlueUploadButton onClick={ () => addKid() }><p>{ blueButton }</p></BlueUploadButton>
+            <BlueUploadButton onClick={ () => addKidInTeam(
+                props.showModal,
+                setBlueButtonLoading,
+                setBlueButtonDefault,
+                isCap,
+                isCocap,
+                surname,
+                name, 
+                patronymic,
+                age
+            ) }><p>{ blueButton }</p></BlueUploadButton>
         </div>
     </>
     )

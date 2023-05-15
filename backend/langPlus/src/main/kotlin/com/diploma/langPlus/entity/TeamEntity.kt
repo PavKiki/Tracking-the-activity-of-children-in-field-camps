@@ -15,7 +15,9 @@ class TeamEntity(
     @OneToMany(mappedBy = "teamOne", cascade = [CascadeType.REMOVE])
     var sportEventsFirst: List<SportsEventEntity>,
     @OneToMany(mappedBy = "teamTwo", cascade = [CascadeType.REMOVE])
-    var sportEventsSecond: List<SportsEventEntity>
+    var sportEventsSecond: List<SportsEventEntity>,
+    @OneToMany(mappedBy = "team", cascade = [CascadeType.REMOVE])
+    var points: List<PointsEntity>
 )
 
 fun TeamEntity.toDto(): TeamDto = TeamDto(title)

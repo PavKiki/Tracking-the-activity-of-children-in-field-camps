@@ -16,7 +16,7 @@ class ChildServiceImpl(
 ): ChildService {
     override fun getAll(): List<ChildEntity> = childRepository.findAll().toList()
     override fun getByTeamId(teamId: Int): List<ChildEntity> = childRepository.findByTeamId(teamId)
-    override fun getByTeamTitle(title: String): List<ChildEntity> = childRepository.findByTeamTitle(title)
+    override fun getByTeamTitle(title: String): List<ChildEntity> = childRepository.findByTeamTitleOrderByTeamRoleAsc(title)
     override fun addToTeam(title: String, dto: ChildDto) {
         val team = teamRepository.findByTitle(title)
             ?: throw TeamNotFound("Команды $title не существует!")

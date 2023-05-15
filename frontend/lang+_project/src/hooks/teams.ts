@@ -14,7 +14,6 @@ export function useTeam() {
         api
             .get(
                 "/team/all", 
-                { withCredentials: true }
             )
             .then((response) => {
                 setTeams(response.data)

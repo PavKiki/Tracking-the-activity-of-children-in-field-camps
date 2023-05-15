@@ -20,6 +20,11 @@ export function NotAuthNavigationPanel() {
             </Link>
             {showSignInButton(useLocation().pathname) &&
             <div className='right-part-navigation'>
+                <Link to="/teamsshow" style={{ textDecoration: "none" }}>
+                    <div className="nav-item">
+                        <p>Команды</p>
+                    </div>
+                </Link>
                 <Link to="/grid" style={{ textDecoration: "none" }}>
                     <div className="nav-item">
                         <p>Спорт</p>

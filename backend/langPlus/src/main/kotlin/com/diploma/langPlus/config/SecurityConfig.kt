@@ -50,7 +50,10 @@ class SecurityConfig(
                 "/api/v1/activity/get",
                 "/api/v1/timetable/allbydate",
                 "/api/v1/sports/tournament/getAll",
-                "/api/v1/sports/getGrid"
+                "/api/v1/sports/getGrid",
+                "/api/v1/team/all",
+                "/api/v1/child/byteamTitle",
+                "/api/v1/points/ofTeam"
             )
             .permitAll()
             .anyRequest()
