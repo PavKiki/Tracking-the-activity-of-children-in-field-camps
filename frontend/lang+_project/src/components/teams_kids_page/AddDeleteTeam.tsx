@@ -4,11 +4,14 @@ import { BlueUploadButton } from "components/BlueUploadButton";
 import { RedDeleteButton } from "components/RedDeleteButton";
 import { useBlueUploadButton } from "hooks/blue-upload-button";
 import { useRedDeleteButton } from "hooks/red-delete-button";
-import { useTeam } from "hooks/teams";
+import { ITeam } from "models";
 import { useState } from "react";
 
 interface IAddDeleteTeam {
     showModal: (text: string, isError: boolean) => void;
+    teams: ITeam[];
+    refresh: boolean | null;
+    setRefresh: (refresh: boolean | null) => void;
 }
 
 export function AddDeleteTeam(props: IAddDeleteTeam) {
@@ -17,7 +20,6 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
 
     const { blueButton, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
     const { redButton, setRedButtonDefault, setRedButtonLoading } = useRedDeleteButton({defaultText: "Удалить"})
-    const { teams, refresh, setRefresh } = useTeam()
 
     async function addTeam() {
         setBlueButtonLoading()
@@ -33,7 +35,7 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
             .then(response => {
                 setBlueButtonDefault()
                 props.showModal(`Команда ${inputValue} успешно добавлена`, false)
-                setRefresh(!refresh)
+                props.setRefresh(!props.refresh)
             })
             .catch (error => {
                 console.log(error)
@@ -58,7 +60,7 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
             .then(response => {
                 setRedButtonDefault()
                 props.showModal(`Команда ${value} успешно удалена`, false)
-                setRefresh(!refresh)
+                props.setRefresh(!props.refresh)
             })
             .catch (error => {
                 console.log(error)
@@ -69,14 +71,13 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
 
     return (
         <>
-        {teams &&
             <div className="add-delete-team-container">
                 <p>Добавить/удалить команду</p>
                 <div className="autocomplete-add-delete">
                     <Autocomplete
                         freeSolo
                         id="combo-box-teams"
-                        options={ teams.map(team => team.title) }
+                        options={ props.teams.map(team => team.title) }
                         sx={{ width: 300 }}
                         value={ value }
                         onChange={ (event, newValue) => setValue(newValue) }
@@ -98,7 +99,6 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
                     <RedDeleteButton onClick={ () => deleteTeam() }><p>{ redButton }</p></RedDeleteButton>
                 </div>
             </div>
-        }
         </>
     )
 }

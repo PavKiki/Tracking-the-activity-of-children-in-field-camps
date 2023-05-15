@@ -78,3 +78,12 @@ export interface IGrid {
     events: ISportsEvent[][];
     scores: ITeamSportsScore[];
 }
+
+export interface IChild {
+    id: number;
+    name: string;
+    surname: string;
+    patronymic: string;
+    age: number;
+    teamRole: string;
+}

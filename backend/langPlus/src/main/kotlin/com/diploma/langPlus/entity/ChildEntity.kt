@@ -13,6 +13,7 @@ class ChildEntity(
     val name: String,
     val surname: String,
     val patronymic: String,
+    val age: Int,
     @Enumerated(EnumType.STRING)
     val teamRole: TeamRole,
     @ManyToOne
@@ -20,4 +21,4 @@ class ChildEntity(
     var team: TeamEntity
 )
 
-fun ChildEntity.toDto(): ChildDto = ChildDto(this.id, this.name, this.surname, this.patronymic, this.teamRole.name)
+fun ChildEntity.toDto(): ChildDto = ChildDto(this.id, this.name, this.surname, this.patronymic, this.age, this.teamRole.name)
