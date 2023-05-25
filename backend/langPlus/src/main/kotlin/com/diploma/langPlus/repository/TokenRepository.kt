@@ -26,3 +26,4 @@ interface TokenRepository: CrudRepository<TokenEntity, Long> {
     """)
     fun findAllValidTokensByUserId(@Param("userId") userId: Long): List<TokenEntity>
 }
+

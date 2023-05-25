@@ -1,8 +1,8 @@
-import "css-components/TeamsPresentation.css";
+import "css-components/TeamsPresentationPage.css";
 import { TeamDisplay } from "components/teams_presentation_page/TeamDisplay";
 import { useTeam } from "hooks/teams";
 
-export function TeamsPresentation() {
+export function TeamsPresentationPage() {
 
     const { teams } = useTeam()
 

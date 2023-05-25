@@ -92,3 +92,14 @@ export interface IPoints {
     points: number;
     team: string;
 }
+
+export interface ICreativeEvent {
+    title: string;
+}
+
+export interface IPlaceCreativeEvent {
+    id: number;
+    place: number;
+    eventTitle: string;
+    teamTitle: string;
+}

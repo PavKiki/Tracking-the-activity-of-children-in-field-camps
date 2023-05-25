@@ -18,3 +18,4 @@ class TokenEntity(
     @JoinColumn(name = "userId")
     val user: UserEntity
 )
+

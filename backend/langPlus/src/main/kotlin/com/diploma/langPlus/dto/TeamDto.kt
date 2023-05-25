@@ -6,4 +6,12 @@ data class TeamDto(
     val title: String
 )
 
-fun TeamDto.toEntity(): TeamEntity = TeamEntity(0, this.title, emptyList(), emptyList(), emptyList(), emptyList())
+fun TeamDto.toEntity(): TeamEntity = TeamEntity(
+    0,
+    this.title,
+    emptyList(),
+    emptyList(),
+    emptyList(),
+    emptyList(),
+    emptyList()
+)

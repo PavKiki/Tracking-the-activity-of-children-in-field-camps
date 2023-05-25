@@ -17,14 +17,15 @@ class PointsServiceImpl(
         val team = teamRepository.findByTitle(title)
             ?: throw Exception("Команды $title не существует!")
         val sum = pointsRepository.sumOfPointsByTeam(team)
-        return if (sum == null) 0L else sum
+        return sum
     }
 
     override fun addPoints(dto: PointsDto) {
         val team = teamRepository.findByTitle(dto.team)
-            ?: throw Exception("Команды $dto.team не существует!")
+            ?: throw Exception("Команды ${dto.team} не существует!")
         val pointsEntity = PointsEntity(0, dto.points, LocalDate.now(), team)
         team.points += pointsEntity
         pointsRepository.save(pointsEntity)
     }
 }
+

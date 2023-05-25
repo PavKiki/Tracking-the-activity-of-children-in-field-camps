@@ -1,7 +1,6 @@
 package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.dto.ActivityDto
-import com.diploma.langPlus.dto.TimetableDto
 import com.diploma.langPlus.dto.toEntity
 import com.diploma.langPlus.entity.ActivityEntity
 import com.diploma.langPlus.entity.TimetableEntity

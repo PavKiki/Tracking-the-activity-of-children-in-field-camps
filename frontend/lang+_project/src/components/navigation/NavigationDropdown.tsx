@@ -45,6 +45,12 @@ export function NavigationDropdown({setIsPopUpActive}: {setIsPopUpActive: (isPop
                 </div>
             </Link>
             <span/>
+            <Link to="creativity" style={ {textDecoration: "none", color: "black"} } >
+                <div className="element">
+                    <p>Творчество</p>
+                </div>
+            </Link>
+            <span/>
             <Link to="teams" style={ {textDecoration: "none", color: "black"} } >
                 <div className="element">
                     <p>Команды</p>

@@ -1,0 +1,36 @@
+.grid-page-container .creativity-leaderboard {
+    margin-top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.creativity-leaderboard {
+    width: 50vw;
+}
+
+.creativity-leaderboard th {
+    width: 5vw;
+}
+
+.creativity-leaderboard th img {
+    width: 2vw;
+}
+
+.creativity-leaderboard #first-place > th {
+    background-color: #ffe982;
+}
+
+.creativity-leaderboard #second-place > th {
+    background-color: #eeeeee;
+}
+
+.creativity-leaderboard #third-place > th {
+    background-color: #f9e8c7;
+}
+
+.creativity-leaderboard td > p{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    margin-left: 2vw;
+}

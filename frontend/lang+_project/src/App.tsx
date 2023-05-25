@@ -20,8 +20,10 @@ import { TournamentGridPage } from 'pages/TournamentGridPage';
 import { SportsPage } from 'pages/SportsPage';
 import { SportsContextProvider } from 'context/SportsContext';
 import { TeamsKidsPage } from 'pages/TeamsKidsPage';
-import { TeamsPresentation } from 'pages/TeamsPresentationPage';
+import { TeamsPresentationPage } from 'pages/TeamsPresentationPage';
 import { PointsPage } from 'pages/PointsPage';
+import { CreativeEventLeaderboardPage } from 'pages/CreativeEventLeaderboardPage';
+import { CreativityPage } from 'pages/CreativityPage';
 
 function App() {
   const { auth } = useAuth()
@@ -49,11 +51,17 @@ function App() {
             <Route 
               path='/teamsshow' 
               element={
-                <TeamsPresentation/>
+                <TeamsPresentationPage/>
+              }
+            />
+            <Route 
+              path='/creativityshow' 
+              element={
+                <CreativeEventLeaderboardPage/>
               }
             />
             <Route element={<ProtectedRoute isAllowed={ auth } children={ null }/>}>
-            <Route 
+              <Route 
                 path='/points' 
                 element={
                   <PointsPage/>
@@ -73,6 +81,12 @@ function App() {
                     <SportsContextProvider>
                       <SportsPage/>
                     </SportsContextProvider>
+                }
+              />
+              <Route 
+                path='/creativity' 
+                element={
+                  <CreativityPage/>
                 }
               />
               <Route 

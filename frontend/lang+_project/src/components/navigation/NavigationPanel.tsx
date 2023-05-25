@@ -24,6 +24,11 @@ export function NavigationPanel() {
                         <p>Команды</p>
                     </div>
                 </Link>
+                <Link to="/creativityshow" style={{ textDecoration: "none" }}>
+                    <div className="nav-item">
+                        <p>Творчество</p>
+                    </div>
+                </Link>
                 <Link to="/grid" style={{ textDecoration: "none" }}>
                     <div className="nav-item">
                         <p>Спорт</p>

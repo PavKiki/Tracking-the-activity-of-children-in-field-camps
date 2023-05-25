@@ -50,3 +50,4 @@ class TimetableController (private val timetableService: TimetableService) {
         }
     }
 }
+

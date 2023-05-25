@@ -4,3 +4,4 @@ data class PointsDto(
     val points: Long,
     val team: String
 )
+

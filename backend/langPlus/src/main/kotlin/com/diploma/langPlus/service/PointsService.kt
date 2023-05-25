@@ -6,3 +6,4 @@ interface PointsService {
     fun getPointsOfTeam(title: String): Long
     fun addPoints(dto: PointsDto)
 }
+
