@@ -1,73 +1,91 @@
 import authApi from "api/authApi"
 import { useModal } from "hooks/modal";
 import { useCreativeEvents } from "hooks/creative_events";
-import { ICreativeEvent, IModal, ITeam } from "models";
-import { createContext } from "react";
+import { ICreativeEvent, IModal, IPlaceCreativeEvent, ITeam } from "models";
+import { createContext, useState } from "react";
 import { useTeam } from "hooks/teams";
 import { useCreativeEventPlaces } from "hooks/creative_events_places";
 
 interface ICreativityContext {
-    events: ICreativeEvent[];
-    loadingEvents: boolean;
-    errorEvents: string;
-    setEventTitle: (title: string) => void;
-    eventTitle: string;
-    addEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, setShow: (show: boolean) => void) => void;
+    creativeEvents: ICreativeEvent[]; 
+    creativeEventTitle: string | null;
+    setCreativeEventTitle: (title: string | null) => void;
+    addEvent: (
+        setButtonLoading: () => void, 
+        setButtonDefault: () => void, 
+        showModal: (text: string, isError: boolean) => void, 
+        setShow: (show: boolean) => void
+    ) => void;
+    deleteEvents: (showModal: (text: string, isError: boolean) => void, title: string) => void;
+    places: IPlaceCreativeEvent[];
+    addCreativeEventPlace: (
+        setButtonLoading: () => void, 
+        setButtonDefault: () => void, 
+        showModal: (text: string, isError: boolean) => void, 
+        place: number,
+        team: string
+    ) => void;
+    deleteCreativeEventPlace: (showModal: (text: string, isError: boolean) => void, placeToDelete: IPlaceCreativeEvent) => void;
     teams: ITeam[] | null;
     modal: IModal | null;
     showModal: (text: string, isError: boolean) => void;
-    addSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToUpload: ISportsEvent) => void;
-    deleteSportsEvent: (showModal: (text: string, isError: boolean) => void, eventToDelete: ISportsEvent) => void;
-    deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => void;
 };
 
 export const CreativityContext = createContext<ICreativityContext>({
-    tournaments: [],
-    loadingTournaments: false,
-    errorTournaments: "",
-    setTournamentTitle: (title: string) => {},
-    tournamentTitle: "",
-    addTournament: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, setShow: (show: boolean) => void) => {},
+    creativeEvents: [], 
+    creativeEventTitle: "",
+    setCreativeEventTitle: (title: string | null) => {},
+    addEvent: (
+        setButtonLoading: () => void, 
+        setButtonDefault: () => void, 
+        showModal: (text: string, isError: boolean) => void, 
+        setShow: (show: boolean) => void
+    ) => {},
+    deleteEvents: (showModal: (text: string, isError: boolean) => void, title: string) => {},
+    places: [],
+    addCreativeEventPlace: (
+        setButtonLoading: () => void, 
+        setButtonDefault: () => void, 
+        showModal: (text: string, isError: boolean) => void, 
+        place: number,
+        team: string
+    ) => {},
+    deleteCreativeEventPlace: (showModal: (text: string, isError: boolean) => void, placeToDelete: IPlaceCreativeEvent) => {},
     teams: null,
     modal: null,
-    showModal: (text: string, isError: boolean) => {},
-    addSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToUpload: ISportsEvent) => {},
-    deleteSportsEvent: (setButtonLoading: () => void, setButtonDefault: () => void, showModal: (text: string, isError: boolean) => void, eventToDelete: ISportsEvent) => {},
-    deleteSportsTournament: (showModal: (text: string, isError: boolean) => void, tournamentTitle: string) => {}
+    showModal: (text: string, isError: boolean) => {}
 });
 
 export const CreativityContextProvider = ({children}: {children: React.ReactNode}) => {
     const { 
         creativeEvents, 
-        setEventTitle,
-        eventTitle, 
+        creativeEventTitle,
+        setCreativeEventTitle,
         addEvent,
-        refreshCreativeEvents,
-        setRefreshCreativeEvents 
+        deleteEvents
     } = useCreativeEvents()
 
     const { 
         places,
         addCreativeEventPlace,
-        deleteCreativeEventPlace
-     } = useCreativeEventPlaces({ eventTitle: "" })
+        deleteCreativeEventPlace,
+     } = useCreativeEventPlaces({ eventTitle: creativeEventTitle })
     
     const { teams } = useTeam()
     const { modal, showModal } = useModal()
 
     const value = {
-        tournaments,
-        loadingTournaments,
-        errorTournaments,
-        setTournamentTitle,
-        tournamentTitle,
-        addTournament,
+        creativeEvents, 
+        creativeEventTitle,
+        setCreativeEventTitle,
+        addEvent,
+        deleteEvents,
+        places,
+        addCreativeEventPlace,
+        deleteCreativeEventPlace,
         teams,
         modal,
-        showModal,
-        addSportsEvent,
-        deleteSportsEvent,
-        deleteSportsTournament
+        showModal
     }
 
     return (

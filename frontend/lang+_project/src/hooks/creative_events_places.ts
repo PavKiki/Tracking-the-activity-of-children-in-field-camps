@@ -1,14 +1,14 @@
 import authApi from "api/authApi";
 import defaultApi from "api/defaultApi"
-import { IPlaceCreativeEvent, ITeam } from "models"
+import { ICreativeEvent, IPlaceCreativeEvent, ITeam } from "models"
 import { useEffect, useState } from "react"
 
 interface IUseCreativeEventPlaces {
-    eventTitle: string;
+    eventTitle: string | null;
 }
 
 export function useCreativeEventPlaces(props: IUseCreativeEventPlaces) {
-    const [places, setPlaces] = useState<IPlaceCreativeEvent[]>()
+    const [places, setPlaces] = useState<IPlaceCreativeEvent[]>([])
     const [refreshPlaces, setRefreshPlaces] = useState<boolean>(false)
 
     useEffect(() => {
@@ -19,34 +19,33 @@ export function useCreativeEventPlaces(props: IUseCreativeEventPlaces) {
         setButtonLoading: () => void, 
         setButtonDefault: () => void, 
         showModal: (text: string, isError: boolean) => void,
-        setShow: (show: boolean) => void,
         place: number,
-        team: ITeam
+        teamTitle: string
     ) {
-    setButtonLoading()
-    
-    const placeToUpload: IPlaceCreativeEvent = { 
-        id: 0,
-        place: place,
-        eventTitle: props.eventTitle,
-        teamTitle: team.title
-    }
+        if (props.eventTitle === undefined || props.eventTitle === null) return
+        setButtonLoading()
+        
+        const placeToUpload: IPlaceCreativeEvent = { 
+            id: 0,
+            place: place,
+            eventTitle: props.eventTitle,
+            teamTitle: teamTitle
+        }
 
-    await authApi.post(
-            "creativity/places/add",
-            placeToUpload
-        )
-        .then(response => {
-            setButtonDefault()
-            showModal(`Результат команды ${team.title} в ${props.eventTitle} успешно добавлен!`, false)
-            setRefreshPlaces(!refreshPlaces)
-            setShow(false)
-        })
-        .catch (error => {
-            console.log(error)
-            showModal(error?.response?.data, true)
-            setButtonDefault()
-        })             
+        await authApi.post(
+                "creativity/places/add",
+                placeToUpload
+            )
+            .then(response => {
+                setButtonDefault()
+                showModal(`Результат команды ${teamTitle} в ${props.eventTitle} успешно добавлен!`, false)
+                setRefreshPlaces(!refreshPlaces)
+            })
+            .catch (error => {
+                console.log(error)
+                showModal(error?.response?.data, true)
+                setButtonDefault()
+            })             
     }
 
     async function deleteCreativeEventPlace(
@@ -72,6 +71,7 @@ export function useCreativeEventPlaces(props: IUseCreativeEventPlaces) {
     }
 
     async function fetchPlaces() {
+        if (props.eventTitle === undefined || props.eventTitle === null) return
         await defaultApi
             .get<IPlaceCreativeEvent[]>(
                 "creativity/places/byEvent",
@@ -88,6 +88,6 @@ export function useCreativeEventPlaces(props: IUseCreativeEventPlaces) {
     return { 
         places,
         addCreativeEventPlace,
-        deleteCreativeEventPlace
+        deleteCreativeEventPlace,
     }
 }

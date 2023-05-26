@@ -2,8 +2,6 @@ import { ICreativeEvent, IPlaceCreativeEvent } from "models"
 import firstPlaceMedal from "data/images/first-medal-icon.svg"
 import secondPlaceMedal from "data/images/second-medal-icon.svg"
 import thirdPlaceMedal from "data/images/third-medal-icon.svg"
-import { useEffect, useState } from "react";
-import defaultApi from "api/defaultApi";
 import { useCreativeEventPlaces } from "hooks/creative_events_places";
 
 interface ICreativityLeaderboard {
@@ -11,8 +9,7 @@ interface ICreativityLeaderboard {
 }
 
 export function CreativityLeaderboard(props: ICreativityLeaderboard) {
-    
-    const { places } = useCreativeEventPlaces({ event: props.event })
+    const { places } = useCreativeEventPlaces({ eventTitle: props.event?.title })
 
     return (
         <table className="creativity-leaderboard">

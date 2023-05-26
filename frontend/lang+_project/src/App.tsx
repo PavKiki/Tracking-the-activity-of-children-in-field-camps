@@ -24,6 +24,7 @@ import { TeamsPresentationPage } from 'pages/TeamsPresentationPage';
 import { PointsPage } from 'pages/PointsPage';
 import { CreativeEventLeaderboardPage } from 'pages/CreativeEventLeaderboardPage';
 import { CreativityPage } from 'pages/CreativityPage';
+import { CreativityContext, CreativityContextProvider } from 'context/CreativityContext';
 
 function App() {
   const { auth } = useAuth()
@@ -86,7 +87,9 @@ function App() {
               <Route 
                 path='/creativity' 
                 element={
-                  <CreativityPage/>
+                  <CreativityContextProvider>
+                    <CreativityPage/>
+                  </CreativityContextProvider>
                 }
               />
               <Route 

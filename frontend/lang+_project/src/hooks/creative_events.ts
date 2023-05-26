@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export function useCreativeEvents() {
     const [refreshCreativeEvents, setRefreshCreativeEvents] = useState<boolean>(false)
     const [creativeEvents, setCreativeEvents] = useState<ICreativeEvent[]>([])
-    const [eventTitle, setEventTitle] = useState<string>("")
+    const [creativeEventTitle, setCreativeEventTitle] = useState<string | null>("")
 
     useEffect( () => { 
         fetchEvents()
@@ -20,7 +20,7 @@ export function useCreativeEvents() {
         ) {
         setButtonLoading()
         
-        const eventToUpload: ICreativeEvent = { title: eventTitle }
+        const eventToUpload: ICreativeEvent = { title: creativeEventTitle === null ? "" : creativeEventTitle }
 
         await authApi.post(
             "creativity/events/add",
@@ -41,17 +41,18 @@ export function useCreativeEvents() {
 
     async function deleteEvents(
         showModal: (text: string, isError: boolean) => void,
+        title: string
     ) {
         await authApi.delete(
             "creativity/events/delete",
             {
                 params: {
-                    title: eventTitle
+                    title: title
                 }
             }
         )
         .then(response => {
-            showModal(`Меропритие "${eventTitle}" успешно удалено!`, false)
+            showModal(`Меропритие "${title}" успешно удалено!`, false)
             setRefreshCreativeEvents(!refreshCreativeEvents)
         })
         .catch (error => {
@@ -76,10 +77,9 @@ export function useCreativeEvents() {
 
     return { 
         creativeEvents, 
-        setEventTitle,
-        eventTitle, 
-        addEvent,
-        refreshCreativeEvents,
-        setRefreshCreativeEvents
+        creativeEventTitle,
+        setCreativeEventTitle,
+        deleteEvents,
+        addEvent
     }
 }
