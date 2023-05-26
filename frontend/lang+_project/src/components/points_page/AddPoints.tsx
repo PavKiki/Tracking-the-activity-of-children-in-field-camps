@@ -6,6 +6,7 @@ import { IPoints } from "models";
 import { useState } from "react";
 
 import authApi from "api/authApi"
+import { DatePicker } from "@mui/x-date-pickers";
 
 interface IAddPoints {
     showModal: (text: string, isError: boolean) => void;
@@ -14,6 +15,7 @@ interface IAddPoints {
 export function AddPoints(props: IAddPoints) {
     const [curTeam, setCurTeam] = useState<string | null>(null)
     const [points, setPoints] = useState<number | null>(null)
+    const [currentDate, setCurrentDate] = useState<Date | null>(null)
 
     const { teams } = useTeam()
     const { blueButton, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
@@ -26,7 +28,7 @@ export function AddPoints(props: IAddPoints) {
             return
         }
 
-        const pointsToUpload: IPoints = { points: points!!, team: curTeam!! }
+        const pointsToUpload: IPoints = { points: points!!, team: curTeam!!, date: currentDate!! }
 
         await authApi.post(
             "points/add",
@@ -48,6 +50,11 @@ export function AddPoints(props: IAddPoints) {
         {teams &&
             <div className="add-points-container">
                 <p id="header">Добавить поинты</p>
+                <DatePicker 
+                    label = "Выберите дату"
+                    value={ currentDate }
+                    onChange={ (date) => setCurrentDate(date) }
+                />
                 <Autocomplete
                     disablePortal
                     id="combo-box-teams"
@@ -56,7 +63,7 @@ export function AddPoints(props: IAddPoints) {
                     renderInput={(params) => <TextField {...params} label="Название команды" />}
                     value={ curTeam }
                     onChange={ (event, newValue) => setCurTeam(newValue) }
-                    style={ {marginBottom: "2vh"} }
+                    style={ {marginBottom: "2vh", marginTop: "2vh"} }
                 />
                 <TextField
                     type="number"

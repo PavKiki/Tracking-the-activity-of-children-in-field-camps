@@ -28,6 +28,14 @@
     font-family: 'Inter', sans-serif;
 }
 
+.teams-container .team-display .name-points > img {
+    margin-top: 2vh;
+}
+
+.teams-container .team-display .name-points > img:hover {
+    background-color: #ebebeb;
+}
+
 .teams-container .team-display .participants {
     padding: 2vw;
     width: 50vw;
@@ -58,4 +66,24 @@
 .teams-container .team-display .participants .participant > #muscle {
     width: 3vh;
     height: 3vh;
+}
+
+.teams-container .chart {
+    margin-left: 20vw;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+}
+
+.teams-container .tooltip {
+    border-radius: 0.25rem;
+    background: #497cff;
+    color: #fff;
+    padding: 1rem;
+    box-shadow: 15px 30px 40px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+
+.teams-container .tooltip > p{
+    margin: 0;
+    padding: 0;
 }

@@ -11,6 +11,7 @@ import com.diploma.langPlus.repository.TeamRepository
 import com.diploma.langPlus.service.TeamService
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
 class TeamServiceImpl(
@@ -37,7 +38,8 @@ class TeamServiceImpl(
                         try {
                             pointsRepository.sumOfPointsByTeam(team)
                         } catch (e: EmptyResultDataAccessException) { 0L },
-                        team.title
+                        team.title,
+                        LocalDate.now()
                     )
                 )
             )

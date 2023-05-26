@@ -92,6 +92,7 @@ export interface IChild {
 export interface IPoints {
     points: number;
     team: string;
+    date: Date;
 }
 
 export interface ICreativeEvent {
@@ -108,4 +109,9 @@ export interface IPlaceCreativeEvent {
 export interface ITeamAndPoints {
     team: ITeam;
     points: IPoints;
+}
+
+export interface IChart {
+    dates: Date;
+    points: number;
 }

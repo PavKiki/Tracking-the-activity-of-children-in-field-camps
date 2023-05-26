@@ -34,5 +34,17 @@ class PointsController(
             return ResponseEntity.badRequest().body(e.message)
         }
     }
+
+    @GetMapping("chart")
+    fun getChart(
+        @RequestParam title: String
+    ): ResponseEntity<Any> {
+        try {
+            return ResponseEntity.ok(pointsService.getChart(title))
+        }
+        catch (e: Exception) {
+            return ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }
 

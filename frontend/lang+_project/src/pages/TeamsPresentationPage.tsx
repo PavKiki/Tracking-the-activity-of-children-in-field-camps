@@ -30,7 +30,12 @@ export function TeamsPresentationPage() {
                 <div className="teams-container">
                     {teamsAndPoints
                         .sort((a: ITeamAndPoints, b: ITeamAndPoints) => b.points.points - a.points.points)
-                        .map((entry, i) => <TeamDisplay teamAndPoints={ entry }/>)
+                        .map((entry, i) => {
+                        return (
+                            <div key={i}>
+                                <TeamDisplay teamAndPoints={ entry }/>
+                            </div>
+                        )})
                     }
                 </div>
             }
