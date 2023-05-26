@@ -92,7 +92,7 @@ export interface IChild {
 export interface IPoints {
     points: number;
     team: string;
-    date: Date;
+    date: Moment;
 }
 
 export interface ICreativeEvent {

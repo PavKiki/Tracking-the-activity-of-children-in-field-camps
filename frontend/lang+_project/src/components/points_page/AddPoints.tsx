@@ -7,6 +7,8 @@ import { useState } from "react";
 
 import authApi from "api/authApi"
 import { DatePicker } from "@mui/x-date-pickers";
+import { Moment } from "moment";
+import moment from "moment";
 
 interface IAddPoints {
     showModal: (text: string, isError: boolean) => void;
@@ -14,8 +16,8 @@ interface IAddPoints {
 
 export function AddPoints(props: IAddPoints) {
     const [curTeam, setCurTeam] = useState<string | null>(null)
-    const [points, setPoints] = useState<number | null>(null)
-    const [currentDate, setCurrentDate] = useState<Date | null>(null)
+    const [points, setPoints] = useState<number>(0)
+    const [currentDate, setCurrentDate] = useState<Moment>(moment())
 
     const { teams } = useTeam()
     const { blueButton, setBlueButtonDefault, setBlueButtonLoading } = useBlueUploadButton({defaultText: "Добавить"})
@@ -29,6 +31,7 @@ export function AddPoints(props: IAddPoints) {
         }
 
         const pointsToUpload: IPoints = { points: points!!, team: curTeam!!, date: currentDate!! }
+        console.log(pointsToUpload)
 
         await authApi.post(
             "points/add",
@@ -53,7 +56,10 @@ export function AddPoints(props: IAddPoints) {
                 <DatePicker 
                     label = "Выберите дату"
                     value={ currentDate }
-                    onChange={ (date) => setCurrentDate(date) }
+                    onChange={ (date) => {
+                        if (date === null) return
+                        setCurrentDate(date)
+                    } }
                 />
                 <Autocomplete
                     disablePortal
@@ -71,7 +77,10 @@ export function AddPoints(props: IAddPoints) {
                     label="Количество поинтов"
                     variant="outlined"
                     value={ points }
-                    onChange={(e) => setPoints(Number(e.target.value))}
+                    onChange={(e) => {
+                        if (e.target.value === undefined) return
+                        setPoints(Number(e.target.value))
+                    }}
                     sx={{ width: 300 }}
                     style={ {marginBottom: "2vh"} }
                 />
