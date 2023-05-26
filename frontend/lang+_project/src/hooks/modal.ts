@@ -1,3 +1,6 @@
+import success from "data/images/done_FILL0_wght400_GRAD0_opsz48.svg"
+import errorImg from "data/images/error_FILL0_wght400_GRAD0_opsz48.svg"
+
 import { IModal } from "models"
 import { useState } from "react"
 
@@ -9,13 +12,14 @@ export function useModal() {
             {
                 text: text, 
                 style: { 
-                    backgroundColor: isError ? "#ffd8d8" : "#e0ffd8" 
-                }
+                    backgroundColor: isError ? "#ff4949" : "#497cff" 
+                },
+                image: isError ? errorImg : success
             }
         )
         setTimeout(() => {
             setModal(null)
-        }, 7000)
+        }, 5000)
     }
 
     return { showModal, modal }

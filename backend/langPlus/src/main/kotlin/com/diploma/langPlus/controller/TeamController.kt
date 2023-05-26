@@ -51,4 +51,14 @@ class TeamController(val teamService: TeamService) {
             return ResponseEntity.badRequest().body(e.message)
         }
     }
+
+    @GetMapping("points")
+    fun getPointsAndTeams(): ResponseEntity<Any> {
+        try {
+            return ResponseEntity.ok(teamService.getTeamsAndPoints())
+        }
+        catch (e: Exception) {
+            return ResponseEntity.badRequest().body(e.message)
+        }
+    }
 }

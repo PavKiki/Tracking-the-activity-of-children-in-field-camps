@@ -1,9 +1,11 @@
 .modal {
     position: fixed;
     bottom: 0;
+    left: 0;
 
-    width: 100vw;
+    width: auto;
     height: 8vh;
+    border-radius: 4px;
     overflow-y: hidden;
     overflow-x: hidden;
     z-index: 9;
@@ -11,11 +13,21 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    padding-left: 1vw;
+    padding-right: 2vw;
+    gap: 1vw;
 }
 
 .modal > p {
+    color: white;
     font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    padding-right: 8vw;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.modal > img {
+    width: 5vh;
+    height: 5vh;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(123deg) brightness(105%) contrast(102%);
 }

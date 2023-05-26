@@ -46,6 +46,7 @@ export interface IModal {
     style: {
         backgroundColor: string;
     };
+    image: string;
 }
 
 export interface ISportsTournament {
@@ -102,4 +103,9 @@ export interface IPlaceCreativeEvent {
     place: number;
     eventTitle: string;
     teamTitle: string;
+}
+
+export interface ITeamAndPoints {
+    team: ITeam;
+    points: IPoints;
 }

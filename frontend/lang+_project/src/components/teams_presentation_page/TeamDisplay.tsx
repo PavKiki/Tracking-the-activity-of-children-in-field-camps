@@ -1,48 +1,21 @@
 import { useKidsInTeam } from "hooks/kids";
-import { ITeam } from "models";
+import { ITeamAndPoints } from "models";
 import crown from "data/images/crown.svg"
 import muscle from 'data/images/arm-muscles-silhouette-svgrepo-com.svg'
-import { useEffect, useState } from "react";
-import defaultApi from "api/defaultApi";
 
 interface ITeamDisplay {
-    team: ITeam;
+    teamAndPoints: ITeamAndPoints;
 }
 
 export function TeamDisplay(props: ITeamDisplay) {
-    const [points, setPoints] = useState<number | null>(null)
-
-    useEffect(() => {
-        fetchPoints()
-    }, [])
-
-    const { participants } = useKidsInTeam({curTeam: props.team.title})
-
-    async function fetchPoints() {
-        if (props.team === null) return
-        await defaultApi
-            .get(
-                "points/ofTeam",
-                {
-                    params: {
-                        title: props.team.title
-                    }
-                }
-            )
-            .then(response => {
-                setPoints(response.data)
-            })
-            .catch (error => {
-                console.log(error)
-            })
-    }
+    const { participants } = useKidsInTeam({curTeam: props.teamAndPoints.team.title})
 
     return(
         <>
             <div className="team-display">
                 <div className="name-points">
-                    <p id="title">{ props.team.title }</p>
-                    <p id="points">{ points ? points : 0 } points</p>
+                    <p id="title">{ props.teamAndPoints.team.title }</p>
+                    <p id="points">{ props.teamAndPoints.points.points } points</p>
                 </div>
                 <div className="participants">
                     { participants.map((kid, i) => {

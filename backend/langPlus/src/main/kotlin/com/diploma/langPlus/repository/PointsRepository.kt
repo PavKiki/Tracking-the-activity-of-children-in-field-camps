@@ -1,5 +1,6 @@
 package com.diploma.langPlus.repository
 
+import com.diploma.langPlus.dto.TeamAndPointsDto
 import com.diploma.langPlus.entity.PointsEntity
 import com.diploma.langPlus.entity.TeamEntity
 import org.springframework.data.jpa.repository.Query

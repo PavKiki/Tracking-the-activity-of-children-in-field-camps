@@ -54,6 +54,7 @@ class SecurityConfig(
                 "/api/v1/team/all",
                 "/api/v1/child/byteamTitle",
                 "/api/v1/points/ofTeam",
+                "/api/v1/team/points",
                 "/api/v1/creativity/events/all",
                 "/api/v1/creativity/places/byEvent"
             )

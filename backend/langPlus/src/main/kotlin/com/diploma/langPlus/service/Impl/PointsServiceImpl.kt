@@ -1,6 +1,7 @@
 package com.diploma.langPlus.service.Impl
 
 import com.diploma.langPlus.dto.PointsDto
+import com.diploma.langPlus.dto.TeamAndPointsDto
 import com.diploma.langPlus.entity.PointsEntity
 import com.diploma.langPlus.repository.PointsRepository
 import com.diploma.langPlus.repository.TeamRepository
