@@ -72,7 +72,7 @@ export function AddDeleteTeam(props: IAddDeleteTeam) {
                 <div className="autocomplete-add-delete">
                     <Autocomplete
                         freeSolo
-                        id="combo-box-teams"
+                        id="combo-box-teams-add-delete"
                         options={ props.teams.map(team => team.title) }
                         sx={{ width: 300 }}
                         value={ value }

@@ -14,6 +14,7 @@ export function useGrid(props: IUseGridProps) {
     }, [props.tournament])
 
     async function fetchGrid() {
+        if (props.tournament === null || props.tournament === undefined) return
         defaultApi
             .get(
                 "/sports/getGrid", 

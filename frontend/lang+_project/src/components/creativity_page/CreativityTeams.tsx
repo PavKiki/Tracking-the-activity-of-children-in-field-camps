@@ -36,12 +36,13 @@ export function CreativityTeams(props: ICreativityTeams) {
                     }) }
                     <div className="field-button">
                         <Autocomplete
+                            freeSolo={true}
                             disablePortal
-                            id="combo-box-places"
+                            id={"combo-box-place" + props.place }
                             options={ props.teams.map(team => team.title) }
                             sx={{ width: "20vw" }}
                             renderInput={(params) => <TextField {...params} label="Название команды" />}
-                            value={ curTeam }
+                            value={ curTeam ? curTeam : "" }
                             onChange={ (event, newValue) => setCurTeam(newValue) }
                             style={ {marginBottom: "2vh"} }
                         />

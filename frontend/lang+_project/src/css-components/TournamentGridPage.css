@@ -11,16 +11,41 @@
     justify-content: space-between;
 }
 
-.head-switcher > p {
+.head-switcher div#leftArrow, .head-switcher div#rightArrow {
+    width: 5vw;
+    display: flex;
+}
+
+.head-switcher div#leftArrow {
+    justify-content: flex-start;
+}
+
+.head-switcher div#rightArrow {
+    justify-content: flex-end;
+}
+
+.head-switcher div#title {
+    width: 35vw;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+.head-switcher div#leftArrow div:hover, .head-switcher div#rightArrow div:hover {
+    background-color: #ebebeb;
+}
+
+.head-switcher p {
     margin: 0;
     font-size: 36px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
 
-.head-switcher > img {
+.head-switcher img {
     filter: invert(100%) sepia(13%) saturate(9%) hue-rotate(292deg) brightness(84%) contrast(80%);
 }
+
+
 
 .grid-page-container .sports-grid {
     margin-top: 5vh;

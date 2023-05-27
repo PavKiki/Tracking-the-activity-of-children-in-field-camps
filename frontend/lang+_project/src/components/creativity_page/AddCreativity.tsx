@@ -13,12 +13,13 @@ export function AddCreativity() {
             <div className="new-sports-event">
                 <p>Добавить результаты</p>
                 <Autocomplete
+                    freeSolo={ true }
                     disablePortal
                     id="combo-box-tournamnets"
                     options={ creativeEvents.map(creativeEvent => creativeEvent.title) }
                     sx={{ width: 300 }}
                     renderInput={(params) => <TextField {...params} label="Введите название мероприятия" />}
-                    value={ creativeEventTitle }
+                    value={ creativeEventTitle ? creativeEventTitle : "" }
                     onChange={ (event, newValue) => {
                         setCreativeEventTitle(newValue)
                     } }

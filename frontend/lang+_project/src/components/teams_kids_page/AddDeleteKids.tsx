@@ -29,12 +29,13 @@ export function AddDeleteKids(props: IAddDeleteKids) {
         <div className="add-delete-kids-container">
             <p>Добавить участников в команду</p>
             <Autocomplete
+                freeSolo={true}
                 disablePortal
-                id="combo-box-teams"
+                id="combo-box-teams-add-kids"
                 options={ props.teams.map(team => team.title) }
                 sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="Название команды" />}
-                value={ curTeam }
+                value={ curTeam ? curTeam : ""}
                 onChange={ (event, newValue) => setCurTeam(newValue) }
             />
             <div className="existing-kids">
@@ -48,23 +49,23 @@ export function AddDeleteKids(props: IAddDeleteKids) {
             <div className="add-kid-field">
                 <TextField 
                     label="Фамилия" 
-                    value={ surname } 
+                    value={ surname ? surname : ""} 
                     onChange={ (event) => setSurname(event.target.value) }
                 />
                 <TextField 
                     label="Имя" 
-                    value={ name } 
+                    value={ name ? name : "" } 
                     onChange={ (event) => setName(event.target.value) }
                 />
                 <TextField 
                     label="Отчество" 
-                    value={ patronymic } 
+                    value={ patronymic ? patronymic : "" } 
                     onChange={ (event) => setPatronymic(event.target.value) }
                 />
                 <TextField 
                     type="number"
                     label="Возраст" 
-                    value={ age } 
+                    value={ age ? age : "" } 
                     sx={ { width: 100 } }
                     onChange={ (event) => setAge(Number(event.target.value)) }
                 />

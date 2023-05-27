@@ -16,9 +16,19 @@ export function CreativeEventLeaderboardPage() {
         {creativeEvents &&
             <div className="grid-page-container">
                 <div className="head-switcher">
-                    {curIndex > 0 && <img src = { arrowLeft } onClick={ () => setCurIndex(curIndex - 1) } alt="arrow to change the tournament to the previous"/>}
-                    <p>{ creativeEvents[curIndex]?.title }</p>
-                    {curIndex < creativeEvents.length - 1 && <img src = { arrowRight } onClick={ () => setCurIndex(curIndex + 1) } alt="arrow to change the tournament to the next"/>}
+                    <div id="leftArrow">
+                        {curIndex > 0 && 
+                            <div><img src = { arrowLeft } onClick={ () => setCurIndex(curIndex - 1) } alt="arrow to change the tournament to the previous"/></div>
+                        }
+                    </div>
+                    <div id="title">
+                        <p>{ creativeEvents[curIndex]?.title }</p>
+                    </div>
+                    <div id="rightArrow">
+                        {curIndex < creativeEvents.length - 1 && 
+                            <div><img src = { arrowRight } onClick={ () => setCurIndex(curIndex + 1) } alt="arrow to change the tournament to the next"/></div>
+                        }
+                    </div>
                 </div>
                 <CreativityLeaderboard event={ creativeEvents[curIndex] }/>
             </div>

@@ -31,8 +31,6 @@ export function AddPoints(props: IAddPoints) {
         }
 
         const pointsToUpload: IPoints = { points: points!!, team: curTeam!!, date: currentDate!! }
-        console.log(pointsToUpload)
-
         await authApi.post(
             "points/add",
             pointsToUpload

@@ -5,6 +5,7 @@
     background-color: #497CFF;
     display: flex;
     justify-content: space-between;
+    overflow:initial;
     position: sticky;
     top: 0;
     z-index: 9;

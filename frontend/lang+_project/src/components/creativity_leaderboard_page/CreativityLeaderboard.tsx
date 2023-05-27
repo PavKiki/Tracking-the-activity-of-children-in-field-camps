@@ -22,7 +22,7 @@ export function CreativityLeaderboard(props: ICreativityLeaderboard) {
                         <td>
                             { places
                                 .filter((place) => { return place.place === 1 })
-                                .map((place) => <p>{ place.teamTitle }</p>) 
+                                .map((place, i) => <p key={i}>{ place.teamTitle }</p>) 
                             }
                         </td>
                     </tr>
@@ -33,7 +33,7 @@ export function CreativityLeaderboard(props: ICreativityLeaderboard) {
                         <td>
                             { places
                                 .filter((place) => { return place.place === 2 })
-                                .map((place) => <p>{ place.teamTitle }</p>) 
+                                .map((place, i) => <p key={i}>{ place.teamTitle }</p>) 
                             }
                         </td>
                     </tr>
@@ -44,7 +44,7 @@ export function CreativityLeaderboard(props: ICreativityLeaderboard) {
                         <td>
                             { places
                                 .filter((place) => { return place.place === 3 })
-                                .map((place) => <p>{ place.teamTitle }</p>) 
+                                .map((place, i) => <p key={i}>{ place.teamTitle }</p>) 
                             }
                         </td>
                     </tr>

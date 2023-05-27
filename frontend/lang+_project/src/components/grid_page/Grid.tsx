@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { GridLine } from "./GridLine"
 import { IGrid } from "models"
 
@@ -14,13 +15,11 @@ export function Grid(props: IGridProps) {
             {teams && actualGrid &&
                 <tbody>
                     { teams.map((team, i) => {
-                        return <GridLine teamName={ teams[i].title } teamEvents={ actualGrid[i]} lineIndex={ i }/>
+                        return <Fragment key={i}><GridLine teamName={ teams[i].title } teamEvents={ actualGrid[i]} lineIndex={ i }/></Fragment>
                     }) }
                     <tr>
                         <th></th>
-                        {teams.map((team, i) => {
-                            return <th key={ i }>{ team.title }</th>
-                        })}
+                        {teams.map((team, i) => <th key={ i }>{ team.title }</th>)}
                     </tr>
                 </tbody>
             }

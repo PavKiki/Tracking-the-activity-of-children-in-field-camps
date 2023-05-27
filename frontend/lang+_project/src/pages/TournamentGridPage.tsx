@@ -19,9 +19,19 @@ export function TournamentGridPage() {
         {tournaments && grid &&
             <div className="grid-page-container">
                 <div className="head-switcher">
-                    {curIndex > 0 && <img src = { arrowLeft } onClick={ () => setCurIndex(curIndex - 1) } alt="arrow to change the tournament to the previous"/>}
-                    <p>{ tournaments[curIndex]?.title }</p>
-                    {curIndex < tournaments.length - 1 && <img src = { arrowRight } onClick={ () => setCurIndex(curIndex + 1) } alt="arrow to change the tournament to the next"/>}
+                    <div id="leftArrow">
+                        {curIndex > 0 && 
+                            <div><img src = { arrowLeft } onClick={ () => setCurIndex(curIndex - 1) } alt="arrow to change the tournament to the previous"/></div>
+                        }
+                    </div>
+                    <div id="title">
+                        <p>{ tournaments[curIndex]?.title }</p>
+                    </div>
+                    <div id="rightArrow">
+                        {curIndex < tournaments.length - 1 && 
+                            <div><img src = { arrowRight } onClick={ () => setCurIndex(curIndex + 1) } alt="arrow to change the tournament to the next"/></div>
+                        }
+                    </div>
                 </div>
                 <Grid grid={ grid }/>
                 <h1 style={ {textAlign: "center", marginTop: "10vh"} }>Leaderboard</h1>
