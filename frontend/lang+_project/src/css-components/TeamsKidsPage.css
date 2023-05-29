@@ -43,13 +43,15 @@
 }
 
 .add-delete-kids-container .kid > p {
-    margin: 0;
+    margin-top: auto;
+    margin-bottom: auto;
     font-size: 24px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
 }
 
 .add-delete-kids-container .kid > img {
+    height: 3vw;
     filter: invert(99%) sepia(1%) saturate(44%) hue-rotate(352deg) brightness(114%) contrast(84%);
     margin-right: 1vw;
 }
